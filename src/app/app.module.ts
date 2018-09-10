@@ -11,6 +11,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { LoadListComponent } from './load/load-list/load-list.component';
+import { LoadEditComponent } from './load/load-edit/load-edit.component';
+import {LoadService} from './load/load.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     LoginComponent,
     SignupComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    LoadListComponent,
+    LoadEditComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [LoadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
