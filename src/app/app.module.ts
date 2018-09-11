@@ -14,6 +14,9 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { LoadListComponent } from './load/load-list/load-list.component';
 import { LoadEditComponent } from './load/load-edit/load-edit.component';
 import {LoadService} from './load/load.service';
+import {AngularFireModule} from '@angular/fire';
+import { environment } from '../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,9 @@ import {LoadService} from './load/load.service';
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [LoadService],
   bootstrap: [AppComponent]

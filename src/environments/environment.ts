@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyBPFadInvfa3yGEkh66ApEz-XwbHPImCRI',
+    authDomain: 'trucking-manager-ng.firebaseapp.com',
+    databaseURL: 'https://trucking-manager-ng.firebaseio.com',
+    projectId: 'trucking-manager-ng',
+    storageBucket: 'trucking-manager-ng.appspot.com',
+    messagingSenderId: '494012668550'
+  }
 };
 
 /*
