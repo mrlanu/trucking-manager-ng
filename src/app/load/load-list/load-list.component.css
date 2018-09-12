@@ -29,7 +29,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
-  height: 104px;
+  height: 70px;
 }
 
 .example-element-symbol {
@@ -45,9 +45,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .example-element-description {
-  padding: 16px;
+  padding: 10px;
 }
 
 .example-element-description-attribution {
-  opacity: 0.5;
+  opacity: 0.8;
 }

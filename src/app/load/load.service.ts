@@ -12,7 +12,7 @@ export class LoadService {
 
   constructor(private db: AngularFirestore) {}
 
-  createLoad(load: LoadModel) {
+  addLoad(load: LoadModel) {
     this.db.collection('loads').add(load).then(result => {
       const id = result.id;
       this.db.doc(`loads/${id}`).update({id: id});

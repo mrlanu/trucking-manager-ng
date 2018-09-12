@@ -21,8 +21,8 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private loadChangesSubs: Subscription;
 
-  columnsToDisplay = ['brokerName', 'weight'];
-  columnHeaderName = ['Broker', 'Weight'];
+  columnsToDisplay = ['brokerName', 'pickUpAddress', 'deliveryAddress'];
+  columnHeaderName = ['Broker', 'Pick Up', 'Delivery'];
   dataSource = new MatTableDataSource<LoadModel>();
   expandedElement: LoadModel;
 

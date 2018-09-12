@@ -1,12 +1,18 @@
 <section class="load">
   <div class="gap"></div>
   <form [formGroup]="loadForm" (ngSubmit)="onSubmit()"
-    fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+    fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
     <mat-form-field>
       <input type="text" placeholder="Broker name" name="brokerName" formControlName="brokerName" matInput required>
     </mat-form-field>
     <mat-form-field>
-      <input type="number" placeholder="Weight" name="weight" formControlName="weight" matInput>
+      <input type="text" placeholder="Commodity" name="commodity" formControlName="commodity" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" placeholder="Rate" name="rate" formControlName="rate" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" placeholder="Pick up Address" name="pickUpAddress" formControlName="pickUpAddress" matInput required>
     </mat-form-field>
     <mat-form-field>
       <input name="pickUpDate" placeholder="Pick up date" formControlName="pickUpDate" matInput required
@@ -15,10 +21,19 @@
       <mat-datepicker touchUi #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
+      <input type="text" placeholder="Delivery Address" name="deliveryAddress" formControlName="deliveryAddress" matInput required>
+    </mat-form-field>
+    <mat-form-field>
       <input name="deliveryDate" formControlName="deliveryDate" placeholder="Delivery date" matInput required
              [matDatepicker]="picker2">
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker touchUi #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" placeholder="Weight" name="weight" formControlName="weight" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" placeholder="Number of pallets" name="pallets" formControlName="pallets" matInput required>
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary" [disabled]="loadForm.invalid">Create</button>
   </form>
