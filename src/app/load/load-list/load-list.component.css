@@ -16,8 +16,10 @@ tr.element-row:not(.example-expanded-row):active {
 
 .main-load-list{
   font-weight: bold;
-  font-size: 12px;
+  color: black;
+  font-size: 14px;
   line-height: normal;
+  background-color: #eff3ff;
 }
 
 .element-row td {

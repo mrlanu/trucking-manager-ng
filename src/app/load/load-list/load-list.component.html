@@ -9,11 +9,12 @@
 
 <table mat-table
        matSort
-       [dataSource]="dataSource" multiTemplateDataRows
+       [dataSource]="dataSource"
+       multiTemplateDataRows
        class="mat-elevation-z8">
   <ng-container  matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i = index">
     <th class="main-load-list" mat-header-cell *matHeaderCellDef mat-sort-header> {{columnHeaderName[i]}} </th>
-    <td class="main-load-list" mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -47,7 +48,9 @@
             </div>
           </div>
         </div>
-        <button style="padding: 2px" type="button" mat-raised-button color="primary">Add Task</button>
+        <div style="padding-bottom: 10px" fxLayout="column">
+          <button type="button" mat-raised-button color="primary" (click)="onAddTask(element.id)">Add Task</button>
+        </div>
       </div>
     </td>
   </ng-container>

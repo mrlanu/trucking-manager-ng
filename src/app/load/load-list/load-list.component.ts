@@ -4,6 +4,7 @@ import {LoadModel} from '../load.model';
 import {LoadService} from '../load.service';
 import {Subscription} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-load-list',
@@ -29,7 +30,9 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private loadService: LoadService) { }
+  constructor(private loadService: LoadService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadChangesSubs = this.loadService.loadsChanged.subscribe((allLoads: LoadModel[]) => {
@@ -51,6 +54,10 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   doFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onAddTask(id: string) {
+    this.router.navigate(['/editLoad', id]);
   }
 
 }
