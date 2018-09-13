@@ -2,52 +2,58 @@ table {
   width: 100%;
 }
 
-tr.example-detail-row {
+tr.detail-row {
   height: 0;
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
+tr.element-row:not(.example-expanded-row):hover {
   background: #f5f5f5;
 }
 
-tr.example-element-row:not(.example-expanded-row):active {
+tr.element-row:not(.example-expanded-row):active {
   background: #efefef;
 }
 
-.example-element-row td {
+.main-load-list{
+  font-weight: bold;
+  font-size: 12px;
+  line-height: normal;
+}
+
+.element-row td {
   border-bottom-width: 0;
 }
 
-.example-element-detail {
+.element-detail {
   overflow: hidden;
   display: flex;
 }
 
-.example-element-diagram {
+.element-diagram {
   min-width: 80px;
   border: 2px solid black;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
-  height: 70px;
+  height: 74px;
 }
 
-.example-element-symbol {
+.element-symbol {
   font-weight: bold;
-  font-size: 40px;
+  font-size: 30px;
   line-height: normal;
 }
 
-.example-element-symbol-span {
+.element-symbol-span {
   font-weight: bold;
   font-size: 20px;
   line-height: normal;
 }
 
-.example-element-description {
-  padding: 10px;
+.element-description {
+  padding: 5px;
 }
 
-.example-element-description-attribution {
+.element-description-attribution {
   opacity: 0.8;
 }
