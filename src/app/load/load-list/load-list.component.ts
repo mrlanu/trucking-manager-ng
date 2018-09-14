@@ -22,7 +22,7 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private loadChangesSubs: Subscription;
 
-  columnsToDisplay = ['brokerName', 'pickUpAddress', 'deliveryAddress'];
+  columnsToDisplay = ['broker', 'pickUpAddress', 'deliveryAddress'];
   columnHeaderName = ['Broker', 'Pick Up', 'Delivery'];
   dataSource = new MatTableDataSource<LoadModel>();
   expandedElement: LoadModel;

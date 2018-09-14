@@ -26,7 +26,7 @@ export class LoadService {
       .pipe(map(docsArray => {
         return docsArray.map(doc => {
           return {
-            ...doc.payload.doc.data() as LoadModel
+            ...doc.payload.doc.data()
           };
         });
       })).subscribe((loads: LoadModel[]) => {

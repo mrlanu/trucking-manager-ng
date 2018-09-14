@@ -6,9 +6,10 @@ export interface LoadModel {
   weight: number;
   pallets: number;
   kind: string; /*dry | frozen etc.*/
-  pickUp: Date;
+  pickUpDate: Date;
   pickUpAddress: string;
-  delivery: Date;
+  deliveryDate: Date;
   deliveryAddress: string;
-  description: 'string';
+  description: string;
+  commodity: string;
 }

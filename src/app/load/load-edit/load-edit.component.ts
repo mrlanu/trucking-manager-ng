@@ -19,26 +19,30 @@ export class LoadEditComponent implements OnInit {
   }
 
   private initForm() {
-    const brokerName = '';
-    const commodity = '';
+    const broker = '';
     const rate = '';
-    const pickUpAddress = '';
-    const pickUpDate = '';
-    const deliveryAddress = '';
-    const deliveryDate = '';
     const weight = '';
     const pallets = '';
+    const kind = '';
+    const pickUpDate = '';
+    const pickUpAddress = '';
+    const deliveryDate = '';
+    const deliveryAddress = '';
+    const description = '';
+    const commodity = '';
 
     this.loadForm = new FormGroup({
-      'brokerName': new FormControl(brokerName, Validators.required),
+      'broker': new FormControl(broker, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
       'rate': new FormControl(rate, Validators.required),
+      'kind': new FormControl(kind),
       'pickUpAddress': new FormControl(pickUpAddress, Validators.required),
       'pickUpDate': new FormControl(pickUpDate, Validators.required),
       'deliveryAddress': new FormControl(deliveryAddress, Validators.required),
       'deliveryDate': new FormControl(deliveryDate, Validators.required),
       'weight': new FormControl(weight),
-      'pallets': new FormControl(pallets)
+      'pallets': new FormControl(pallets),
+      'description': new FormControl(description)
     });
   }
 
