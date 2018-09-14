@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoadService} from '../load.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-load-edit',
@@ -11,7 +12,7 @@ export class LoadEditComponent implements OnInit {
 
   loadForm: FormGroup;
 
-  constructor(private loadService: LoadService) { }
+  constructor(private loadService: LoadService, private router: Router) { }
 
   ngOnInit() {
     this.initForm();
@@ -43,6 +44,7 @@ export class LoadEditComponent implements OnInit {
 
   onSubmit() {
     this.loadService.addLoad(this.loadForm.value);
+    this.router.navigate(['/listLoad']);
   }
 
 }

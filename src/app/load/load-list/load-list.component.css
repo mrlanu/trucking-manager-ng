@@ -14,6 +14,10 @@ tr.element-row:not(.example-expanded-row):active {
   background: #efefef;
 }
 
+.huy{
+  width: 100px;
+}
+
 .main-load-list{
   font-weight: bold;
   color: black;
