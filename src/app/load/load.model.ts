@@ -5,6 +5,7 @@ export interface LoadModel {
 
   id: string;
   broker: string;
+  dispatch: string;
   rate: number;
   weight: number;
   pallets: number;

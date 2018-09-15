@@ -33,6 +33,7 @@ export class LoadEditComponent implements OnInit {
   private initForm() {
     let id = '';
     let broker = '';
+    let dispatch = '';
     let rate: number;
     let weight: number;
     let pallets: number;
@@ -48,6 +49,7 @@ export class LoadEditComponent implements OnInit {
       const load = this.loadService.getLoadById(this.loadId);
       id = load.id;
       broker = load.broker;
+      dispatch = load.dispatch;
       rate = load.rate;
       weight = load.weight;
       pallets = load.pallets;
@@ -63,6 +65,7 @@ export class LoadEditComponent implements OnInit {
     this.loadForm = new FormGroup({
       'id': new FormControl(id),
       'broker': new FormControl(broker, Validators.required),
+      'dispatch': new FormControl(dispatch, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
       'rate': new FormControl(rate, Validators.required),
       'kind': new FormControl(kind),
