@@ -1,3 +1,19 @@
 mat-form-field {
   width: 300px;
 }
+
+.background{
+  height: 93%;
+  background: url('/assets/img/mark-tuzman-103358-unsplash.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.formBack {
+  border-radius: 15px;
+  width: 330px;
+  padding: 30px;
+  background: whitesmoke;
+}

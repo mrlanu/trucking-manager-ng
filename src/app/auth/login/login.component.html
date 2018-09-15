@@ -1,7 +1,7 @@
-<section class="signup-form">
-
+<section class="background" fxLayout="column" fxLayoutAlign="up center">
   <div style="height: 150px"></div>
-  <form fxLayout="column"
+  <div class="formBack">
+    <form fxLayout="column"
         fxLayoutAlign="center center"
         fxLayoutGap="15px"
         [formGroup]="loginForm"
@@ -40,5 +40,5 @@
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 
   </form>
-
+  </div>
 </section>
