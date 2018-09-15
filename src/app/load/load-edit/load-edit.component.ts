@@ -16,6 +16,8 @@ export class LoadEditComponent implements OnInit {
   editMode = false;
   loadId: string;
 
+  kinds: string[] = ['Dry', 'Frozen', 'Chilled'];
+
   constructor(private loadService: LoadService,
               private router: Router,
               private route: ActivatedRoute) { }

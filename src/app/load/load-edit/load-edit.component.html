@@ -3,24 +3,31 @@
     fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
     <div fxLayout.gt-md="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="100px" fxLayoutGap.lt-md="0px">
       <div fxLayout="column">
-        <input type="hidden" name="id" formControlName="id">
+        <input type="hidden" formControlName="id">
         <mat-form-field>
-          <input type="text" placeholder="Broker's name" name="broker" formControlName="broker" matInput required>
+          <input type="text" placeholder="Broker's name" formControlName="broker" matInput required>
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Dispatch's name" name="dispatch" formControlName="dispatch" matInput required>
+          <input type="text" placeholder="Dispatch's name" formControlName="dispatch" matInput required>
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Commodity" name="commodity" formControlName="commodity" matInput>
+          <input type="text" placeholder="Commodity" formControlName="commodity" matInput>
         </mat-form-field>
         <mat-form-field>
-          <input type="number" placeholder="Rate" name="rate" formControlName="rate" matInput>
+          <input type="number" placeholder="Rate" formControlName="rate" matInput>
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Kind ex. Dry, Frozen etc." name="kind" formControlName="kind" matInput>
+          <mat-select placeholder="Kind ex. Dry, Frozen etc." formControlName="kind" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let kind of kinds" [value]="kind">
+              {{kind}}
+            </mat-option>
+          </mat-select>
+          <!--<mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
+          <mat-hint>{{animalControl.value?.sound}}</mat-hint>-->
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Pick up Address" name="pickUpAddress" formControlName="pickUpAddress" matInput required>
+          <input type="text" placeholder="Pick up Address" formControlName="pickUpAddress" matInput required>
         </mat-form-field>
       </div>
       <div fxLayout="column">
@@ -31,7 +38,7 @@
           <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Delivery Address" name="deliveryAddress" formControlName="deliveryAddress" matInput required>
+          <input type="text" placeholder="Delivery Address" formControlName="deliveryAddress" matInput required>
         </mat-form-field>
         <mat-form-field>
           <input name="deliveryDate" formControlName="deliveryDate" placeholder="Delivery date" matInput required
@@ -40,13 +47,13 @@
           <mat-datepicker touchUi #picker2></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input type="number" placeholder="Weight" name="weight" formControlName="weight" matInput>
+          <input type="number" placeholder="Weight" formControlName="weight" matInput>
         </mat-form-field>
         <mat-form-field>
-          <input type="number" placeholder="Number of pallets" name="pallets" formControlName="pallets" matInput>
+          <input type="number" placeholder="Number of pallets" formControlName="pallets" matInput>
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Description" name="description" formControlName="description" matInput>
+          <input type="text" placeholder="Description" formControlName="description" matInput>
         </mat-form-field>
       </div>
     </div>
