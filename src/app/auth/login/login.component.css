@@ -3,11 +3,8 @@ mat-form-field {
 }
 
 .background{
-  height: 93%;
-  background: url('/assets/img/mark-tuzman-103358-unsplash.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  height: calc(100% - 65px);
+  background: url('/assets/img/gian-reto-tarnutzer-45217-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -16,4 +13,5 @@ mat-form-field {
   width: 330px;
   padding: 30px;
   background: whitesmoke;
+  opacity: 0.9;
 }
