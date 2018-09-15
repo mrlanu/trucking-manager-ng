@@ -17,6 +17,7 @@ import {LoadService} from './load/load.service';
 import {AngularFireModule} from '@angular/fire';
 import { environment } from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { EmployeeEditComponent } from './employee/employee-edit/employee-edit.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
     HeaderComponent,
     SidenavListComponent,
     LoadListComponent,
-    LoadEditComponent
+    LoadEditComponent,
+    EmployeeEditComponent
   ],
   imports: [
     BrowserModule,
