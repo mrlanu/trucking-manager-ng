@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoadService} from '../load.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import Timestamp = firebase.firestore.Timestamp;
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-load-edit',
@@ -11,27 +13,55 @@ import {Router} from '@angular/router';
 export class LoadEditComponent implements OnInit {
 
   loadForm: FormGroup;
+  editMode = false;
+  loadId: string;
 
-  constructor(private loadService: LoadService, private router: Router) { }
+  constructor(private loadService: LoadService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.initForm();
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.loadId = params['id'];
+        this.editMode = params['id'] != null;
+        this.initForm();
+      }
+    );
   }
 
   private initForm() {
-    const broker = '';
-    const rate = '';
-    const weight = '';
-    const pallets = '';
-    const kind = '';
-    const pickUpDate = '';
-    const pickUpAddress = '';
-    const deliveryDate = '';
-    const deliveryAddress = '';
-    const description = '';
-    const commodity = '';
+    let id = '';
+    let broker = '';
+    let rate: number;
+    let weight: number;
+    let pallets: number;
+    let kind = '';
+    let pickUpDate: Date;
+    let pickUpAddress = '';
+    let deliveryDate: Date;
+    let deliveryAddress = '';
+    let description = '';
+    let commodity = '';
+
+    if (this.editMode) {
+      const load = this.loadService.getLoadById(this.loadId);
+      id = load.id;
+      broker = load.broker;
+      rate = load.rate;
+      weight = load.weight;
+      pallets = load.pallets;
+      kind = load.kind;
+      pickUpDate = load.pickUpDate.toDate();
+      pickUpAddress = load.pickUpAddress;
+      deliveryDate = load.deliveryDate.toDate();
+      deliveryAddress = load.deliveryAddress;
+      description = load.description;
+      commodity = load.commodity;
+    }
 
     this.loadForm = new FormGroup({
+      'id': new FormControl(id),
       'broker': new FormControl(broker, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
       'rate': new FormControl(rate, Validators.required),
@@ -47,7 +77,11 @@ export class LoadEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loadService.addLoad(this.loadForm.value);
+    if (this.editMode) {
+      this.loadService.updateLoad(this.loadForm.value);
+    } else {
+      this.loadService.addLoad(this.loadForm.value);
+    }
     this.router.navigate(['/listLoad']);
   }
 

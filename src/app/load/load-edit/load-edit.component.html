@@ -2,6 +2,7 @@
   <div class="gap"></div>
   <form [formGroup]="loadForm" (ngSubmit)="onSubmit()"
     fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <input type="hidden" name="id" formControlName="id">
     <mat-form-field>
       <input type="text" placeholder="Broker name" name="broker" formControlName="broker" matInput required>
     </mat-form-field>
@@ -44,6 +45,6 @@
     <button type="submit"
             mat-raised-button
             color="primary"
-            [disabled]="loadForm.invalid">Create</button>
+            [disabled]="loadForm.invalid">Save</button>
   </form>
 </section>

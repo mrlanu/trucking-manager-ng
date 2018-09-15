@@ -19,14 +19,18 @@ export class LoadService {
       });
   }
 
+  updateLoad(load: LoadModel) {
+    this.db.doc(`loads/${load.id}`).set(load);
+  }
+
   fetchAvailableLoads() {
     this.db
       .collection('loads')
       .snapshotChanges()
       .pipe(map(docsArray => {
-        return docsArray.map(doc => {
+        return docsArray.map(dc => {
           return {
-            ...doc.payload.doc.data()
+            ...dc.payload.doc.data()
           };
         });
       })).subscribe((loads: LoadModel[]) => {
@@ -34,6 +38,10 @@ export class LoadService {
         this.loadsChanged.next([...this.loadList]);
         }
       );
+  }
+
+  getLoadById(id: string) {
+    return this.loadList.find(load => load.id === id);
   }
 
 }

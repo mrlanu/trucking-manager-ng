@@ -1,3 +1,6 @@
+import Timestamp = firebase.firestore.Timestamp;
+import * as firebase from 'firebase';
+
 export interface LoadModel {
 
   id: string;
@@ -6,9 +9,9 @@ export interface LoadModel {
   weight: number;
   pallets: number;
   kind: string; /*dry | frozen etc.*/
-  pickUpDate: Date;
+  pickUpDate: Timestamp;
   pickUpAddress: string;
-  deliveryDate: Date;
+  deliveryDate: Timestamp;
   deliveryAddress: string;
   description: string;
   commodity: string;
