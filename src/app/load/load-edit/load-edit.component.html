@@ -42,9 +42,14 @@
     <mat-form-field>
       <input type="text" placeholder="Description" name="description" formControlName="description" matInput>
     </mat-form-field>
-    <button type="submit"
-            mat-raised-button
-            color="primary"
-            [disabled]="loadForm.invalid">Save</button>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <button type="submit"
+              mat-raised-button
+              color="primary"
+              [disabled]="loadForm.invalid">Save</button>
+      <button type="button"
+              mat-raised-button
+              color="warn" (click)="onCancel()">Cancel</button>
+    </div>
   </form>
 </section>

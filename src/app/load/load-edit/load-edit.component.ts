@@ -85,4 +85,8 @@ export class LoadEditComponent implements OnInit {
     this.router.navigate(['/listLoad']);
   }
 
+  onCancel() {
+    this.router.navigate(['/listLoad']);
+  }
+
 }
