@@ -16,16 +16,24 @@
         <mat-form-field>
           <input type="number" placeholder="Rate" formControlName="rate" matInput>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Kind of load, pick one" aria-label="Number" matInput formControlName="kind" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let kind of kinds" [value]="kind">
+              {{ kind }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <!--<mat-form-field>
           <mat-select placeholder="Kind ex. Dry, Frozen etc." formControlName="kind" required>
-            <mat-option>--</mat-option>
+            <mat-option>&#45;&#45;</mat-option>
             <mat-option *ngFor="let kind of kinds" [value]="kind">
               {{kind}}
             </mat-option>
           </mat-select>
-          <!--<mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
-          <mat-hint>{{animalControl.value?.sound}}</mat-hint>-->
-        </mat-form-field>
+          &lt;!&ndash;<mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
+          <mat-hint>{{animalControl.value?.sound}}</mat-hint>&ndash;&gt;
+        </mat-form-field>-->
         <mat-form-field>
           <input type="text" placeholder="Pick up Address" formControlName="pickUpAddress" matInput required>
         </mat-form-field>
