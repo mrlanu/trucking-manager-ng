@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import Timestamp = firebase.firestore.Timestamp;
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-load-edit',

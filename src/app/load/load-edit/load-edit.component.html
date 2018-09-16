@@ -16,7 +16,7 @@
         <mat-form-field>
           <input type="number" placeholder="Rate" formControlName="rate" matInput>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
           <input type="text" placeholder="Kind of load, pick one" aria-label="Number" matInput formControlName="kind" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let kind of kinds" [value]="kind">

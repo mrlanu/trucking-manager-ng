@@ -28,10 +28,8 @@ export class EmployeeService {
     });
   }
 
-  convertEmployeeToLastName(employees: EmployeeModel[]): string[] {
-    return employees.map(employee => {
-      return employee.firstName + ' ' + employee.secondName;
-    });
+  getAllEmployees() {
+    return [...this.allEmployees];
   }
 
 }

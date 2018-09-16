@@ -19,6 +19,7 @@ import { environment } from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { EmployeeEditComponent } from './employee/employee-edit/employee-edit.component';
 import {EmployeeService} from './employee/employee.service';
+import {SharedService} from './shared/shared.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import {EmployeeService} from './employee/employee.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [LoadService, EmployeeService],
+  providers: [LoadService, EmployeeService, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
