@@ -1,3 +1,26 @@
-<p>
-  task-edit works!
-</p>
+<section fxLayout fxLayoutAlign="center" style="padding: 30px">
+  <mat-card fxFlex.xs="100%" fxFlex="400px">
+    <mat-card-header>
+      <mat-card-title>Broker: <span>{{ load.broker }}</span></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>Commodity: <span>{{ load.commodity}}</span></div>
+      <div>Weight: <span>{{ load.weight}}</span></div>
+      <div>Pallets: <span>{{ load.pallets}}</span></div>
+      <div>Description: <span>{{ load.description}}</span></div>
+      <section class="pickup">
+        <div style="padding-top: 15px">Pick Ups:</div>
+        <div class="container" fxLayout>pick up</div>
+      </section>
+      <section class="delivery">
+        <div style="padding-top: 15px">Delivery:</div>
+        <div class="container" fxLayout>delivery</div>
+      </section>
+    </mat-card-content>
+    <mat-card-actions>
+      <div fxLayout fxLayoutAlign="end">
+        <button type="button" mat-raised-button color="primary" (click)="onCancel()">Back</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</section>
