@@ -21,6 +21,7 @@ import { EmployeeEditComponent } from './employee/employee-edit/employee-edit.co
 import {EmployeeService} from './employee/employee.service';
 import {SharedService} from './shared/shared.service';
 import { TaskEditComponent } from './task/task-edit/task-edit.component';
+import {TaskService} from './task/task.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { TaskEditComponent } from './task/task-edit/task-edit.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [LoadService, EmployeeService, SharedService],
+  providers: [LoadService, EmployeeService, SharedService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
