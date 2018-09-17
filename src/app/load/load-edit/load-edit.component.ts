@@ -49,6 +49,7 @@ export class LoadEditComponent implements OnInit {
     let deliveryAddress = '';
     let description = '';
     let commodity = '';
+    let unscheduledTasks: boolean;
 
     if (this.editMode) {
       const load = this.loadService.getLoadById(this.loadId);
@@ -67,6 +68,7 @@ export class LoadEditComponent implements OnInit {
       deliveryAddress = load.deliveryAddress;
       description = load.description;
       commodity = load.commodity;
+      unscheduledTasks = load.unscheduledTasks;
     }
 
     this.loadForm = new FormGroup({
@@ -84,7 +86,8 @@ export class LoadEditComponent implements OnInit {
       'deliveryDate': new FormControl(deliveryDate, Validators.required),
       'weight': new FormControl(weight),
       'pallets': new FormControl(pallets),
-      'description': new FormControl(description)
+      'description': new FormControl(description),
+      'unscheduledTasks': new FormControl(unscheduledTasks)
     });
   }
 
