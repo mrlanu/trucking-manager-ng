@@ -65,5 +65,10 @@ tr.element-row:not(.example-expanded-row):active {
 }
 
 .hasUnscheduledTasks{
-  background-color: #ffeded;
+  background-color: #ffe2e2;
+}
+
+.hasUnscheduledTasks2{
+  color: red;
+  font-weight: bold;
 }

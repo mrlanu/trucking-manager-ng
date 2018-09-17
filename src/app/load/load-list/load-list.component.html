@@ -14,7 +14,7 @@
        class="mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i = index">
     <th class="main-load-list" mat-header-cell *matHeaderCellDef mat-sort-header> {{columnHeaderName[i]}} </th>
-    <td [ngClass]="{hasUnscheduledTasks: hasUnscheduledTasks}" mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    <td [ngClass]="{hasUnscheduledTasks: element.unscheduledTasks}" mat-cell *matCellDef="let element"> {{element[column]}} </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -23,21 +23,24 @@
       <div class="element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'" fxLayout="column">
         <div fxLayout="row">
-          <div class="element-diagram">
-            <div class="element-position"> Rate </div>
-            <div class="element-symbol"> {{element.rate}} <span class="element-symbol-span">$</span></div>
-            <!--<div class="example-element-name"> {{element.pickUpDate.toDate() | date}} </div>
-            <div class="example-element-weight"> {{element.deliveryDate.toDate() | date}} </div>-->
-          </div>
+          <section fxLayout="column" fxLayoutAlign="center center">
+            <div *ngIf="element.unscheduledTasks" style="color: red; font-weight: bold; padding-top: 6px">UNSCHEDULED</div>
+            <div class="element-diagram">
+              <div class="element-position"> Rate </div>
+              <div class="element-symbol"> {{element.rate}} <span class="element-symbol-span">$</span></div>
+              <!--<div class="example-element-name"> {{element.pickUpDate.toDate() | date}} </div>
+              <div class="example-element-weight"> {{element.deliveryDate.toDate() | date}} </div>-->
+            </div>
+          </section>
           <div fxLayout="column" style="padding-left: 10px">
             <div fxLayout="row" fxLayoutGap="30px">
               <div class="element-description">
                 PickUp:
-                <span class="element-description-attribution"> {{element.pickUpCount}}</span>
+                <span [ngClass]="{hasUnscheduledTasks2: element.unscheduledTasks}"> {{element.pickUpCount}}</span>
               </div>
               <div class="element-description">
                 Delivery:
-                <span class="element-description-attribution"> {{element.deliveryCount}}</span>
+                <span [ngClass]="{hasUnscheduledTasks2: element.unscheduledTasks}"> {{element.deliveryCount}}</span>
               </div>
             </div>
             <div class="element-description">
@@ -61,7 +64,11 @@
         <div style="padding: 20px" fxLayout="row" fxLayoutGap="20px">
           <button type="button" mat-raised-button color="primary" (click)="onEditLoad(element.id)">Edit</button>
           <button type="button" mat-raised-button color="primary" (click)="onAddTask(element.id)">Complete</button>
-          <button type="button" mat-raised-button color="primary" (click)="onAddTask(element.id)">Add Task</button>
+          <button type="button" mat-raised-button
+                  [color]="element.unscheduledTasks ? 'warn' : 'primary'"
+                  (click)="onAddTask(element.id)">
+            {{ element.unscheduledTasks ? 'Schedule' : 'Edit Tasks' }}
+          </button>
         </div>
       </div>
     </td>

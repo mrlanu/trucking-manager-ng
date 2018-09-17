@@ -18,4 +18,5 @@ export interface LoadModel {
   deliveryAddress: string;
   description: string;
   commodity: string;
+  unscheduledTasks: boolean;
 }
