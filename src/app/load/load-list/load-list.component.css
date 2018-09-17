@@ -63,3 +63,7 @@ tr.element-row:not(.example-expanded-row):active {
 .element-description-attribution {
   opacity: 0.8;
 }
+
+.hasUnscheduledTasks{
+  background-color: #ffeded;
+}
