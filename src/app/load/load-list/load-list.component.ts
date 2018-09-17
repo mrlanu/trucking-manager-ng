@@ -26,6 +26,7 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
   columnHeaderName = ['Broker', 'Pick Up', 'Delivery', 'Dispatch'];
   dataSource = new MatTableDataSource<LoadModel>();
   expandedElement: LoadModel;
+  hasUnscheduledTasks = true;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

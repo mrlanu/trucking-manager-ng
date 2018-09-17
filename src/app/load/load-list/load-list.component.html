@@ -30,6 +30,16 @@
             <div class="example-element-weight"> {{element.deliveryDate.toDate() | date}} </div>-->
           </div>
           <div fxLayout="column" style="padding-left: 10px">
+            <div fxLayout="row" fxLayoutGap="30px">
+              <div class="element-description">
+                PickUp:
+                <span class="element-description-attribution"> {{element.pickUpCount}}</span>
+              </div>
+              <div class="element-description">
+                Delivery:
+                <span class="element-description-attribution"> {{element.deliveryCount}}</span>
+              </div>
+            </div>
             <div class="element-description">
               Commodity:
               <span class="element-description-attribution"> {{element.commodity}}</span>

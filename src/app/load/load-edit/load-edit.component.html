@@ -30,6 +30,14 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <mat-form-field class="forWith">
+            <input type="number" placeholder="Number of PickUp" formControlName="pickUpCount" matInput>
+          </mat-form-field>
+          <mat-form-field class="forWith">
+            <input type="number" placeholder="Number of delivery" formControlName="deliveryCount" matInput>
+          </mat-form-field>
+        </div>
         <!--<mat-form-field>
           <mat-select placeholder="Kind ex. Dry, Frozen etc." formControlName="kind" required>
             <mat-option>&#45;&#45;</mat-option>

@@ -41,6 +41,8 @@ export class LoadEditComponent implements OnInit {
     let weight: number;
     let pallets: number;
     let kind = '';
+    let pickUpCount: number;
+    let deliveryCount: number;
     let pickUpDate: Date;
     let pickUpAddress = '';
     let deliveryDate: Date;
@@ -57,6 +59,8 @@ export class LoadEditComponent implements OnInit {
       weight = load.weight;
       pallets = load.pallets;
       kind = load.kind;
+      pickUpCount = load.pickUpCount;
+      deliveryCount = load.deliveryCount;
       pickUpDate = load.pickUpDate.toDate();
       pickUpAddress = load.pickUpAddress;
       deliveryDate = load.deliveryDate.toDate();
@@ -71,6 +75,8 @@ export class LoadEditComponent implements OnInit {
       'dispatch': new FormControl(dispatch, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
       'rate': new FormControl(rate, Validators.required),
+      'pickUpCount': new FormControl(pickUpCount, Validators.required),
+      'deliveryCount': new FormControl(deliveryCount, Validators.required),
       'kind': new FormControl(kind),
       'pickUpAddress': new FormControl(pickUpAddress, Validators.required),
       'pickUpDate': new FormControl(pickUpDate, Validators.required),
