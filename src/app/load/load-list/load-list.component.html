@@ -65,7 +65,11 @@
           <button type="button" mat-raised-button color="primary" (click)="onEditLoad(element.id)">Edit</button>
           <button type="button" mat-raised-button color="primary" (click)="onAddTask(element.id)">Complete</button>
           <button type="button" mat-raised-button
-                  [color]="element.unscheduledTasks ? 'warn' : 'primary'"
+                  [matBadge]="element.pickUpCount + element.deliveryCount"
+                  [matBadgeHidden]="!element.unscheduledTasks"
+                  matBadgePosition="after"
+                  matBadgeColor="warn"
+                  color="primary"
                   (click)="onEditTask(element.id)">
             {{ element.unscheduledTasks ? 'Schedule' : 'Edit Tasks' }}
           </button>
