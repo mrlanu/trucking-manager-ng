@@ -20,6 +20,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { EmployeeEditComponent } from './employee/employee-edit/employee-edit.component';
 import {EmployeeService} from './employee/employee.service';
 import {SharedService} from './shared/shared.service';
+import { TaskEditComponent } from './task/task-edit/task-edit.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {SharedService} from './shared/shared.service';
     SidenavListComponent,
     LoadListComponent,
     LoadEditComponent,
-    EmployeeEditComponent
+    EmployeeEditComponent,
+    TaskEditComponent
   ],
   imports: [
     BrowserModule,

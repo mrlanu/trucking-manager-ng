@@ -76,7 +76,7 @@ export class LoadEditComponent implements OnInit {
       'broker': new FormControl(broker, Validators.required),
       'dispatch': new FormControl(dispatch, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
-      'rate': new FormControl(rate, Validators.required),
+      'rate': new FormControl(rate, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       'pickUpCount': new FormControl(pickUpCount, Validators.required),
       'deliveryCount': new FormControl(deliveryCount, Validators.required),
       'kind': new FormControl(kind),
@@ -84,8 +84,8 @@ export class LoadEditComponent implements OnInit {
       'pickUpDate': new FormControl(pickUpDate, Validators.required),
       'deliveryAddress': new FormControl(deliveryAddress, Validators.required),
       'deliveryDate': new FormControl(deliveryDate, Validators.required),
-      'weight': new FormControl(weight),
-      'pallets': new FormControl(pallets),
+      'weight': new FormControl(weight, Validators.pattern(/^[1-9]+[0-9]*$/)),
+      'pallets': new FormControl(pallets, Validators.pattern(/^[1-9]+[0-9]*$/)),
       'description': new FormControl(description),
       'unscheduledTasks': new FormControl(unscheduledTasks)
     });

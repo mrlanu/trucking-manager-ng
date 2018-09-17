@@ -5,6 +5,7 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {LoadEditComponent} from './load/load-edit/load-edit.component';
 import {LoadListComponent} from './load/load-list/load-list.component';
 import {EmployeeEditComponent} from './employee/employee-edit/employee-edit.component';
+import {TaskEditComponent} from './task/task-edit/task-edit.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'editLoad', component: LoadEditComponent},
   {path: 'editLoad/:id', component: LoadEditComponent},
+  {path: 'editTask/:id', component: TaskEditComponent},
   {path: 'listLoad', component: LoadListComponent},
   {path: 'employee', component: EmployeeEditComponent}
 ];
