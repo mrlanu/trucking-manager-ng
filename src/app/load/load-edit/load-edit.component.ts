@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-load-edit',
@@ -15,6 +16,7 @@ export class LoadEditComponent implements OnInit {
   loadId: string;
 
   kinds: string[] = ['Dry', 'Frozen', 'Chilled'];
+  dispatches: Observable<any>;
 
   constructor(private loadService: LoadService,
               private router: Router,
@@ -28,6 +30,7 @@ export class LoadEditComponent implements OnInit {
         this.initForm();
       }
     );
+    this.dispatches = this.loadService.getDispatches();
   }
 
   private initForm() {

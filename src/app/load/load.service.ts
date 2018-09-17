@@ -2,7 +2,8 @@ import {LoadModel} from './load.model';
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
+import {EmployeeService} from '../employee/employee.service';
 
 @Injectable()
 export class LoadService {
@@ -10,7 +11,8 @@ export class LoadService {
   private loadList: LoadModel[] = [];
   loadsChanged = new Subject<LoadModel[]>();
 
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore,
+              private employeeService: EmployeeService) {}
 
   addLoad(load: LoadModel) {
     this.db.collection('loads').add(load).then(result => {
@@ -42,6 +44,10 @@ export class LoadService {
 
   getLoadById(id: string) {
     return this.loadList.find(load => load.id === id);
+  }
+
+  getDispatches(): Observable<any> {
+    return this.employeeService.getAllDispatches();
   }
 
 }

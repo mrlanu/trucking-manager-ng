@@ -8,7 +8,13 @@
           <input type="text" placeholder="Broker's name" formControlName="broker" matInput required>
         </mat-form-field>
         <mat-form-field>
-          <input type="text" placeholder="Dispatch's name" formControlName="dispatch" matInput required>
+          <input type="text" placeholder="Dispatch, pick one" aria-label="Number" matInput formControlName="dispatch" [matAutocomplete]="autoDisp">
+          <mat-autocomplete #autoDisp="matAutocomplete">
+            <mat-option *ngFor="let dispatch of dispatches | async"
+                        [value]=" dispatch.firstName + ' ' + dispatch.secondName">
+              {{ dispatch.firstName + ' ' + dispatch.secondName }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <input type="text" placeholder="Commodity" formControlName="commodity" matInput>

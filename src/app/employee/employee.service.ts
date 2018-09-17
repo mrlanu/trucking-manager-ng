@@ -1,5 +1,5 @@
 import {EmployeeModel} from './employee.model';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
@@ -30,6 +30,12 @@ export class EmployeeService {
 
   getAllEmployees() {
     return [...this.allEmployees];
+  }
+
+  getAllDispatches(): Observable<any> {
+    return this.db
+      .collection('employee', ref => ref.where('occupation', '==', 'dispatch'))
+      .valueChanges();
   }
 
 }
