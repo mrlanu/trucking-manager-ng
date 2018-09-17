@@ -47,7 +47,7 @@ export class LoadService {
   }
 
   getDispatches(): Observable<any> {
-    return this.employeeService.getAllDispatches();
+    return this.employeeService.getEmployeesByOccupation('driver');
   }
 
 }

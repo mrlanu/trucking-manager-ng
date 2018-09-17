@@ -32,9 +32,9 @@ export class EmployeeService {
     return [...this.allEmployees];
   }
 
-  getAllDispatches(): Observable<any> {
+  getEmployeesByOccupation(occupation: string): Observable<any> {
     return this.db
-      .collection('employee', ref => ref.where('occupation', '==', 'dispatch'))
+      .collection('employee', ref => ref.where('occupation', '==', occupation))
       .valueChanges();
   }
 
