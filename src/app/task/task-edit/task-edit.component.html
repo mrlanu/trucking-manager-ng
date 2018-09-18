@@ -1,4 +1,4 @@
-<section fxLayout fxLayoutAlign="center" style="padding: 30px">
+<section fxLayout fxLayoutAlign="center" style="padding: 15px">
   <mat-card fxFlex.xs="100%" fxFlex="400px">
     <mat-card-header>
       <mat-card-title>Broker: <span>{{ load.broker }}</span></mat-card-title>
@@ -8,19 +8,52 @@
       <div>Weight: <span>{{ load.weight}}</span></div>
       <div>Pallets: <span>{{ load.pallets}}</span></div>
       <div>Description: <span>{{ load.description}}</span></div>
-      <section class="pickup">
-        <div style="padding-top: 15px">Pick Ups:</div>
-        <div class="container" fxLayout>pick up</div>
-      </section>
-      <section class="delivery">
-        <div style="padding-top: 15px">Delivery:</div>
-        <div class="container" fxLayout>delivery</div>
-      </section>
     </mat-card-content>
     <mat-card-actions>
-      <div fxLayout fxLayoutAlign="end">
-        <button type="button" mat-raised-button color="primary" (click)="onCancel()">Back</button>
-      </div>
+      <section>
+        <form [formGroup]="tasksForm" (ngSubmit)="onSubmit()">
+          <div class="tasks">
+            <div style="padding-top: 15px">Tasks:</div>
+            <div formArrayName="tasks">
+              <div fxLayout="column"
+                   class="container"
+                   *ngFor="let taskCtrl of tasksForm.get('tasks').controls; let i = index"
+                   [formGroupName]="i">
+                <div fxLayout="row" fxLayoutGap="10px">
+                  <mat-form-field class="mat-form-field-with">
+                    <input type="text" placeholder="Employee" formControlName="employee" matInput>
+                  </mat-form-field>
+                  <mat-form-field class="mat-form-field-with">
+                    <mat-select placeholder="Kind" formControlName="kind" required>
+                      <mat-option *ngFor="let kind of kindArr" [value]="kind">
+                        {{kind}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <span>
+                   <button mat-icon-button color="warn">
+                    <mat-icon aria-label="Del">close</mat-icon>
+                   </button>
+                </span>
+                </div>
+                <div fxLayout="column">
+                  <mat-form-field>
+                    <input type="text" placeholder="Address" formControlName="address" matInput required>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input type="text" placeholder="Description" formControlName="description" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div fxLayout fxLayoutAlign="center">
+            <button type="button" mat-raised-button color="primary">Add</button>
+            <button type="submit" mat-raised-button color="primary">Save</button>
+            <button type="button" mat-raised-button color="primary" (click)="onCancel()">Back</button>
+          </div>
+        </form>
+      </section>
     </mat-card-actions>
   </mat-card>
 </section>
