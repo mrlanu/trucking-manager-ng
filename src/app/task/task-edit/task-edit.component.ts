@@ -55,17 +55,13 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCancel() {
-    this.router.navigate(['/listLoad']);
-  }
-
   initForm() {
-    const loadId = this.load.id;
     const tasks = new FormArray([]);
 
     if (this.tasks.length > 0) {
       for (const tsk of this.tasks) {
         tasks.push(new FormGroup({
+          'loadId': new FormControl(tsk.loadId),
           'kind': new FormControl(tsk.kind),
           'date': new FormControl(tsk.date.toDate()),
           'time': new FormControl(tsk.time),
@@ -78,14 +74,18 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     }
 
     this.tasksForm = new FormGroup({
-      'loadId': new FormControl(loadId),
       'tasks': tasks
     });
+  }
+
+  onSubmit() {
+    console.log(this.tasksForm.get('tasks').value);
   }
 
   addTask(tsk: TaskModel) {
     (<FormArray>this.tasksForm.get('tasks')).push(
       new FormGroup({
+        'loadId': new FormControl(tsk.loadId),
         'kind': new FormControl(tsk.kind),
         'date': new FormControl(tsk.date.toDate()),
         'time': new FormControl(tsk.time),
@@ -100,12 +100,13 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   onAddTask() {
     (<FormArray>this.tasksForm.get('tasks')).push(
       new FormGroup({
+        'loadId': new FormControl(this.load.id),
         'kind': new FormControl(null),
         'date': new FormControl(null),
         'time': new FormControl(null),
         'address': new FormControl(null),
         'employee': new FormControl(null),
-        'isCompleted': new FormControl(null),
+        'isCompleted': new FormControl(false),
         'description': new FormControl(null)
       })
     );
@@ -113,6 +114,10 @@ export class TaskEditComponent implements OnInit, OnDestroy {
 
   onDeleteTask(index: number) {
     (<FormArray>this.tasksForm.get('tasks')).removeAt(index);
+  }
+
+  onCancel() {
+    this.router.navigate(['/listLoad']);
   }
 
 }

@@ -9,7 +9,6 @@
       <section>
         <form [formGroup]="tasksForm" (ngSubmit)="onSubmit()">
           <div class="tasks">
-            <input type="hidden" formControlName="loadId">
             <div style="padding-top: 15px">Tasks:</div>
             <div formArrayName="tasks">
               <div fxLayout="column"
@@ -17,6 +16,7 @@
                    *ngFor="let taskCtrl of tasksForm.get('tasks').controls; let i = index"
                    [formGroupName]="i">
                 <div fxLayout="row" fxLayoutGap="10px">
+                  <input type="hidden" formControlName="loadId">
                   <mat-form-field class="with_1">
                     <mat-select placeholder="Kind" formControlName="kind" required>
                       <mat-option *ngFor="let kind of kindArr" [value]="kind">
