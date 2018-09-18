@@ -77,4 +77,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDeleteTask(index: number) {
+    (<FormArray>this.tasksForm.get('tasks')).removeAt(index);
+  }
+
 }
