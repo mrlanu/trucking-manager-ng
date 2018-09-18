@@ -21,12 +21,16 @@
                    [formGroupName]="i">
                 <div fxLayout="row" fxLayoutGap="10px">
                   <mat-form-field class="mat-form-field-with">
-                    <input type="text" placeholder="Employee" formControlName="employee" matInput>
-                  </mat-form-field>
-                  <mat-form-field class="mat-form-field-with">
                     <mat-select placeholder="Kind" formControlName="kind" required>
                       <mat-option *ngFor="let kind of kindArr" [value]="kind">
                         {{kind}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="mat-form-field-with">
+                    <mat-select placeholder="Driver" formControlName="employee">
+                      <mat-option *ngFor="let driver of drivers | async" [value]="driver.firstName + ' ' + driver.secondName">
+                        {{driver.firstName + ' ' + driver.secondName}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -34,7 +38,7 @@
                    <button mat-icon-button color="warn">
                     <mat-icon aria-label="Del">close</mat-icon>
                    </button>
-                </span>
+                  </span>
                 </div>
                 <div fxLayout="column">
                   <mat-form-field>

@@ -2,7 +2,9 @@ import {Injectable} from '@angular/core';
 import {TaskModel} from './task.model';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
-import {Subject, Subscription} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {EmployeeService} from '../employee/employee.service';
+import {EmployeeModel} from '../employee/employee.model';
 
 @Injectable()
 export class TaskService {
@@ -11,7 +13,8 @@ export class TaskService {
   tasksChanged = new Subject<TaskModel[]>();
   subscriptions: Subscription;
 
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore,
+              private employeeService: EmployeeService) {}
 
   fetchTasksByLoadId(loadId: string) {
     this.subscriptions = this.db
@@ -32,16 +35,8 @@ export class TaskService {
     this.subscriptions.unsubscribe();
   }
 
-  stertiAddTask() {
-    this.db.collection('tasks').add({
-      'loadId': '',
-      'kind': 'pickUp',
-      'date': new Date(),
-      'address': 'Addison, IL',
-      'employee': 'Serhiy Khabenyuk',
-      'isCompleted': false,
-      'description': 'HZ'
-    });
+  getDrivers(): Observable<any> {
+    return this.employeeService.getEmployeesByOccupation('driver');
   }
 
 }

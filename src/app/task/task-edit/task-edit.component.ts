@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {LoadService} from '../../load/load.service';
 import {LoadModel} from '../../load/load.model';
 import {TaskModel} from '../task.model';
 import {TaskService} from '../task.service';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {EmployeeModel} from '../../employee/employee.model';
 
 @Component({
   selector: 'app-task-edit',
@@ -19,6 +20,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   taskSubscription: Subscription;
   kindArr = ['Pick Up', 'Delivery'];
+  drivers: Observable<any>;
 
   tasksForm: FormGroup;
 
@@ -36,6 +38,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       });
     });
     this.taskService.fetchTasksByLoadId(this.load.id);
+    this.drivers = this.taskService.getDrivers();
   }
 
   ngOnDestroy() {

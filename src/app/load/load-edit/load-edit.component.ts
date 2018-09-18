@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Observable} from 'rxjs';
+import {EmployeeModel} from '../../employee/employee.model';
 
 @Component({
   selector: 'app-load-edit',
@@ -16,7 +17,7 @@ export class LoadEditComponent implements OnInit {
   loadId: string;
 
   kinds: string[] = ['Dry', 'Frozen', 'Chilled'];
-  dispatches: Observable<any>;
+  dispatches: Observable<EmployeeModel[]>;
 
   constructor(private loadService: LoadService,
               private router: Router,
