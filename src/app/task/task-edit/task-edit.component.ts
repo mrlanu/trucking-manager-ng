@@ -20,7 +20,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   taskSubscription: Subscription;
   kindArr = ['Pick Up', 'Delivery'];
-  drivers: Observable<any>;
+  drivers: any[] = [];
 
   tasksForm: FormGroup;
 
@@ -34,11 +34,16 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       this.load = this.loadService.getLoadById(params['id']);
       this.taskSubscription = this.taskService.tasksChanged.subscribe((tasks: TaskModel[]) => {
         this.tasks = tasks;
-        this.initForm();
+        this.tasks.forEach(t => {
+          this.addTask(t);
+        });
       });
     });
     this.taskService.fetchTasksByLoadId(this.load.id);
-    this.drivers = this.taskService.getDrivers();
+    this.taskService.getDrivers().subscribe(drivers => {
+      this.drivers = drivers;
+    });
+    this.initForm();
   }
 
   ngOnDestroy() {
@@ -63,6 +68,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
         tasks.push(new FormGroup({
           'kind': new FormControl(tsk.kind),
           'date': new FormControl(tsk.date.toDate()),
+          'time': new FormControl(tsk.time),
           'address': new FormControl(tsk.address),
           'employee': new FormControl(tsk.employee),
           'isCompleted': new FormControl(tsk.isCompleted),
@@ -75,6 +81,34 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       'loadId': new FormControl(loadId),
       'tasks': tasks
     });
+  }
+
+  addTask(tsk: TaskModel) {
+    (<FormArray>this.tasksForm.get('tasks')).push(
+      new FormGroup({
+        'kind': new FormControl(tsk.kind),
+        'date': new FormControl(tsk.date.toDate()),
+        'time': new FormControl(tsk.time),
+        'address': new FormControl(tsk.address),
+        'employee': new FormControl(tsk.employee),
+        'isCompleted': new FormControl(tsk.isCompleted),
+        'description': new FormControl(tsk.description)
+      })
+    );
+  }
+
+  onAddTask() {
+    (<FormArray>this.tasksForm.get('tasks')).push(
+      new FormGroup({
+        'kind': new FormControl(null),
+        'date': new FormControl(null),
+        'time': new FormControl(null),
+        'address': new FormControl(null),
+        'employee': new FormControl(null),
+        'isCompleted': new FormControl(null),
+        'description': new FormControl(null)
+      })
+    );
   }
 
   onDeleteTask(index: number) {
