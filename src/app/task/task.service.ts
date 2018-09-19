@@ -4,7 +4,6 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
-import {EmployeeModel} from '../employee/employee.model';
 
 @Injectable()
 export class TaskService {
@@ -29,6 +28,25 @@ export class TaskService {
         this.tasks = tasks;
         this.tasksChanged.next([...this.tasks]);
       });
+  }
+
+  saveTask(task: TaskModel) {
+    this.db.collection('tasks').add(task).then(result => {
+      const id = result.id;
+      this.db.doc(`tasks/${id}`).update({id: id});
+    });
+  }
+
+  updateTask(task: TaskModel) {
+    this.db.doc(`tasks/${task.id}`).set(task);
+  }
+
+
+  deleteTask(task: TaskModel) {
+    this.db.doc(`tasks/${task.id}`).delete().then(result => {
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   cancelAllSubscriptions() {

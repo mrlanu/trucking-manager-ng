@@ -1,12 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {LoadService} from '../../load/load.service';
 import {LoadModel} from '../../load/load.model';
 import {TaskModel} from '../task.model';
 import {TaskService} from '../task.service';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {EmployeeModel} from '../../employee/employee.model';
 
 @Component({
   selector: 'app-task-edit',
@@ -47,6 +46,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.taskService.cancelAllSubscriptions();
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
@@ -58,33 +58,15 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   initForm() {
     const tasks = new FormArray([]);
 
-    if (this.tasks.length > 0) {
-      for (const tsk of this.tasks) {
-        tasks.push(new FormGroup({
-          'loadId': new FormControl(tsk.loadId),
-          'kind': new FormControl(tsk.kind),
-          'date': new FormControl(tsk.date.toDate()),
-          'time': new FormControl(tsk.time),
-          'address': new FormControl(tsk.address),
-          'employee': new FormControl(tsk.employee),
-          'isCompleted': new FormControl(tsk.isCompleted),
-          'description': new FormControl(tsk.description)
-        }));
-      }
-    }
-
     this.tasksForm = new FormGroup({
       'tasks': tasks
     });
   }
 
-  onSubmit() {
-    console.log(this.tasksForm.get('tasks').value);
-  }
-
   addTask(tsk: TaskModel) {
     (<FormArray>this.tasksForm.get('tasks')).push(
       new FormGroup({
+        'id': new FormControl(tsk.id),
         'loadId': new FormControl(tsk.loadId),
         'kind': new FormControl(tsk.kind),
         'date': new FormControl(tsk.date.toDate()),
@@ -97,9 +79,22 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     );
   }
 
+  onSubmit() {
+    const allTasks: TaskModel[] = this.tasksForm.get('tasks').value;
+    allTasks.forEach(tsk => {
+      if (tsk.id) {
+        this.taskService.updateTask(tsk);
+      } else {
+        this.taskService.saveTask(tsk);
+      }
+    });
+    this.router.navigate(['listLoad']);
+  }
+
   onAddTask() {
     (<FormArray>this.tasksForm.get('tasks')).push(
       new FormGroup({
+        'id': new FormControl(null),
         'loadId': new FormControl(this.load.id),
         'kind': new FormControl(null),
         'date': new FormControl(null),
@@ -113,7 +108,20 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   }
 
   onDeleteTask(index: number) {
-    (<FormArray>this.tasksForm.get('tasks')).removeAt(index);
+    const taskForDel: TaskModel = this.tasksForm.get('tasks').value[index];
+    if (taskForDel.id) {
+      this.taskService.deleteTask(taskForDel);
+      this.clearFormArray(<FormArray>this.tasksForm.get('tasks'));
+    } else {
+      (<FormArray>this.tasksForm.get('tasks')).removeAt(index);
+    }
+
+  }
+
+  clearFormArray (formArray: FormArray) {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0);
+    }
   }
 
   onCancel() {
