@@ -5,7 +5,10 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {LoadEditComponent} from './load/load-edit/load-edit.component';
 import {LoadListComponent} from './load/load-list/load-list.component';
 import {EmployeeEditComponent} from './employee/employee-edit/employee-edit.component';
-import {TaskEditComponent} from './task/task-edit/task-edit.component';
+import {TaskEditComponent} from './tasks/task-edit/task-edit.component';
+import {TasksComponent} from './tasks/tasks.component';
+import {TaskStartComponent} from './tasks/task-start/task-start.component';
+import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -13,9 +16,13 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'editLoad', component: LoadEditComponent},
   {path: 'editLoad/:id', component: LoadEditComponent},
-  {path: 'editTask/:id', component: TaskEditComponent},
   {path: 'listLoad', component: LoadListComponent},
-  {path: 'employee', component: EmployeeEditComponent}
+  {path: 'employee', component: EmployeeEditComponent},
+  {path: 'tasks', component: TasksComponent, children: [
+      {path: ':id', component: TasksListComponent, children: [
+          {path: ':taskId', component: TaskEditComponent}
+        ]},
+    ]}
 ];
 
 @NgModule({

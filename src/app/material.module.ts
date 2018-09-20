@@ -19,7 +19,7 @@ import {
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  MatSnackBarModule, MatAutocompleteModule, MatBadgeModule
+  MatSnackBarModule, MatAutocompleteModule, MatBadgeModule, MatTooltipModule
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -43,7 +43,8 @@ import {
     MatPaginatorModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTooltipModule
   ],
   exports: [
     MatButtonModule,
@@ -66,7 +67,8 @@ import {
     MatPaginatorModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule {

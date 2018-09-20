@@ -1,3 +1,25 @@
-<p>
-  task-item works!
-</p>
+<mat-card class="mat-card-task-item">
+  <mat-card-header>
+    <mat-card-title>{{ task.employee }}</mat-card-title>
+    <mat-card-subtitle>{{ 'for ' + task.kind}}</mat-card-subtitle>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <p>{{ 'Date: ' + task.date.toDate() | date}}</p>
+    <p>{{ 'Address: ' + task.address}}</p>
+  </mat-card-content>
+  <hr>
+  <mat-card-actions align="end">
+    <div fxLayout="row" fxLayoutGap="10px">
+      <button mat-mini-fab color="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab color="primary">
+        <mat-icon>done</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

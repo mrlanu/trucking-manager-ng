@@ -1,3 +1,5 @@
-<p>
-  tasks-list works!
-</p>
+<section fxLayout="column" fxLayoutGap="10px">
+  <router-outlet></router-outlet>
+  <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
+</section>
+
