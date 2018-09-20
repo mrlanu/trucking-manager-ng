@@ -1,3 +1,42 @@
-<p>
-  task-edit works!
-</p>
+<section>
+  <form [formGroup]="taskEditForm" (ngSubmit)="onSubmit()">
+    <div class="tasks">
+          <div fxLayout="row" fxLayoutGap="10px">
+            <input type="hidden" formControlName="loadId">
+            <mat-form-field class="with_1">
+              <mat-select placeholder="Kind" formControlName="kind" required>
+                <mat-option *ngFor="let kind of kindArr" [value]="kind">
+                  {{kind}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="with_1">
+              <mat-select placeholder="Driver" formControlName="employee">
+                <mat-option *ngFor="let driver of drivers" [value]="driver.firstName + ' ' + driver.secondName">
+                  {{driver.firstName + ' ' + driver.secondName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column">
+            <section fxLayout="row" fxLayoutGap="10px">
+              <mat-form-field class="with_2">
+                <input name="pickUpDate" placeholder="Date" formControlName="date" matInput required
+                       [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="with_2">
+                <input type="text" placeholder="Time" formControlName="time" matInput>
+              </mat-form-field>
+            </section>
+            <mat-form-field>
+              <input type="text" placeholder="Address" formControlName="address" matInput required>
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" placeholder="Confirmation numbers etc." formControlName="description" matInput>
+            </mat-form-field>
+          </div>
+    </div>
+  </form>
+</section>

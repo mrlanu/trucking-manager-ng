@@ -57,4 +57,10 @@ export class TaskService {
     return this.employeeService.getEmployeesByOccupation('driver');
   }
 
+  getTaskById(id: string): TaskModel {
+    return this.tasks.find((tsk: TaskModel) => {
+      return tsk.id === id;
+    });
+  }
+
 }

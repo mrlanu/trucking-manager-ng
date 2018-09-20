@@ -23,7 +23,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe((params: Params) => {
       this.loadId = params['id'];
-      console.log(params);
     });
     this.tasksChangeSubscription = this.taskService.tasksChanged.subscribe((tasks: TaskModel[]) => {
       this.tasksArr = tasks;
@@ -39,6 +38,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     if (this.tasksChangeSubscription) {
       this.tasksChangeSubscription.unsubscribe();
     }
+    this.taskService.cancelAllSubscriptions();
   }
 
 

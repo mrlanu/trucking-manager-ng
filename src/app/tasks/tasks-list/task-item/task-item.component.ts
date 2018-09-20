@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TaskModel} from '../../task.model';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-task-item',
@@ -10,9 +11,15 @@ export class TaskItemComponent implements OnInit {
 
   @Input() task: TaskModel;
 
-  constructor() { }
+  constructor(private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
+
+  onEditTask(id: string) {
+    this.router.navigate([id], {relativeTo: this.route});
+  }
+
 
 }

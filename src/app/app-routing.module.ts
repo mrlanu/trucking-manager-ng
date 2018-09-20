@@ -20,6 +20,7 @@ const routes: Routes = [
   {path: 'employee', component: EmployeeEditComponent},
   {path: 'tasks', component: TasksComponent, children: [
       {path: ':id', component: TasksListComponent, children: [
+          {path: 'new', component: TaskEditComponent},
           {path: ':taskId', component: TaskEditComponent}
         ]},
     ]}
