@@ -22,6 +22,9 @@ import {EmployeeService} from './employee/employee.service';
 import {SharedService} from './shared/shared.service';
 import { TaskEditComponent } from './task/task-edit/task-edit.component';
 import {TaskService} from './task/task.service';
+import { TasksComponent } from './tasks/tasks.component';
+import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
+import { TaskItemComponent } from './tasks/tasks-list/task-item/task-item.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import {TaskService} from './task/task.service';
     LoadListComponent,
     LoadEditComponent,
     EmployeeEditComponent,
-    TaskEditComponent
+    TaskEditComponent,
+    TasksComponent,
+    TasksListComponent,
+    TaskItemComponent
   ],
   imports: [
     BrowserModule,
