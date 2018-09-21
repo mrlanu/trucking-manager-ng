@@ -18,8 +18,11 @@ export class TaskItemComponent implements OnInit {
   }
 
   onEditTask(id: string) {
-    this.router.navigate([id], {relativeTo: this.route});
+    this.router.navigate(['edit', id], {relativeTo: this.route});
   }
 
+  onNewTask() {
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
 
 }

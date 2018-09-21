@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskModel} from '../task.model';
 import {TaskService} from '../task.service';
 import {Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-task-edit',
@@ -12,18 +13,22 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class TaskEditComponent implements OnInit, OnDestroy {
 
+  loadId: string;
   taskId: string;
   routeSubscription: Subscription;
   taskEditForm: FormGroup;
   editMode = false;
+  showForm = true;
   kindArr: string[] = ['Pick Up', 'Delivery'];
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private taskService: TaskService) { }
 
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe((params: Params) => {
       this.taskId = params['taskId'];
+      this.loadId = params['loadId'];
     });
     if (this.taskId) {
       this.editMode = true;
@@ -59,8 +64,10 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       employee = task.employee;
       isCompleted = task.isCompleted;
       description = task.description;
+    } else {
+      loadId = this.loadId;
     }
-
+    console.log(loadId);
     this.taskEditForm = new FormGroup({
       'id': new FormControl(id),
       'loadId': new FormControl(loadId),
@@ -72,6 +79,10 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       'isCompleted': new FormControl(isCompleted),
       'description': new FormControl(description)
     });
+  }
+
+  onCancelAddNewTask() {
+    this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
 }
