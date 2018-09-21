@@ -81,6 +81,19 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSubmit() {
+    if (this.editMode) {
+      this.taskService.updateTask(this.taskEditForm.value);
+    } else {
+      this.taskService.addTask(this.taskEditForm.value);
+    }
+    this.router.navigate(['../../'], {relativeTo: this.route});
+  }
+
+  onCancel() {
+    this.router.navigate(['/listLoad']);
+  }
+
   onCancelAddNewTask() {
     this.router.navigate(['../../'], {relativeTo: this.route});
   }
