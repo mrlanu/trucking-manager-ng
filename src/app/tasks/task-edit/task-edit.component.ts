@@ -4,7 +4,6 @@ import {TaskModel} from '../task.model';
 import {TaskService} from '../task.service';
 import {Observable, Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 import {EmployeeModel} from '../../employee/employee.model';
 
 @Component({
@@ -70,7 +69,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     } else {
       loadId = this.loadId;
     }
-    console.log(loadId);
+
     this.taskEditForm = new FormGroup({
       'id': new FormControl(id),
       'loadId': new FormControl(loadId),
@@ -88,13 +87,9 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       this.taskService.updateTask(this.taskEditForm.value);
     } else {
-      this.taskService.addTask(this.taskEditForm.value);
+      this.taskService.saveTask(this.taskEditForm.value);
     }
     this.router.navigate(['../../'], {relativeTo: this.route});
-  }
-
-  onCancel() {
-    this.router.navigate(['/listLoad']);
   }
 
   onCancelAddNewTask() {

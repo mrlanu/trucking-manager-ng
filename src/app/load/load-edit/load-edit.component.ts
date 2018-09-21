@@ -96,7 +96,7 @@ export class LoadEditComponent implements OnInit {
     if (this.editMode) {
       this.loadService.updateLoad(this.loadForm.value);
     } else {
-      this.loadService.addLoad(this.loadForm.value);
+      this.loadService.saveLoad(this.loadForm.value);
     }
     this.router.navigate(['/listLoad']);
   }

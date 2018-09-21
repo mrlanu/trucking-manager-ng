@@ -14,17 +14,6 @@ export class LoadService {
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService) {}
 
-  addLoad(load: LoadModel) {
-    this.db.collection('loads').add(load).then(result => {
-      const id = result.id;
-      this.db.doc(`loads/${id}`).update({id: id});
-      });
-  }
-
-  updateLoad(load: LoadModel) {
-    this.db.doc(`loads/${load.id}`).set(load);
-  }
-
   fetchAvailableLoads() {
     this.db
       .collection('loads')
@@ -38,8 +27,19 @@ export class LoadService {
       })).subscribe((loads: LoadModel[]) => {
         this.loadList = loads;
         this.loadsChanged.next([...this.loadList]);
-        }
-      );
+      }
+    );
+  }
+
+  saveLoad(load: LoadModel) {
+    this.db.collection('loads').add(load).then(result => {
+      const id = result.id;
+      this.db.doc(`loads/${id}`).update({id: id});
+      });
+  }
+
+  updateLoad(load: LoadModel) {
+    this.db.doc(`loads/${load.id}`).set(load);
   }
 
   getLoadById(id: string) {

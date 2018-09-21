@@ -46,7 +46,7 @@ export class TaskService {
       });
   }
 
-  addTask(task: TaskModel) {
+  saveTask(task: TaskModel) {
     this.db.collection('tasks').add(task).then(result => {
       const id = result.id;
       this.db.doc(`tasks/${id}`).update({id: id});

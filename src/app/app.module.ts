@@ -19,13 +19,12 @@ import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {EmployeeEditComponent} from './employee/employee-edit/employee-edit.component';
 import {EmployeeService} from './employee/employee.service';
-import {SharedService} from './shared/shared.service';
 import {TaskEditComponent} from './tasks/task-edit/task-edit.component';
 import {TaskService} from './tasks/task.service';
 import {TasksComponent} from './tasks/tasks.component';
 import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
 import {TaskItemComponent} from './tasks/tasks-list/task-item/task-item.component';
-import { TaskStartComponent } from './tasks/task-start/task-start.component';
+import {TaskStartComponent} from './tasks/task-start/task-start.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,7 @@ import { TaskStartComponent } from './tasks/task-start/task-start.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [LoadService, EmployeeService, SharedService, TaskService],
+  providers: [LoadService, EmployeeService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

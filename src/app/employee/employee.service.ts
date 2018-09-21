@@ -28,10 +28,6 @@ export class EmployeeService {
     });
   }
 
-  getAllEmployees() {
-    return [...this.allEmployees];
-  }
-
   getEmployeesByOccupation(occupation: string): Observable<any> {
     return this.db
       .collection('employee', ref => ref.where('occupation', '==', occupation))
