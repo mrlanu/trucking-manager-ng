@@ -7,6 +7,9 @@
   <div>LOGO</div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+      <li><a routerLink="/myTasks">
+        <span [matBadge]="myTasks.length" matBadgeColor="warn" [matBadgeHidden]="myTasks.length === 0">Tasks</span>
+      </a></li>
       <li><a routerLink="/signup">Signup</a></li>
       <li><a routerLink="/login">Login</a></li>
       <li><a routerLink="/logout">Logout</a></li>

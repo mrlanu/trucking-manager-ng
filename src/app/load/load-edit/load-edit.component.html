@@ -1,4 +1,4 @@
-<section class="load" style="padding-bottom: 20px">
+<section class="load">
   <form [formGroup]="loadForm" (ngSubmit)="onSubmit()"
     fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
     <div fxLayout.gt-md="row" fxLayout.lt-md="column" fxLayoutGap.gt-sm="100px" fxLayoutGap.lt-md="0px">
@@ -80,13 +80,12 @@
       </div>
     </div>
     <div fxLayout="row" fxLayoutGap="20px">
-      <button type="submit"
-              mat-raised-button
-              color="primary"
-              [disabled]="loadForm.invalid">Save</button>
-      <button type="button"
-              mat-raised-button
-              color="warn" (click)="onCancel()">Cancel</button>
+      <button mat-mini-fab color="primary" (click)="onCancel()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button type="submit" mat-mini-fab color="primary" [disabled]="loadForm.invalid">
+        <mat-icon>save_alt</mat-icon>
+      </button>
     </div>
   </form>
 </section>

@@ -10,6 +10,7 @@ export class TaskService {
 
   private tasks: TaskModel[] = [];
   tasksChanged = new Subject<TaskModel[]>();
+  tasksChangedForEmployee = new Subject<TaskModel[]>();
   subscriptions: Subscription;
 
   constructor(private db: AngularFirestore,
@@ -27,6 +28,21 @@ export class TaskService {
       .subscribe((tasks: TaskModel[]) => {
         this.tasks = tasks;
         this.tasksChanged.next([...this.tasks]);
+      });
+  }
+
+  fetchTasksByEmployeeName(employeeName: string) {
+    this.subscriptions = this.db
+      .collection('tasks', ref => ref.where('employee', '==', employeeName))
+      .valueChanges()
+      .pipe(map(tasks => {
+        return tasks.map(task => {
+          return {...task};
+        });
+      }))
+      .subscribe((tasks: TaskModel[]) => {
+        this.tasks = tasks;
+        this.tasksChangedForEmployee.next([...this.tasks]);
       });
   }
 
