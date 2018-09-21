@@ -12,7 +12,7 @@
             </mat-form-field>
             <mat-form-field class="with_1">
               <mat-select placeholder="Driver" formControlName="employee">
-                <mat-option *ngFor="let driver of drivers" [value]="driver.firstName + ' ' + driver.secondName">
+                <mat-option *ngFor="let driver of drivers | async" [value]="driver.firstName + ' ' + driver.secondName">
                   {{driver.firstName + ' ' + driver.secondName}}
                 </mat-option>
               </mat-select>

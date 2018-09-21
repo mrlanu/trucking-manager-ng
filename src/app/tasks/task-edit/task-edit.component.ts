@@ -2,9 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskModel} from '../task.model';
 import {TaskService} from '../task.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {el} from '@angular/platform-browser/testing/src/browser_util';
+import {EmployeeModel} from '../../employee/employee.model';
 
 @Component({
   selector: 'app-task-edit',
@@ -20,6 +21,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   editMode = false;
   showForm = true;
   kindArr: string[] = ['Pick Up', 'Delivery'];
+  drivers: Observable<EmployeeModel[]>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -33,6 +35,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     if (this.taskId) {
       this.editMode = true;
     }
+    this.drivers = this.taskService.getDrivers();
     this.initForm();
   }
 
