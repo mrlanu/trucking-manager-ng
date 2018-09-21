@@ -42,8 +42,8 @@ export class TaskService {
   }
 
 
-  deleteTask(task: TaskModel) {
-    this.db.doc(`tasks/${task.id}`).delete().then(result => {
+  deleteTask(taskId: string) {
+    this.db.doc(`tasks/${taskId}`).delete().then(result => {
     }).catch(err => {
       console.log(err);
     });

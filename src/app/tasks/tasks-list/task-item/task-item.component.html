@@ -20,7 +20,7 @@
       <button mat-mini-fab color="primary">
         <mat-icon>done</mat-icon>
       </button>
-      <button mat-mini-fab color="warn">
+      <button mat-mini-fab color="warn" (click)="onDeleteTask(task.id)">
         <mat-icon>clear</mat-icon>
       </button>
     </mat-action-row>

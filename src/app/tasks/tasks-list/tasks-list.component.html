@@ -1,9 +1,12 @@
 <section fxLayout="column" fxLayoutGap="10px">
   <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
+    <button mat-mini-fab color="primary" (click)="onBackToList()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <button mat-mini-fab color="primary" (click)="onAddNewTask()">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-mini-fab color="warn" (click)="onDeleteAllTasks()">
+    <button mat-mini-fab color="warn">
       <mat-icon>delete_forever</mat-icon>
     </button>
   </section>
