@@ -8,7 +8,9 @@ export interface LoadModel {
   dispatch: string;
   rate: number;
   pickUpCount: number;
+  unscheduledPickUpCount: number;
   deliveryCount: number;
+  unscheduledDeliveryCount: number;
   weight: number;
   pallets: number;
   kind: string; /*dry | frozen etc.*/
@@ -18,5 +20,4 @@ export interface LoadModel {
   deliveryAddress: string;
   description: string;
   commodity: string;
-  unscheduledTasks: boolean;
 }

@@ -31,8 +31,7 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private loadService: LoadService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
   ngOnInit() {
     this.loadChangesSubs = this.loadService.loadsChanged.subscribe((allLoads: LoadModel[]) => {

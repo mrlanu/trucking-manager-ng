@@ -4,6 +4,7 @@ import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {EmployeeModel} from '../../employee/employee.model';
+import {LoadModel} from '../load.model';
 
 @Component({
   selector: 'app-load-edit',
@@ -43,14 +44,15 @@ export class LoadEditComponent implements OnInit {
     let pallets: number;
     let kind = '';
     let pickUpCount: number;
+    let unscheduledPickUpCount: number;
     let deliveryCount: number;
+    let unscheduledDeliveryCount: number;
     let pickUpDate: Date;
     let pickUpAddress = '';
     let deliveryDate: Date;
     let deliveryAddress = '';
     let description = '';
     let commodity = '';
-    let unscheduledTasks: boolean;
 
     if (this.editMode) {
       const load = this.loadService.getLoadById(this.loadId);
@@ -62,14 +64,15 @@ export class LoadEditComponent implements OnInit {
       pallets = load.pallets;
       kind = load.kind;
       pickUpCount = load.pickUpCount;
+      unscheduledPickUpCount = load.unscheduledPickUpCount;
       deliveryCount = load.deliveryCount;
+      unscheduledDeliveryCount = load.unscheduledDeliveryCount;
       pickUpDate = load.pickUpDate.toDate();
       pickUpAddress = load.pickUpAddress;
       deliveryDate = load.deliveryDate.toDate();
       deliveryAddress = load.deliveryAddress;
       description = load.description;
       commodity = load.commodity;
-      unscheduledTasks = load.unscheduledTasks;
     }
 
     this.loadForm = new FormGroup({
@@ -79,7 +82,9 @@ export class LoadEditComponent implements OnInit {
       'commodity': new FormControl(commodity, Validators.required),
       'rate': new FormControl(rate, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       'pickUpCount': new FormControl(pickUpCount, Validators.required),
+      'unscheduledPickUpCount': new FormControl(unscheduledPickUpCount),
       'deliveryCount': new FormControl(deliveryCount, Validators.required),
+      'unscheduledDeliveryCount': new FormControl(unscheduledDeliveryCount),
       'kind': new FormControl(kind),
       'pickUpAddress': new FormControl(pickUpAddress, Validators.required),
       'pickUpDate': new FormControl(pickUpDate, Validators.required),
@@ -87,8 +92,7 @@ export class LoadEditComponent implements OnInit {
       'deliveryDate': new FormControl(deliveryDate, Validators.required),
       'weight': new FormControl(weight, Validators.pattern(/^[1-9]+[0-9]*$/)),
       'pallets': new FormControl(pallets, Validators.pattern(/^[1-9]+[0-9]*$/)),
-      'description': new FormControl(description),
-      'unscheduledTasks': new FormControl(unscheduledTasks)
+      'description': new FormControl(description)
     });
   }
 
@@ -96,7 +100,10 @@ export class LoadEditComponent implements OnInit {
     if (this.editMode) {
       this.loadService.updateLoad(this.loadForm.value);
     } else {
-      this.loadService.saveLoad(this.loadForm.value);
+      const loadForSave: LoadModel = this.loadForm.value;
+      loadForSave.unscheduledPickUpCount = loadForSave.pickUpCount;
+      loadForSave.unscheduledDeliveryCount = loadForSave.deliveryCount;
+      this.loadService.saveLoad(loadForSave);
     }
     this.router.navigate(['/listLoad']);
   }
