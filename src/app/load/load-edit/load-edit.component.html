@@ -30,7 +30,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <div fxLayout="row" fxLayoutGap="20px">
+        <div formGroupName="task" fxLayout="row" fxLayoutGap="20px">
           <mat-form-field class="forWith">
             <input type="number" placeholder="Number of PickUp" formControlName="pickUpCount" matInput>
           </mat-form-field>
@@ -48,26 +48,8 @@
           &lt;!&ndash;<mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
           <mat-hint>{{animalControl.value?.sound}}</mat-hint>&ndash;&gt;
         </mat-form-field>-->
-        <mat-form-field>
-          <input type="text" placeholder="Pick up Address" formControlName="pickUpAddress" matInput required>
-        </mat-form-field>
       </div>
       <div fxLayout="column">
-        <mat-form-field>
-          <input name="pickUpDate" placeholder="Pick up date" formControlName="pickUpDate" matInput required
-                 [matDatepicker]="picker">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <input type="text" placeholder="Delivery Address" formControlName="deliveryAddress" matInput required>
-        </mat-form-field>
-        <mat-form-field>
-          <input name="deliveryDate" formControlName="deliveryDate" placeholder="Delivery date" matInput required
-                 [matDatepicker]="picker2">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #picker2></mat-datepicker>
-        </mat-form-field>
         <mat-form-field>
           <input type="number" placeholder="Weight" formControlName="weight" matInput>
         </mat-form-field>

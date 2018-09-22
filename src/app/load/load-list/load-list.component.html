@@ -14,7 +14,7 @@
        class="mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i = index">
     <th class="main-load-list" mat-header-cell *matHeaderCellDef mat-sort-header> {{columnHeaderName[i]}} </th>
-    <td [ngClass]="{hasUnscheduledTasks: element.unscheduledPickUpCount || element.unscheduledDeliveryCount}" mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    <td [ngClass]="{hasUnscheduledTasks: element.task.unscheduledPickUpCount || element.task.unscheduledDeliveryCount}" mat-cell *matCellDef="let element"> {{element[column]}} </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -24,7 +24,7 @@
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'" fxLayout="column">
         <div fxLayout="row">
           <section fxLayout="column" fxLayoutAlign="center center">
-            <div *ngIf="element.unscheduledPickUpCount || element.unscheduledDeliveryCount" style="color: red; font-weight: bold; padding-top: 6px">UNSCHEDULED</div>
+            <div *ngIf="element.task.unscheduledPickUpCount || element.task.unscheduledDeliveryCount" style="color: red; font-weight: bold; padding-top: 6px">UNSCHEDULED</div>
             <div class="element-diagram">
               <div class="element-position"> Rate </div>
               <div class="element-symbol"> {{element.rate}} <span class="element-symbol-span">$</span></div>
@@ -36,11 +36,11 @@
             <div fxLayout="row" fxLayoutGap="30px">
               <div class="element-description">
                 PickUp:
-                <span [ngClass]="{hasUnscheduledTasks2: element.unscheduledPickUpCount}"> {{element.unscheduledPickUpCount}}</span>
+                <span [ngClass]="{hasUnscheduledTasks2: element.task.unscheduledPickUpCount}"> {{element.task.unscheduledPickUpCount}}</span>
               </div>
               <div class="element-description">
                 Delivery:
-                <span [ngClass]="{hasUnscheduledTasks2: element.unscheduledDeliveryCount}"> {{element.unscheduledDeliveryCount}}</span>
+                <span [ngClass]="{hasUnscheduledTasks2: element.task.unscheduledDeliveryCount}"> {{element.task.unscheduledDeliveryCount}}</span>
               </div>
             </div>
             <div class="element-description">
@@ -65,13 +65,13 @@
           <button type="button" mat-raised-button color="primary" (click)="onEditLoad(element.id)">Edit</button>
           <button type="button" mat-raised-button color="primary">Complete</button>
           <button type="button" mat-raised-button
-                  [matBadge]="element.unscheduledPickUpCount + element.unscheduledDeliveryCount"
-                  [matBadgeHidden]="!(element.unscheduledPickUpCount && element.unscheduledDeliveryCount)"
+                  [matBadge]="element.task.unscheduledPickUpCount + element.task.unscheduledDeliveryCount"
+                  [matBadgeHidden]="!(element.task.unscheduledPickUpCount && element.task.unscheduledDeliveryCount)"
                   matBadgePosition="after"
                   matBadgeColor="warn"
                   color="primary"
                   (click)="onEditTask(element.id)">
-            {{ (element.unscheduledPickUpCount || element.unscheduledDeliveryCount) ? 'Schedule' : 'Edit Tasks' }}
+            {{ (element.task.unscheduledPickUpCount || element.task.unscheduledDeliveryCount) ? 'Schedule' : 'Edit Tasks' }}
           </button>
         </div>
       </div>

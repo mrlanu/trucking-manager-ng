@@ -47,10 +47,6 @@ export class LoadEditComponent implements OnInit {
     let unscheduledPickUpCount: number;
     let deliveryCount: number;
     let unscheduledDeliveryCount: number;
-    let pickUpDate: Date;
-    let pickUpAddress = '';
-    let deliveryDate: Date;
-    let deliveryAddress = '';
     let description = '';
     let commodity = '';
 
@@ -63,14 +59,10 @@ export class LoadEditComponent implements OnInit {
       weight = load.weight;
       pallets = load.pallets;
       kind = load.kind;
-      pickUpCount = load.pickUpCount;
-      unscheduledPickUpCount = load.unscheduledPickUpCount;
-      deliveryCount = load.deliveryCount;
-      unscheduledDeliveryCount = load.unscheduledDeliveryCount;
-      pickUpDate = load.pickUpDate.toDate();
-      pickUpAddress = load.pickUpAddress;
-      deliveryDate = load.deliveryDate.toDate();
-      deliveryAddress = load.deliveryAddress;
+      pickUpCount = load.task.pickUpCount;
+      unscheduledPickUpCount = load.task.unscheduledPickUpCount;
+      deliveryCount = load.task.deliveryCount;
+      unscheduledDeliveryCount = load.task.unscheduledDeliveryCount;
       description = load.description;
       commodity = load.commodity;
     }
@@ -81,18 +73,16 @@ export class LoadEditComponent implements OnInit {
       'dispatch': new FormControl(dispatch, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
       'rate': new FormControl(rate, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
-      'pickUpCount': new FormControl(pickUpCount, Validators.required),
-      'unscheduledPickUpCount': new FormControl(unscheduledPickUpCount),
-      'deliveryCount': new FormControl(deliveryCount, Validators.required),
-      'unscheduledDeliveryCount': new FormControl(unscheduledDeliveryCount),
       'kind': new FormControl(kind),
-      'pickUpAddress': new FormControl(pickUpAddress, Validators.required),
-      'pickUpDate': new FormControl(pickUpDate, Validators.required),
-      'deliveryAddress': new FormControl(deliveryAddress, Validators.required),
-      'deliveryDate': new FormControl(deliveryDate, Validators.required),
       'weight': new FormControl(weight, Validators.pattern(/^[1-9]+[0-9]*$/)),
       'pallets': new FormControl(pallets, Validators.pattern(/^[1-9]+[0-9]*$/)),
-      'description': new FormControl(description)
+      'description': new FormControl(description),
+        'task': new FormGroup({
+          'pickUpCount': new FormControl(pickUpCount, Validators.required),
+          'unscheduledPickUpCount': new FormControl(unscheduledPickUpCount),
+          'deliveryCount': new FormControl(deliveryCount, Validators.required),
+          'unscheduledDeliveryCount': new FormControl(unscheduledDeliveryCount),
+        })
     });
   }
 
@@ -101,9 +91,10 @@ export class LoadEditComponent implements OnInit {
       this.loadService.updateLoad(this.loadForm.value);
     } else {
       const loadForSave: LoadModel = this.loadForm.value;
-      loadForSave.unscheduledPickUpCount = loadForSave.pickUpCount;
-      loadForSave.unscheduledDeliveryCount = loadForSave.deliveryCount;
+      loadForSave.task.unscheduledPickUpCount = loadForSave.task.pickUpCount;
+      loadForSave.task.unscheduledDeliveryCount = loadForSave.task.deliveryCount;
       this.loadService.saveLoad(loadForSave);
+      this.router.navigate(['/tasks', lo]);
     }
     this.router.navigate(['/listLoad']);
   }
