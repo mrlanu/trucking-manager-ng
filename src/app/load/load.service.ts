@@ -10,6 +10,7 @@ export class LoadService {
 
   private loadList: LoadModel[] = [];
   loadsChanged = new Subject<LoadModel[]>();
+  loadSavedConfirm = new Subject<string>();
 
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService) {}
@@ -35,6 +36,7 @@ export class LoadService {
     this.db.collection('loads').add(load).then(result => {
       const id = result.id;
       this.db.doc(`loads/${id}`).update({id: id});
+      this.loadSavedConfirm.next(id);
       });
   }
 

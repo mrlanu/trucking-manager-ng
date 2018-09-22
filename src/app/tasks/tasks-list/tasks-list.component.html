@@ -6,11 +6,14 @@
     <button mat-mini-fab color="primary" (click)="onAddNewTask()">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-mini-fab color="warn">
+    <button mat-mini-fab color="warn" [disabled]="tasksArr.length === 0">
       <mat-icon>delete_forever</mat-icon>
     </button>
   </section>
   <router-outlet></router-outlet>
   <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
+  <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
+    <p class="mat-h3">Add any Pick-Up or Delivery</p>
+  </div>
 </section>
 

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {EmployeeModel} from '../../employee/employee.model';
 import {LoadModel} from '../load.model';
 
@@ -11,7 +11,7 @@ import {LoadModel} from '../load.model';
   templateUrl: './load-edit.component.html',
   styleUrls: ['./load-edit.component.css']
 })
-export class LoadEditComponent implements OnInit {
+export class LoadEditComponent implements OnInit, OnDestroy {
 
   loadForm: FormGroup;
   editMode = false;
@@ -19,6 +19,8 @@ export class LoadEditComponent implements OnInit {
 
   kinds: string[] = ['Dry', 'Frozen', 'Chilled'];
   dispatches: Observable<EmployeeModel[]>;
+
+  loadSavedConfirmSubscription: Subscription;
 
   constructor(private loadService: LoadService,
               private router: Router,
@@ -33,6 +35,12 @@ export class LoadEditComponent implements OnInit {
       }
     );
     this.dispatches = this.loadService.getDispatches();
+  }
+
+  ngOnDestroy() {
+    if (this.loadSavedConfirmSubscription) {
+      this.loadSavedConfirmSubscription.unsubscribe();
+    }
   }
 
   private initForm() {
@@ -89,14 +97,19 @@ export class LoadEditComponent implements OnInit {
   onSubmit() {
     if (this.editMode) {
       this.loadService.updateLoad(this.loadForm.value);
+      this.router.navigate(['/listLoad']);
     } else {
       const loadForSave: LoadModel = this.loadForm.value;
       loadForSave.task.unscheduledPickUpCount = loadForSave.task.pickUpCount;
       loadForSave.task.unscheduledDeliveryCount = loadForSave.task.deliveryCount;
       this.loadService.saveLoad(loadForSave);
-      this.router.navigate(['/tasks', lo]);
+
+      // here should be a spinner during this process
+      this.loadSavedConfirmSubscription = this.loadService.loadSavedConfirm
+        .subscribe((loadId: string) => {
+        this.router.navigate(['/tasks', loadId]);
+      });
     }
-    this.router.navigate(['/listLoad']);
   }
 
   onCancel() {

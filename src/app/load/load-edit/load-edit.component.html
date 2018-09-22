@@ -66,7 +66,10 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
       <button type="submit" mat-mini-fab color="primary" [disabled]="loadForm.invalid">
-        <mat-icon>save_alt</mat-icon>
+        <mat-icon *ngIf="!editMode; else newMode">navigate_next</mat-icon>
+        <ng-template #newMode>
+          <mat-icon *ngIf="editMode">save_alt</mat-icon>
+        </ng-template>
       </button>
     </div>
   </form>
