@@ -49,4 +49,10 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/listLoad']);
   }
 
+  onDeleteAllTasks() {
+    this.tasksArr.forEach(tsk => {
+      this.taskService.deleteTask(tsk.id);
+    });
+  }
+
 }
