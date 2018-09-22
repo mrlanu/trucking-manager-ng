@@ -46,7 +46,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   onBackToList() {
-    this.router.navigate(['/listLoad']);
+    this.router.navigate(['/loads']);
   }
 
   onDeleteAllTasks() {

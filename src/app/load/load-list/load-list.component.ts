@@ -31,7 +31,8 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private loadService: LoadService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadChangesSubs = this.loadService.loadsChanged.subscribe((allLoads: LoadModel[]) => {
@@ -56,7 +57,7 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onEditLoad(idLoad: string) {
-    this.router.navigate(['/editLoad', idLoad]);
+    this.router.navigate(['edit', idLoad], {relativeTo: this.route});
   }
 
   onEditTask(loadId: string) {

@@ -113,7 +113,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['/listLoad']);
+    this.router.navigate(['loads']);
   }
 
 }

@@ -7,16 +7,18 @@ import {LoadListComponent} from './load/load-list/load-list.component';
 import {EmployeeEditComponent} from './employee/employee-edit/employee-edit.component';
 import {TaskEditComponent} from './tasks/task-edit/task-edit.component';
 import {TasksComponent} from './tasks/tasks.component';
-import {TaskStartComponent} from './tasks/task-start/task-start.component';
 import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
+import {LoadComponent} from './load/load.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'signUp', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'editLoad', component: LoadEditComponent},
-  {path: 'editLoad/:id', component: LoadEditComponent},
-  {path: 'listLoad', component: LoadListComponent},
+  {path: 'loads', component: LoadComponent, children: [
+      {path: '', component: LoadListComponent},
+      {path: 'new', component: LoadEditComponent},
+      {path: 'edit/:id', component: LoadEditComponent},
+    ]},
   {path: 'employee', component: EmployeeEditComponent},
   {path: 'tasks', component: TasksComponent, children: [
       {path: ':loadId', component: TasksListComponent, children: [
