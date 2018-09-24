@@ -26,6 +26,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     });
     this.tasksChangeSubscription = this.taskService.tasksChanged.subscribe((tasks: TaskModel[]) => {
       this.tasksArr = tasks;
+      this.taskService.recountUnscheduledTasks(tasks, this.loadId);
     });
     this.taskService.fetchTasksByLoadId(this.loadId);
   }

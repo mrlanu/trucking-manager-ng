@@ -4,6 +4,8 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
+import {LoadService} from '../load/load.service';
+import {LoadModel} from '../load/load.model';
 
 @Injectable()
 export class TaskService {
@@ -14,11 +16,12 @@ export class TaskService {
   subscriptions: Subscription;
 
   constructor(private db: AngularFirestore,
-              private employeeService: EmployeeService) {}
+              private employeeService: EmployeeService,
+              private loadService: LoadService) {}
 
   fetchTasksByLoadId(loadId: string) {
     this.subscriptions = this.db
-      .collection('tasks', ref => ref.where('loadId', '==', loadId))
+      .collection('tasks', ref => ref.where('loadId', '==', loadId).orderBy('date'))
       .valueChanges()
       .pipe(map(tasks => {
         return tasks.map(task => {
@@ -77,6 +80,24 @@ export class TaskService {
     return this.tasks.find((tsk: TaskModel) => {
       return tsk.id === id;
     });
+  }
+
+  recountUnscheduledTasks(tasks: TaskModel[], loadId: string) {
+    const load: LoadModel = this.loadService.getLoadById(loadId);
+    let scheduledPickUps = 0;
+    let scheduledDelivery = 0;
+    tasks.forEach(task => {
+      if (task.employee) {
+        if (task.kind === 'Pick Up') {
+          scheduledPickUps ++;
+        } else if (task.kind === 'Delivery') {
+          scheduledDelivery ++;
+        }
+      }
+    });
+    load.task.unscheduledPickUpCount = load.task.pickUpCount - scheduledPickUps;
+    load.task.unscheduledDeliveryCount = load.task.deliveryCount - scheduledDelivery;
+    this.loadService.updateLoad(load);
   }
 
 }

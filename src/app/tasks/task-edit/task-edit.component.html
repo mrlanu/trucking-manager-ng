@@ -2,16 +2,16 @@
   <form [formGroup]="taskEditForm" (ngSubmit)="onSubmit()">
     <div class="tasks">
           <div fxLayout="row" fxLayoutGap="10px">
-            <input type="hidden" formControlName="loadId">
-            <mat-form-field class="with_1">
+            <mat-form-field>
               <mat-select placeholder="Kind" formControlName="kind" required>
                 <mat-option *ngFor="let kind of kindArr" [value]="kind">
                   {{kind}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="with_1">
+            <mat-form-field>
               <mat-select placeholder="Driver" formControlName="employee">
+                <mat-option value=""></mat-option>
                 <mat-option *ngFor="let driver of drivers | async" [value]="driver.firstName + ' ' + driver.secondName">
                   {{driver.firstName + ' ' + driver.secondName}}
                 </mat-option>

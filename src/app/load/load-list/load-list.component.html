@@ -35,12 +35,14 @@
           <div fxLayout="column" style="padding-left: 10px">
             <div fxLayout="row" fxLayoutGap="30px">
               <div class="element-description">
-                PickUp:
-                <span [ngClass]="{hasUnscheduledTasks2: element.task.unscheduledPickUpCount}"> {{element.task.unscheduledPickUpCount}}</span>
+                PickUp: {{ element.task.pickUpCount}}
+                <span [ngClass]="{hasUnscheduledTasks2: element.task.unscheduledPickUpCount}">
+                 ({{element.task.unscheduledPickUpCount}})</span>
               </div>
               <div class="element-description">
-                Delivery:
-                <span [ngClass]="{hasUnscheduledTasks2: element.task.unscheduledDeliveryCount}"> {{element.task.unscheduledDeliveryCount}}</span>
+                Delivery: {{ element.task.deliveryCount}}
+                <span [ngClass]="{hasUnscheduledTasks2: element.task.unscheduledDeliveryCount}">
+                  ({{element.task.unscheduledDeliveryCount}})</span>
               </div>
             </div>
             <div class="element-description">
