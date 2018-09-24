@@ -68,12 +68,12 @@
           <button type="button" mat-raised-button color="primary">Complete</button>
           <button type="button" mat-raised-button
                   [matBadge]="element.task.unscheduledPickUpCount + element.task.unscheduledDeliveryCount"
-                  [matBadgeHidden]="!(element.task.unscheduledPickUpCount && element.task.unscheduledDeliveryCount)"
+                  [matBadgeHidden]="element.task.unscheduledPickUpCount == 0 && element.task.unscheduledDeliveryCount == 0"
                   matBadgePosition="after"
                   matBadgeColor="warn"
                   color="primary"
                   (click)="onEditTask(element.id)">
-            {{ (element.task.unscheduledPickUpCount || element.task.unscheduledDeliveryCount) ? 'Schedule' : 'Edit Tasks' }}
+            {{ (element.task.unscheduledPickUpCount || element.task.unscheduledDeliveryCount) ? 'Schedule' : 'Show Tasks' }}
           </button>
         </div>
       </div>

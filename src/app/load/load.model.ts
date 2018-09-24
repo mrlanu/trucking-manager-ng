@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 export interface LoadModel {
 
   id: string;
+  date: Timestamp;
   broker: string;
   dispatch: string;
   rate: number;

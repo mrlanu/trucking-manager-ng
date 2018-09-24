@@ -17,7 +17,7 @@ export class LoadService {
 
   fetchAvailableLoads() {
     this.db
-      .collection('loads')
+      .collection('loads', ref => ref.orderBy('date', 'desc'))
       .snapshotChanges()
       .pipe(map(docsArray => {
         return docsArray.map(dc => {

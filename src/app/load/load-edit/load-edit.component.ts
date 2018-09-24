@@ -45,6 +45,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let id = '';
+    let date = new Date();
     let broker = '';
     let dispatch = '';
     let rate: number;
@@ -61,6 +62,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       const load = this.loadService.getLoadById(this.loadId);
       id = load.id;
+      date = load.date.toDate();
       broker = load.broker;
       dispatch = load.dispatch;
       rate = load.rate;
@@ -77,6 +79,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
 
     this.loadForm = new FormGroup({
       'id': new FormControl(id),
+      'date': new FormControl(date),
       'broker': new FormControl(broker, Validators.required),
       'dispatch': new FormControl(dispatch, Validators.required),
       'commodity': new FormControl(commodity, Validators.required),
