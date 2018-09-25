@@ -1,6 +1,6 @@
 <div class="task-item">
   <mat-accordion>
-    <mat-expansion-panel class="main">
+    <mat-expansion-panel [ngClass]="{itemCompleted: task.isCompleted}">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ task.employee }}
@@ -13,12 +13,15 @@
         <div>Time: <span>{{ task.time}}</span></div>
         <div>Address: <span>{{ task.address}}</span></div>
         <div>Description: <span>{{ task.description}}</span></div>
+        <div *ngIf="task.isCompleted" style="color: blue">
+          Completed
+        </div>
       </section>
       <mat-action-row fxLayoutGap="10px">
         <button mat-mini-fab color="primary" (click)="onEditTask(task.id)" [disabled]="employeeMode">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-mini-fab color="primary">
+        <button mat-mini-fab color="primary" (click)="onCompleteTask(task.id)">
           <mat-icon>done</mat-icon>
         </button>
         <button mat-mini-fab color="warn" (click)="onDeleteTask(task.id)" [disabled]="employeeMode">

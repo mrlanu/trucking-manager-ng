@@ -45,7 +45,11 @@ export class TaskService {
   fetchTasksByEmployeeName(employeeName: string) {
     this.sharedService.isLoadingChanged.next(true);
     this.subscriptions = this.db
-      .collection('tasks', ref => ref.where('employee', '==', employeeName))
+      .collection('tasks', ref => ref
+        .where('employee', '==', employeeName)
+        .where('isCompleted', '==', false)
+        .orderBy('date')
+        .orderBy('kind', 'desc'))
       .valueChanges()
       .pipe(map(tasks => {
         return tasks.map(task => {
@@ -69,6 +73,10 @@ export class TaskService {
 
   updateTask(task: TaskModel) {
     this.db.doc(`tasks/${task.id}`).set(task);
+  }
+
+  updateTaskStatusIsCompleted(taskId: string) {
+    this.db.doc(`tasks/${taskId}`).update({isCompleted: true});
   }
 
 

@@ -31,10 +31,12 @@ export class TaskItemComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   onEditTask(id: string) {
     this.router.navigate(['edit', id], {relativeTo: this.route});
+  }
+
+  onCompleteTask(taskId: string) {
+    this.taskService.updateTaskStatusIsCompleted(taskId);
   }
 
   onDeleteTask(taskId: string) {
