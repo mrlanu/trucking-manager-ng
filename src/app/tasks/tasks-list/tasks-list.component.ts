@@ -12,6 +12,8 @@ import {SharedService} from '../../shared/shared.service';
 })
 export class TasksListComponent implements OnInit, OnDestroy {
 
+  employeeMode = false;
+  employeeModeSubs: Subscription;
   isLoadingDate = true;
   loadId: string;
   tasksArr: TaskModel[] = [];
@@ -27,10 +29,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const urlPath = this.route.snapshot.url[0].path;
     this.isLoadingSubscription = this.sharedService.isLoadingChanged.subscribe(result => this.isLoadingDate = result);
-    if (urlPath !== 'myTasks') {
-     this.initTasksByLoadId();
-    } else if (urlPath === 'myTasks') {
+    this.employeeModeSubs = this.sharedService.isEmployeeModeChanged.subscribe(result => this.employeeMode = result);
+    if (urlPath === 'myTasks') {
       this.initTasksByEmployee();
+    } else {
+      this.initTasksByLoadId();
     }
   }
 
@@ -43,6 +46,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
     }
     if (this.isLoadingSubscription) {
       this.isLoadingSubscription.unsubscribe();
+    }
+    if (this.employeeModeSubs) {
+      this.employeeModeSubs.unsubscribe();
     }
     this.taskService.cancelAllSubscriptions();
   }
@@ -75,6 +81,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
   initTasksByEmployee() {
     this.tasksChangeSubscription = this.taskService.tasksChangedForEmployee.subscribe((tasks: TaskModel[]) => {
       this.tasksArr = tasks;
+      setTimeout(() => {
+        this.sharedService.isEmployeeModeChanged.next(true);
+      }, 300);
     });
     this.taskService.fetchTasksByEmployeeName('Igor Shershen');
   }

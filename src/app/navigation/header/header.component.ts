@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {TaskService} from '../../tasks/task.service';
-import {TaskModel} from '../../tasks/task.model';
 import {Subscription} from 'rxjs';
 
 @Component({
