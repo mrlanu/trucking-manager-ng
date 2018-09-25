@@ -25,7 +25,10 @@ export class TaskService {
   fetchTasksByLoadId(loadId: string) {
     this.sharedService.isLoadingChanged.next(true);
     this.subscriptions = this.db
-      .collection('tasks', ref => ref.where('loadId', '==', loadId).orderBy('date'))
+      .collection('tasks', ref => ref
+        .where('loadId', '==', loadId)
+        .orderBy('kind', 'desc')
+        .orderBy('date'))
       .valueChanges()
       .pipe(map(tasks => {
         return tasks.map(task => {
