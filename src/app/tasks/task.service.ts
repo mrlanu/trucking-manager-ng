@@ -13,6 +13,7 @@ export class TaskService {
 
   private tasks: TaskModel[] = [];
   tasksChanged = new Subject<TaskModel[]>();
+  numberOfTasksChangedForEmployee = new Subject<number>();
   tasksChangedForEmployee = new Subject<TaskModel[]>();
   subscriptions: Subscription;
 
@@ -39,6 +40,7 @@ export class TaskService {
   }
 
   fetchTasksByEmployeeName(employeeName: string) {
+    this.sharedService.isLoadingChanged.next(true);
     this.subscriptions = this.db
       .collection('tasks', ref => ref.where('employee', '==', employeeName))
       .valueChanges()
@@ -49,7 +51,9 @@ export class TaskService {
       }))
       .subscribe((tasks: TaskModel[]) => {
         this.tasks = tasks;
+        this.numberOfTasksChangedForEmployee.next(tasks.length);
         this.tasksChangedForEmployee.next([...this.tasks]);
+        this.sharedService.isLoadingChanged.next(false);
       });
   }
 

@@ -10,19 +10,19 @@ import {Subscription} from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  myTasks: TaskModel[] = [];
+  myTasksCount: number;
   myTaskSubs: Subscription;
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(private tasksService: TaskService) { }
+  constructor(private taskService: TaskService) { }
 
   ngOnInit() {
-    this.myTaskSubs = this.tasksService.tasksChangedForEmployee.subscribe((myNewTasks: TaskModel[]) => {
-      this.myTasks = myNewTasks;
+    this.myTaskSubs = this.taskService.numberOfTasksChangedForEmployee.subscribe(number => {
+      this.myTasksCount = number;
     });
 
-    this.tasksService.fetchTasksByEmployeeName('Igor Shershen');
+    this.taskService.fetchTasksByEmployeeName('Igor Shershen');
   }
 
   ngOnDestroy() {

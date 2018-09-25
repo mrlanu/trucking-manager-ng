@@ -25,17 +25,14 @@ export class TasksListComponent implements OnInit, OnDestroy {
               private sharedService: SharedService) { }
 
   ngOnInit() {
+    const urlPath = this.route.snapshot.url[0].path;
     this.isLoadingSubscription = this.sharedService.isLoadingChanged.subscribe(result => this.isLoadingDate = result);
-    this.routeSubscription = this.route.params.subscribe((params: Params) => {
-      this.loadId = params['loadId'];
-    });
-    this.tasksChangeSubscription = this.taskService.tasksChanged.subscribe((tasks: TaskModel[]) => {
-      this.tasksArr = tasks;
-      this.taskService.recountUnscheduledTasks(tasks, this.loadId);
-    });
-    this.taskService.fetchTasksByLoadId(this.loadId);
+    if (urlPath !== 'myTasks') {
+     this.initTasksByLoadId();
+    } else if (urlPath === 'myTasks') {
+      this.initTasksByEmployee();
+    }
   }
-
 
   ngOnDestroy() {
     if (this.routeSubscription) {
@@ -62,6 +59,24 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.tasksArr.forEach(tsk => {
       this.taskService.deleteTask(tsk.id);
     });
+  }
+
+  initTasksByLoadId () {
+    this.routeSubscription = this.route.params.subscribe((params: Params) => {
+      this.loadId = params['loadId'];
+    });
+    this.tasksChangeSubscription = this.taskService.tasksChanged.subscribe((tasks: TaskModel[]) => {
+      this.tasksArr = tasks;
+      this.taskService.recountUnscheduledTasks(tasks, this.loadId);
+    });
+    this.taskService.fetchTasksByLoadId(this.loadId);
+  }
+
+  initTasksByEmployee() {
+    this.tasksChangeSubscription = this.taskService.tasksChangedForEmployee.subscribe((tasks: TaskModel[]) => {
+      this.tasksArr = tasks;
+    });
+    this.taskService.fetchTasksByEmployeeName('Igor Shershen');
   }
 
 }

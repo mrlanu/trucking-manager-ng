@@ -1,5 +1,8 @@
 <section fxLayout="column" fxLayoutGap="10px">
-  <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
+  <div fxLayout="row" fxLayoutAlign="center  enter" *ngIf="isLoadingDate">
+    <mat-spinner></mat-spinner>
+  </div>
+  <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px" *ngIf="!isLoadingDate">
     <button mat-mini-fab color="primary" (click)="onBackToList()">
       <mat-icon>arrow_back</mat-icon>
     </button>
@@ -11,12 +14,7 @@
     </button>
   </section>
   <router-outlet></router-outlet>
-  <div fxLayout="row" fxLayoutAlign="center  enter" *ngIf="isLoadingDate">
-    <mat-spinner></mat-spinner>
-  </div>
-  <div *ngIf="!isLoadingDate">
     <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
-  </div>
   <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
     <p class="mat-h3">Add any Pick-Up or Delivery</p>
   </div>

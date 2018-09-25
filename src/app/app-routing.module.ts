@@ -21,6 +21,7 @@ const routes: Routes = [
     ]},
   {path: 'employee', component: EmployeeEditComponent},
   {path: 'tasks', component: TasksComponent, children: [
+      {path: 'myTasks', component: TasksListComponent},
       {path: ':loadId', component: TasksListComponent, children: [
           {path: 'edit/:taskId', component: TaskEditComponent},
           {path: 'new/:loadId', component: TaskEditComponent}
