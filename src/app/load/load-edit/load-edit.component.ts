@@ -100,7 +100,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.editMode) {
       this.loadService.updateLoad(this.loadForm.value);
-      this.router.navigate(['/listLoad']);
+      this.router.navigate(['/loads']);
     } else {
       const loadForSave: LoadModel = this.loadForm.value;
       loadForSave.task.unscheduledPickUpCount = loadForSave.task.pickUpCount;

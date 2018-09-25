@@ -11,7 +11,12 @@
     </button>
   </section>
   <router-outlet></router-outlet>
-  <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
+  <div fxLayout="row" fxLayoutAlign="center  enter" *ngIf="isLoadingDate">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingDate">
+    <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
+  </div>
   <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
     <p class="mat-h3">Add any Pick-Up or Delivery</p>
   </div>

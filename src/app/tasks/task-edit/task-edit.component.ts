@@ -30,12 +30,12 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     this.routeSubscription = this.route.params.subscribe((params: Params) => {
       this.taskId = params['taskId'];
       this.loadId = params['loadId'];
+      if (this.taskId) {
+        this.editMode = true;
+      }
+      this.initForm();
     });
-    if (this.taskId) {
-      this.editMode = true;
-    }
     this.drivers = this.taskService.getDrivers();
-    this.initForm();
   }
 
   ngOnDestroy() {

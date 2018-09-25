@@ -1,28 +1,31 @@
-<mat-accordion>
-  <mat-expansion-panel class="main">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ task.employee }}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ 'for ' + task.kind }} {{ task.date.toDate() | date }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <section fxLayout="column">
-      <div>Time: <span>{{ task.time}}</span></div>
-      <div>Address: <span>{{ task.address}}</span></div>
-      <div>Description: <span>{{ task.description}}</span></div>
-    </section>
-    <mat-action-row fxLayoutGap="10px">
-      <button mat-mini-fab color="primary" (click)="onEditTask(task.id)">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-mini-fab color="primary">
-        <mat-icon>done</mat-icon>
-      </button>
-      <button mat-mini-fab color="warn" (click)="onDeleteTask(task.id)">
-        <mat-icon>clear</mat-icon>
-      </button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+<div class="task-item">
+  <mat-accordion>
+    <mat-expansion-panel class="main">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ task.employee }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ 'for ' + task.kind }} {{ task.date.toDate() | date }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <section fxLayout="column">
+        <div>Time: <span>{{ task.time}}</span></div>
+        <div>Address: <span>{{ task.address}}</span></div>
+        <div>Description: <span>{{ task.description}}</span></div>
+      </section>
+      <mat-action-row fxLayoutGap="10px">
+        <button mat-mini-fab color="primary" (click)="onEditTask(task.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" (click)="onDeleteTask(task.id)">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
