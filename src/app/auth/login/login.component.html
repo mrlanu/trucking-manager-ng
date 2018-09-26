@@ -30,16 +30,17 @@
       <mat-hint>Please enter your password.</mat-hint>
       <mat-error>Missing password.</mat-error>
     </mat-form-field>
-    <button
-      *ngIf="!isLoading"
-      type="submit"
-      mat-raised-button
-      color="primary"
-      [disabled]="loginForm.invalid">Login</button>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <div fxLayout="row" fxLayoutGap="150px">
+        <div fxLayout="row" fxLayoutAlign="start">
+          <a style="margin-top: 15px" routerLink="/signup">Register</a>
+        </div>
+        <button
+          *ngIf="!isLoading"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="loginForm.invalid">Login</button>
+      </div>
   </form>
-    <div fxLayout="row" fxLayoutAlign="start">
-      <a routerLink="/signup">Register</a>
-    </div>
   </div>
 </section>

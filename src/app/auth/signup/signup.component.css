@@ -3,7 +3,7 @@ mat-form-field {
 }
 
 .background{
-  height: calc(100% - 65px);
+  height: calc(100% - 50px);
   background: url('/assets/img/gian-reto-tarnutzer-45217-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
 }
@@ -14,4 +14,13 @@ mat-form-field {
   padding: 30px;
   background: whitesmoke;
   opacity: 1;
+}
+
+a{
+  text-decoration: none;
+  color: #3F51B5;
+}
+
+a:hover, a:active{
+  color: #808bcc;
 }

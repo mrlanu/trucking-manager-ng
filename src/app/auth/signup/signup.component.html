@@ -16,7 +16,12 @@
         <mat-hint>Enter your password.</mat-hint>
         <mat-error>Invalid or missing password.</mat-error>
       </mat-form-field>
-      <button type="submit" mat-raised-button color="primary" [disabled]="signUpForm.invalid">Sign Up</button>
+      <div fxLayout="row" fxLayoutGap="150px">
+        <div fxLayout="row" fxLayoutAlign="start">
+          <a style="margin-top: 15px" routerLink="/login">Login</a>
+        </div>
+        <button type="submit" mat-raised-button color="primary" [disabled]="signUpForm.invalid">Sign Up</button>
+      </div>
     </form>
   </div>
 </section>
