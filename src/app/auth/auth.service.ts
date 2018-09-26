@@ -39,12 +39,11 @@ export class AuthService {
         this.authSuccessfully();
          const unsubscribe = this.afAuth.auth.onAuthStateChanged(user => {
           if (user) {
-            this.employeeService.getEmployeeByEmail(user.email);
             this.serviceSubs.push(this.employeeService.employeeChange.subscribe(employee => {
               this.loggedInEmployee = employee;
             }));
+            this.employeeService.fetchEmployeeByEmail(user.email);
           } else {
-            console.log('LoggedOut');
             unsubscribe();
           }
         });
@@ -80,10 +79,6 @@ export class AuthService {
     this.serviceSubs.forEach(subscription => {
       subscription.unsubscribe();
     });
-  }
-
-  getLoggedInEmployee() {
-    return this.loggedInEmployee;
   }
 
 }

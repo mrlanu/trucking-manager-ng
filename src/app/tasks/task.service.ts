@@ -42,7 +42,7 @@ export class TaskService {
       }, err => console.log('Error - fetchTasksByLoadId(loadId: string) ' + err)));
   }
 
-  fetchTasksByEmployeeName(employeeName: string) {
+  fetchTasksForEmployeeName(employeeName: string) {
     this.sharedService.isLoadingChanged.next(true);
     this.componentSubs.push(this.db
       .collection('tasks', ref => ref
@@ -61,7 +61,7 @@ export class TaskService {
         this.numberOfTasksChangedForEmployee.next(tasks.length);
         this.tasksChangedForEmployee.next([...this.tasks]);
         this.sharedService.isLoadingChanged.next(false);
-      }, err => console.log('Error - fetchTasksByEmployeeName(employeeName: string) ' + err)));
+      }, err => console.log('Error - fetchTasksForEmployeeName(employeeName: string) ' + err)));
   }
 
   saveTask(task: TaskModel) {

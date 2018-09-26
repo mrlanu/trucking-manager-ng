@@ -59,7 +59,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
         this.sharedService.isEmployeeModeChanged.next(true);
       }, 300);
     }));
-    this.taskService.fetchTasksByEmployeeName(this.tasksEmployeeName);
+    this.taskService.fetchTasksForEmployeeName(this.tasksEmployeeName);
   }
 
   onAddNewTask() {

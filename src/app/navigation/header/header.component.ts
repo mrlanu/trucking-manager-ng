@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {TaskService} from '../../tasks/task.service';
-import {Subscription} from 'rxjs';
+import {Observable, Observer, Subscription} from 'rxjs';
 import {AuthService} from '../../auth/auth.service';
 import {EmployeeModel} from '../../employee/employee.model';
 import {EmployeeService} from '../../employee/employee.service';
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuth = false;
   authenticatedEmployee: EmployeeModel;
+  employeeGreeting: Observable<string>;
   myTasksCount: number;
   componentSubs: Subscription[] = [];
 
@@ -32,7 +33,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.componentSubs.push(this.employeeService.employeeChange
           .subscribe(employee => {
           this.authenticatedEmployee = employee;
-          this.taskService.fetchTasksByEmployeeName(`${employee.firstName} ${employee.secondName}`);
+          this.employeeGreeting = new Observable<string>((observer: Observer<string>) => {
+            observer.next(employee.firstName);
+          });
+          this.taskService.fetchTasksForEmployeeName(`${employee.firstName} ${employee.secondName}`);
         }));
       }
     }));

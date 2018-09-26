@@ -30,7 +30,7 @@ export class EmployeeService {
     }, err => console.log('Error - fetchAllEmployees() ' + err)));
   }
 
-  getEmployeeByEmail(email: string) {
+  fetchEmployeeByEmail(email: string) {
     const resultArr: EmployeeModel[] = [];
     this.db.collection('employee', ref => ref.where('email', '==', email))
       .get()
