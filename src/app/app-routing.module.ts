@@ -12,7 +12,7 @@ import {LoadComponent} from './load/load.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
-  {path: 'signUp', component: SignupComponent},
+  {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
   {path: 'loads', component: LoadComponent, children: [
       {path: '', component: LoadListComponent},

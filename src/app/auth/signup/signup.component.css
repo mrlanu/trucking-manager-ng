@@ -1,0 +1,17 @@
+mat-form-field {
+  width: 300px;
+}
+
+.background{
+  height: calc(100% - 65px);
+  background: url('/assets/img/gian-reto-tarnutzer-45217-unsplash.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+#formBack {
+  border-radius: 15px;
+  width: 330px;
+  padding: 30px;
+  background: whitesmoke;
+  opacity: 0.95;
+}

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {TaskService} from '../../tasks/task.service';
 import {Subscription} from 'rxjs';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,14 +10,20 @@ import {Subscription} from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  isAuth = false;
   myTasksCount: number;
   myTaskSubs: Subscription;
+  authChangeSubs: Subscription;
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService,
+              private authService: AuthService) { }
 
   ngOnInit() {
+    this.authChangeSubs = this.authService.authChange.subscribe(authStatus => {
+      this.isAuth = authStatus;
+    });
     this.myTaskSubs = this.taskService.numberOfTasksChangedForEmployee.subscribe(number => {
       this.myTasksCount = number;
     });
@@ -27,6 +34,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.myTaskSubs) {
       this.myTaskSubs.unsubscribe();
+    }
+    if (this.authChangeSubs) {
+      this.authChangeSubs.unsubscribe();
     }
   }
 

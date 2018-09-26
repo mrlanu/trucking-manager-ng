@@ -27,6 +27,7 @@ import {TaskItemComponent} from './tasks/tasks-list/task-item/task-item.componen
 import {TaskStartComponent} from './tasks/task-start/task-start.component';
 import { LoadComponent } from './load/load.component';
 import {SharedService} from './shared/shared.service';
+import {AuthService} from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import {SharedService} from './shared/shared.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [LoadService, EmployeeService, TaskService, SharedService],
+  providers: [LoadService, EmployeeService, TaskService, SharedService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

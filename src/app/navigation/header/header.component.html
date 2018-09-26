@@ -1,18 +1,18 @@
 <mat-toolbar color="primary" class="my-toolbar">
   <div>
-    <button mat-icon-button (click)="onSidenavToggle()">
+    <button *ngIf="isAuth" mat-icon-button (click)="onSidenavToggle()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
   <div>LOGO</div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
-    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li><a routerLink="/tasks/myTasks">
+    <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+      <li *ngIf="isAuth"><a routerLink="/tasks/myTasks">
         <span [matBadge]="myTasksCount" matBadgeColor="warn" [matBadgeHidden]="myTasksCount === 0">Tasks</span>
       </a></li>
-      <li><a routerLink="/signup">Signup</a></li>
-      <li><a routerLink="/login">Login</a></li>
-      <li><a routerLink="/logout">Logout</a></li>
+      <li *ngIf="!isAuth"><a routerLink="/signup">Signup</a></li>
+      <li *ngIf="!isAuth"><a routerLink="/login">Login</a></li>
+      <li *ngIf="isAuth"><a routerLink="/logout">Logout</a></li>
     </ul>
   </div>
 </mat-toolbar>
