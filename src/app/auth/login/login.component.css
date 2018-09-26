@@ -13,5 +13,14 @@ mat-form-field {
   width: 330px;
   padding: 30px;
   background: whitesmoke;
-  opacity: 0.9;
+  opacity: 1;
+}
+
+a{
+  text-decoration: none;
+  color: gray;
+}
+
+a:hover, a:active{
+  color: darkgray;
 }
