@@ -9,18 +9,19 @@ import {TaskEditComponent} from './tasks/task-edit/task-edit.component';
 import {TasksComponent} from './tasks/tasks.component';
 import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
 import {LoadComponent} from './load/load.component';
+import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'loads', component: LoadComponent, children: [
+  {path: 'employee', component: EmployeeEditComponent, canActivate: [AuthGuard]},
+  {path: 'loads', component: LoadComponent, canActivateChild: [AuthGuard], children: [
       {path: '', component: LoadListComponent},
       {path: 'new', component: LoadEditComponent},
       {path: 'edit/:id', component: LoadEditComponent},
     ]},
-  {path: 'employee', component: EmployeeEditComponent},
-  {path: 'tasks', component: TasksComponent, children: [
+  {path: 'tasks', component: TasksComponent, canActivateChild: [AuthGuard], children: [
       {path: 'myTasks', component: TasksListComponent},
       {path: ':loadId', component: TasksListComponent, children: [
           {path: 'edit/:taskId', component: TaskEditComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 
