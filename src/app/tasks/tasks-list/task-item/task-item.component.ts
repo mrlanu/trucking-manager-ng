@@ -14,7 +14,7 @@ export class TaskItemComponent implements OnInit, OnDestroy {
 
   @Input() task: TaskModel;
   employeeMode = false;
-  employeeModeSubs: Subscription;
+  componentSubs: Subscription[] = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -22,13 +22,7 @@ export class TaskItemComponent implements OnInit, OnDestroy {
               private sharedService: SharedService) { }
 
   ngOnInit() {
-    this.employeeModeSubs = this.sharedService.isEmployeeModeChanged.subscribe(result => this.employeeMode = result);
-  }
-
-  ngOnDestroy(): void {
-    if (this.employeeModeSubs) {
-      this.employeeModeSubs.unsubscribe();
-    }
+    this.componentSubs.push(this.sharedService.isEmployeeModeChanged.subscribe(result => this.employeeMode = result));
   }
 
   onEditTask(id: string) {
@@ -41,6 +35,12 @@ export class TaskItemComponent implements OnInit, OnDestroy {
 
   onDeleteTask(taskId: string) {
     this.taskService.deleteTask(taskId);
+  }
+
+  ngOnDestroy(): void {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
   }
 
 }

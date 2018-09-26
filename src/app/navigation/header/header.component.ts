@@ -12,8 +12,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuth = false;
   myTasksCount: number;
-  myTaskSubs: Subscription;
-  authChangeSubs: Subscription;
+  componentSubs: Subscription[] = [];
 
   @Output() sidenavToggle = new EventEmitter<void>();
 
@@ -21,23 +20,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.authChangeSubs = this.authService.authChange.subscribe(authStatus => {
+    this.componentSubs.push(this.authService.authChange.subscribe(authStatus => {
       this.isAuth = authStatus;
-    });
-    this.myTaskSubs = this.taskService.numberOfTasksChangedForEmployee.subscribe(number => {
+    }));
+    this.componentSubs.push(this.taskService.numberOfTasksChangedForEmployee.subscribe(number => {
       this.myTasksCount = number;
-    });
+    }));
 
     this.taskService.fetchTasksByEmployeeName('Igor Shershen');
-  }
-
-  ngOnDestroy() {
-    if (this.myTaskSubs) {
-      this.myTaskSubs.unsubscribe();
-    }
-    if (this.authChangeSubs) {
-      this.authChangeSubs.unsubscribe();
-    }
   }
 
   onSidenavToggle() {
@@ -48,4 +38,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  ngOnDestroy() {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
+  }
 }

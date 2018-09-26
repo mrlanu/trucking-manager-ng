@@ -15,7 +15,7 @@ export class TaskService {
   tasksChanged = new Subject<TaskModel[]>();
   numberOfTasksChangedForEmployee = new Subject<number>();
   tasksChangedForEmployee = new Subject<TaskModel[]>();
-  subscriptions: Subscription;
+  componentSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService,
@@ -24,7 +24,7 @@ export class TaskService {
 
   fetchTasksByLoadId(loadId: string) {
     this.sharedService.isLoadingChanged.next(true);
-    this.subscriptions = this.db
+    this.componentSubs.push(this.db
       .collection('tasks', ref => ref
         .where('loadId', '==', loadId)
         .orderBy('kind', 'desc')
@@ -39,12 +39,12 @@ export class TaskService {
         this.tasks = tasks;
         this.tasksChanged.next([...this.tasks]);
         this.sharedService.isLoadingChanged.next(false);
-      });
+      }, err => console.log('Error - fetchTasksByLoadId(loadId: string) ' + err)));
   }
 
   fetchTasksByEmployeeName(employeeName: string) {
     this.sharedService.isLoadingChanged.next(true);
-    this.subscriptions = this.db
+    this.componentSubs.push(this.db
       .collection('tasks', ref => ref
         .where('employee', '==', employeeName)
         .where('isCompleted', '==', false)
@@ -61,7 +61,7 @@ export class TaskService {
         this.numberOfTasksChangedForEmployee.next(tasks.length);
         this.tasksChangedForEmployee.next([...this.tasks]);
         this.sharedService.isLoadingChanged.next(false);
-      });
+      }, err => console.log('Error - fetchTasksByEmployeeName(employeeName: string) ' + err)));
   }
 
   saveTask(task: TaskModel) {
@@ -85,10 +85,6 @@ export class TaskService {
     }).catch(err => {
       console.log(err);
     });
-  }
-
-  cancelAllSubscriptions() {
-    this.subscriptions.unsubscribe();
   }
 
   getDrivers(): Observable<any> {
@@ -119,4 +115,9 @@ export class TaskService {
     this.loadService.updateLoad(load);
   }
 
+  cancelAllSubscriptions() {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
+  }
 }

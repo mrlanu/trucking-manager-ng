@@ -6,10 +6,10 @@ import {AuthData} from '../auth-data.model';
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup;
 

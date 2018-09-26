@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './auth/login/login.component';
-import {SignupComponent} from './auth/signup/signup.component';
+import {SignUpComponent} from './auth/signup/sign-up.component';
 import {LoadEditComponent} from './load/load-edit/load-edit.component';
 import {LoadListComponent} from './load/load-list/load-list.component';
 import {EmployeeEditComponent} from './employee/employee-edit/employee-edit.component';
@@ -13,7 +13,7 @@ import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
+  {path: 'signup', component: SignUpComponent},
   {path: 'login', component: LoginComponent},
   {path: 'employee', component: EmployeeEditComponent, canActivate: [AuthGuard]},
   {path: 'loads', component: LoadComponent, canActivateChild: [AuthGuard], children: [

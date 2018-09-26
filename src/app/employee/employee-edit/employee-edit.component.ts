@@ -10,23 +10,23 @@ import {EmployeeModel} from '../employee.model';
 })
 export class EmployeeEditComponent implements OnInit, OnDestroy {
 
-  employeesChangedSubscription: Subscription;
+  componentSubs: Subscription[] = [];
   allEmployees: EmployeeModel[] = [];
 
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
-    this.employeesChangedSubscription = this.employeeService
+    this.componentSubs.push(this.employeeService
       .employeesChanged.subscribe((employees: EmployeeModel[]) => {
         this.allEmployees = employees;
-      });
+      }));
     this.employeeService.fetchAllEmployees();
   }
 
   ngOnDestroy() {
-    if (this.employeesChangedSubscription) {
-      this.employeesChangedSubscription.unsubscribe();
-    }
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
   }
 
 }

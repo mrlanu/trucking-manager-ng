@@ -26,6 +26,7 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
   columnHeaderName = ['Broker', 'Dispatch'];
   dataSource = new MatTableDataSource<LoadModel>();
   expandedElement: LoadModel;
+  componentSubs: Subscription[] = [];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -35,17 +36,11 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.loadChangesSubs = this.loadService.loadsChanged.subscribe((allLoads: LoadModel[]) => {
+    this.componentSubs.push(this.loadChangesSubs = this.loadService.loadsChanged.subscribe((allLoads: LoadModel[]) => {
       this.dataSource.data = allLoads;
-    });
+    }));
     this.loadService.fetchAvailableLoads();
     this.dataSource.paginator = this.paginator;
-  }
-
-  ngOnDestroy() {
-    if (this.loadChangesSubs) {
-      this.loadChangesSubs.unsubscribe();
-    }
   }
 
   ngAfterViewInit() {
@@ -64,4 +59,9 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/tasks', loadId]);
   }
 
+  ngOnDestroy() {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
+  }
 }

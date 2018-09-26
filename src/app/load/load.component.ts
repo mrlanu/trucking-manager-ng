@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoadService} from './load.service';
-import {Timeouts} from 'selenium-webdriver';
 
 @Component({
   selector: 'app-load',

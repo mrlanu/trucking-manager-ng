@@ -2,13 +2,14 @@ import {LoadModel} from './load.model';
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
 
 @Injectable()
 export class LoadService {
 
   private loadList: LoadModel[] = [];
+  serviceSubs: Subscription[] = [];
   loadsChanged = new Subject<LoadModel[]>();
   loadSavedConfirm = new Subject<string>();
 
@@ -16,7 +17,7 @@ export class LoadService {
               private employeeService: EmployeeService) {}
 
   fetchAvailableLoads() {
-    this.db
+    this.serviceSubs.push(this.db
       .collection('loads', ref => ref.orderBy('date', 'desc'))
       .snapshotChanges()
       .pipe(map(docsArray => {
@@ -28,8 +29,8 @@ export class LoadService {
       })).subscribe((loads: LoadModel[]) => {
         this.loadList = loads;
         this.loadsChanged.next([...this.loadList]);
-      }
-    );
+      }, err => console.log('Error - fetchAvailableLoads() ' + err)
+    ));
   }
 
   saveLoad(load: LoadModel) {
@@ -52,4 +53,9 @@ export class LoadService {
     return this.employeeService.getEmployeesByOccupation('dispatch');
   }
 
+  cancelAllSubscriptions() {
+    this.serviceSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
+  }
 }

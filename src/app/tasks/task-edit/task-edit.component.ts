@@ -15,7 +15,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
 
   loadId: string;
   taskId: string;
-  routeSubscription: Subscription;
+  componentSubs: Subscription[] = [];
   taskEditForm: FormGroup;
   editMode = false;
   showForm = true;
@@ -27,21 +27,15 @@ export class TaskEditComponent implements OnInit, OnDestroy {
               private taskService: TaskService) { }
 
   ngOnInit() {
-    this.routeSubscription = this.route.params.subscribe((params: Params) => {
+    this.componentSubs.push(this.route.params.subscribe((params: Params) => {
       this.taskId = params['taskId'];
       this.loadId = params['loadId'];
       if (this.taskId) {
         this.editMode = true;
       }
       this.initForm();
-    });
+    }));
     this.drivers = this.taskService.getDrivers();
-  }
-
-  ngOnDestroy() {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
   }
 
   initForm() {
@@ -96,4 +90,9 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
+  ngOnDestroy() {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
+  }
 }

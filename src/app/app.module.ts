@@ -6,7 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {LoginComponent} from './auth/login/login.component';
-import {SignupComponent} from './auth/signup/signup.component';
+import {SignUpComponent} from './auth/signup/sign-up.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './navigation/header/header.component';
@@ -34,7 +34,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent,
+    SignUpComponent,
     HeaderComponent,
     SidenavListComponent,
     LoadListComponent,

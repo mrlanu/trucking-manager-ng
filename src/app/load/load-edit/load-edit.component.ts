@@ -20,28 +20,23 @@ export class LoadEditComponent implements OnInit, OnDestroy {
   kinds: string[] = ['Dry', 'Frozen', 'Chilled'];
   dispatches: Observable<EmployeeModel[]>;
 
-  loadSavedConfirmSubscription: Subscription;
+  componentSubs: Subscription[] = [];
 
   constructor(private loadService: LoadService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
+    this.componentSubs.push(this.route.params.subscribe(
       (params: Params) => {
         this.loadId = params['id'];
         this.editMode = params['id'] != null;
         this.initForm();
       }
-    );
+    ));
     this.dispatches = this.loadService.getDispatches();
   }
 
-  ngOnDestroy() {
-    if (this.loadSavedConfirmSubscription) {
-      this.loadSavedConfirmSubscription.unsubscribe();
-    }
-  }
 
   private initForm() {
     let id = '';
@@ -108,10 +103,10 @@ export class LoadEditComponent implements OnInit, OnDestroy {
       this.loadService.saveLoad(loadForSave);
 
       // here should be a spinner during this process
-      this.loadSavedConfirmSubscription = this.loadService.loadSavedConfirm
+      this.componentSubs.push(this.loadService.loadSavedConfirm
         .subscribe((loadId: string) => {
         this.router.navigate(['/tasks', loadId]);
-      });
+      }));
     }
   }
 
@@ -119,4 +114,9 @@ export class LoadEditComponent implements OnInit, OnDestroy {
     this.router.navigate(['loads']);
   }
 
+  ngOnDestroy() {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
+  }
 }
