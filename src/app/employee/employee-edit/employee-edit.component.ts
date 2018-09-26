@@ -17,7 +17,7 @@ export class EmployeeEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.componentSubs.push(this.employeeService
-      .employeesChanged.subscribe((employees: EmployeeModel[]) => {
+      .employeesChange.subscribe((employees: EmployeeModel[]) => {
         this.allEmployees = employees;
       }));
     this.employeeService.fetchAllEmployees();

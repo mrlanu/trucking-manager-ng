@@ -22,7 +22,7 @@ const routes: Routes = [
       {path: 'edit/:id', component: LoadEditComponent},
     ]},
   {path: 'tasks', component: TasksComponent, canActivateChild: [AuthGuard], children: [
-      {path: 'myTasks', component: TasksListComponent},
+      {path: 'myTasks/:employeeName', component: TasksListComponent},
       {path: ':loadId', component: TasksListComponent, children: [
           {path: 'edit/:taskId', component: TaskEditComponent},
           {path: 'new/:loadId', component: TaskEditComponent}

@@ -17,6 +17,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   isLoadingDate = true;
   loadId: string;
   tasksArr: TaskModel[] = [];
+  tasksEmployeeName: string;
 
   constructor(private taskService: TaskService,
               private router: Router,
@@ -25,8 +26,14 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const urlPath = this.route.snapshot.url[0].path;
-    this.componentSubs.push(this.sharedService.isLoadingChanged.subscribe(result => this.isLoadingDate = result));
-    this.componentSubs.push(this.sharedService.isEmployeeModeChanged.subscribe(result => this.employeeMode = result));
+    this.componentSubs.push(this.route.params
+      .subscribe((params: Params) => {
+      this.tasksEmployeeName = params['employeeName'];
+    }));
+    this.componentSubs.push(this.sharedService.isLoadingChanged
+      .subscribe(result => this.isLoadingDate = result));
+    this.componentSubs.push(this.sharedService.isEmployeeModeChanged
+      .subscribe(result => this.employeeMode = result));
     if (urlPath === 'myTasks') {
       this.initTasksByEmployee();
     } else {
@@ -52,7 +59,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
         this.sharedService.isEmployeeModeChanged.next(true);
       }, 300);
     }));
-    this.taskService.fetchTasksByEmployeeName('Igor Shershen');
+    this.taskService.fetchTasksByEmployeeName(this.tasksEmployeeName);
   }
 
   onAddNewTask() {

@@ -8,7 +8,8 @@ import {Injectable} from '@angular/core';
 export class EmployeeService {
 
   private allEmployees: EmployeeModel[] = [];
-  employeesChanged = new Subject<EmployeeModel[]>();
+  employeesChange = new Subject<EmployeeModel[]>();
+  employeeChange = new Subject<EmployeeModel>();
   serviceSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) {}
@@ -25,8 +26,22 @@ export class EmployeeService {
         });
       })).subscribe((employees: EmployeeModel[]) => {
         this.allEmployees = employees;
-        this.employeesChanged.next([...this.allEmployees]);
+        this.employeesChange.next([...this.allEmployees]);
     }, err => console.log('Error - fetchAllEmployees() ' + err)));
+  }
+
+  getEmployeeByEmail(email: string) {
+    const resultArr: EmployeeModel[] = [];
+    this.db.collection('employee', ref => ref.where('email', '==', email))
+      .get()
+      .subscribe(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          resultArr.push({
+            ...doc.data() as EmployeeModel
+          });
+        });
+        this.employeeChange.next(resultArr[0]);
+      });
   }
 
   getEmployeesByOccupation(occupation: string): Observable<any> {
