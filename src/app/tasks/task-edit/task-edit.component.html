@@ -30,10 +30,17 @@
                 <input type="time" placeholder="Time" formControlName="time" matInput>
               </mat-form-field>
             </section>
-            <mat-form-field>
-              <input type="text" placeholder="Address" formControlName="address" matInput required>
-            </mat-form-field>
-            <mat-form-field>
+            <div fxLayout="row">
+              <label *ngIf="!address" class="address">Add an Address</label>
+                <label *ngIf="address" class="address">{{ address?.address1 }} {{ address?.address2 }}
+                  {{ address?.city }}, {{ address?.state }} {{ address?.zip }}</label>
+              <div fxFlex fxLayout fxLayoutAlign="flex-end">
+                <button type="button" mat-mini-fab color="primary" (click)="onAddAddress()">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </div>
+            <mat-form-field style="margin-top: 1rem">
               <input type="text" placeholder="Confirmation numbers etc." formControlName="description" matInput>
             </mat-form-field>
           </div>

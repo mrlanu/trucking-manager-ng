@@ -9,9 +9,13 @@
           {{ 'for ' + task.kind }} {{ task.date.toDate() | date }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <section fxLayout="column">
+      <section fxLayout="column" fxLayoutGap="10px">
+        <div>Address: <span>{{ task.address.address1}} {{ task.address.address2}}
+                            {{ task.address.city}} {{ task.address.state}}
+                            {{ task.address.zip}}
+                      </span>
+        </div>
         <div>Time: <span>{{ task.time}}</span></div>
-        <div>Address: <span>{{ task.address}}</span></div>
         <div>Description: <span>{{ task.description}}</span></div>
         <div *ngIf="task.isCompleted" style="color: blue">
           Completed

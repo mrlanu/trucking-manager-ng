@@ -7,7 +7,13 @@ export interface TaskModel {
   kind: string;
   date: Timestamp;
   time: string;
-  address: string;
+  address: {
+    'address1': string,
+    'address2': string,
+    'city': string,
+    'state': string,
+    'zip': number
+  };
   employee: string;
   isCompleted: boolean;
   description: string;

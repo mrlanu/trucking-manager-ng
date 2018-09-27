@@ -30,6 +30,7 @@ import {SharedService} from './shared/shared.service';
 import {AuthService} from './auth/auth.service';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DeleteConfirmComponent} from './shared/delete-confirm.component';
+import {AddressComponent} from './tasks/task-edit/address.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {DeleteConfirmComponent} from './shared/delete-confirm.component';
     TaskItemComponent,
     TaskStartComponent,
     LoadComponent,
-    DeleteConfirmComponent
+    DeleteConfirmComponent,
+    AddressComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,6 @@ import {DeleteConfirmComponent} from './shared/delete-confirm.component';
   ],
   providers: [LoadService, EmployeeService, TaskService, SharedService, AuthService],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteConfirmComponent]
+  entryComponents: [DeleteConfirmComponent, AddressComponent]
 })
 export class AppModule { }

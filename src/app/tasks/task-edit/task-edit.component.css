@@ -1,3 +1,8 @@
 .with_2 {
   width: 49%;
 }
+
+.address {
+  padding-top: 20px;
+  border-bottom: gray solid 1px;
+}
