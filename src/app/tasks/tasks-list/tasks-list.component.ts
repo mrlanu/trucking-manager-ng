@@ -4,6 +4,8 @@ import {Subscription} from 'rxjs';
 import {TaskService} from '../task.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {SharedService} from '../../shared/shared.service';
+import {MatDialog} from '@angular/material';
+import {DeleteConfirmComponent} from '../../shared/delete-confirm.component';
 
 @Component({
   selector: 'app-tasks-list',
@@ -22,7 +24,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
   constructor(private taskService: TaskService,
               private router: Router,
               private route: ActivatedRoute,
-              private sharedService: SharedService) { }
+              private sharedService: SharedService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     const urlPath = this.route.snapshot.url[0].path;
@@ -71,8 +74,19 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteAllTasks() {
-    this.tasksArr.forEach(tsk => {
-      this.taskService.deleteTask(tsk.id);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      data: {
+        numberTasks: this.tasksArr.length
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.tasksArr.forEach(tsk => {
+          this.taskService.deleteTask(tsk.id);
+        });
+      } else {
+        dialogRef.close();
+      }
     });
   }
 
