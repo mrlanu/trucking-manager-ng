@@ -1,9 +1,15 @@
 <section *ngIf="showForm">
   <form [formGroup]="taskEditForm" (ngSubmit)="onSubmit()">
     <div class="tasks">
+      <div fxLayout="row" fxLayoutAlign="center">
+        <h1 class="mat-body">
+          Unscheduled Pick-Ups - {{ availableTasksForSchedule?.unscheduledPickUp }},
+          Delivery - {{ availableTasksForSchedule?.unscheduledDelivery }}
+        </h1>
+      </div>
           <div fxLayout="row" fxLayoutGap="10px">
             <mat-form-field>
-              <mat-select placeholder="Kind" formControlName="kind" required>
+              <mat-select placeholder="Kind" formControlName="kind" required (selectionChange)="onChangeKind($event)">
                 <mat-option *ngFor="let kind of kindArr" [value]="kind">
                   {{kind}}
                 </mat-option>
@@ -35,7 +41,7 @@
                 <label *ngIf="address" class="address">{{ address?.address1 }} {{ address?.address2 }}
                   {{ address?.city }}, {{ address?.state }} {{ address?.zip }}</label>
               <div fxFlex fxLayout fxLayoutAlign="flex-end">
-                <button type="button" mat-mini-fab color="primary" (click)="onAddAddress()">
+                <button type="button" mat-mini-fab color="primary" (click)="onAddAddress()" [disabled]="!canScheduleTask">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -45,7 +51,7 @@
             </mat-form-field>
           </div>
       <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
-        <button type="submit" mat-mini-fab color="primary">
+        <button type="submit" mat-mini-fab color="primary" [disabled]="!canScheduleTask">
           <mat-icon>save_alt</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="warn" (click)="onCancelAddNewTask()">

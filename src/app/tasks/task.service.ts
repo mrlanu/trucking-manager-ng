@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TaskModel} from './task.model';
+import {TaskModel, UnscheduledTasks} from './task.model';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Observable, Subject, Subscription} from 'rxjs';
@@ -13,8 +13,9 @@ export class TaskService {
 
   private tasks: TaskModel[] = [];
   tasksChanged = new Subject<TaskModel[]>();
-  numberOfTasksChangedForEmployee = new Subject<number>();
   tasksChangedForEmployee = new Subject<TaskModel[]>();
+  numberOfTasksChangedForEmployee = new Subject<number>();
+  private unscheduledTasks: UnscheduledTasks;
   componentSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore,
@@ -112,7 +113,15 @@ export class TaskService {
     });
     load.task.unscheduledPickUpCount = load.task.pickUpCount - scheduledPickUps;
     load.task.unscheduledDeliveryCount = load.task.deliveryCount - scheduledDelivery;
+    this.unscheduledTasks = {
+      'unscheduledPickUp': load.task.unscheduledPickUpCount,
+      'unscheduledDelivery': load.task.unscheduledDeliveryCount
+    };
     this.loadService.updateLoad(load);
+  }
+
+  getNumbersUnscheduledTasks(): UnscheduledTasks {
+    return {...this.unscheduledTasks};
   }
 
   cancelAllSubscriptions() {

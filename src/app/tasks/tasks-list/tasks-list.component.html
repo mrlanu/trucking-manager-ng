@@ -1,7 +1,7 @@
+<div class="loading-indicator" *ngIf="isLoading">
+  <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
+</div>
 <section fxLayout="column" fxLayoutGap="10px">
-  <div class="loading-indicator" *ngIf="isLoading">
-    <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
-  </div>
   <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px" *ngIf="!isLoading">
     <button mat-mini-fab color="primary" (click)="onBackToList()" [disabled]="employeeMode">
       <mat-icon>arrow_back</mat-icon>

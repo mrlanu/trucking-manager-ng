@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {TaskModel} from '../task.model';
+import {TaskModel, UnscheduledTasks} from '../task.model';
 import {TaskService} from '../task.service';
 import {Observable, Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {EmployeeModel} from '../../employee/employee.model';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSelectChange} from '@angular/material';
 import {AddressComponent} from './address.component';
 
 @Component({
@@ -26,6 +26,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     state: string,
     zip: number
   };
+  canScheduleTask = true;
+  availableTasksForSchedule: UnscheduledTasks;
   editMode = false;
   showForm = true;
   kindArr: string[] = ['Pick Up', 'Delivery'];
@@ -44,6 +46,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
         this.editMode = true;
       }
       this.initForm();
+      this.availableTasksForSchedule = this.taskService.getNumbersUnscheduledTasks();
     }));
     this.drivers = this.taskService.getDrivers();
   }
@@ -120,6 +123,27 @@ export class TaskEditComponent implements OnInit, OnDestroy {
         this.address = result;
       }
     });
+  }
+
+  onChangeKind(event: MatSelectChange) {
+    this.canScheduleTask = true;
+    switch (event.value) {
+      case 'Pick Up': {
+        if (this.availableTasksForSchedule.unscheduledPickUp === 0) {
+          this.canScheduleTask = false;
+        }
+        break;
+      }
+      case 'Delivery': {
+        if (this.availableTasksForSchedule.unscheduledDelivery === 0) {
+          this.canScheduleTask = false;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 
   ngOnDestroy() {

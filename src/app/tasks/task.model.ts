@@ -18,3 +18,8 @@ export interface TaskModel {
   isCompleted: boolean;
   description: string;
 }
+
+export interface UnscheduledTasks {
+  'unscheduledPickUp': number;
+  'unscheduledDelivery': number;
+}
