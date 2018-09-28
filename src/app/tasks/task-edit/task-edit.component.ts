@@ -7,6 +7,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {EmployeeModel} from '../../employee/employee.model';
 import {MatDialog, MatSelectChange} from '@angular/material';
 import {AddressComponent} from './address.component';
+import {AddressModel} from '../../shared/address.model';
 
 @Component({
   selector: 'app-task-edit',
@@ -19,13 +20,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   taskId: string;
   componentSubs: Subscription[] = [];
   taskEditForm: FormGroup;
-  address: {
-    address1: string,
-    address2: string,
-    city: string,
-    state: string,
-    zip: number
-  };
+  address: AddressModel;
   canScheduleTask = true;
   availableTasksForSchedule: UnscheduledTasks;
   editMode = false;

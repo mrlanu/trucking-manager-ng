@@ -51,7 +51,8 @@
             </mat-form-field>
           </div>
       <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
-        <button type="submit" mat-mini-fab color="primary" [disabled]="!canScheduleTask">
+        <button type="submit" mat-mini-fab color="primary"
+                [disabled]="!canScheduleTask || taskEditForm.invalid || taskEditForm.untouched">
           <mat-icon>save_alt</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="warn" (click)="onCancelAddNewTask()">
