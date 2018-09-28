@@ -9,7 +9,12 @@
     <input type="text" placeholder="City" formControlName="city" matInput required>
   </mat-form-field>
   <mat-form-field>
-    <input type="text" placeholder="State" formControlName="state" matInput required>
+    <mat-select placeholder="State" formControlName="state" matInput required>
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let state of states" [value]="state">
+        {{state}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
     <input type="number" placeholder="ZIP" formControlName="zip" matInput required>
