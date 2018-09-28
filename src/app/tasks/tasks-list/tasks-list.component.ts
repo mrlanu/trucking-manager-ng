@@ -16,7 +16,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
   employeeMode = false;
-  isLoadingDate = true;
+  isLoading = true;
   loadId: string;
   tasksArr: TaskModel[] = [];
   tasksEmployeeName: string;
@@ -34,7 +34,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
       this.tasksEmployeeName = params['employeeName'];
     }));
     this.componentSubs.push(this.sharedService.isLoadingChanged
-      .subscribe(result => this.isLoadingDate = result));
+      .subscribe(result => this.isLoading = result));
     this.componentSubs.push(this.sharedService.isEmployeeModeChanged
       .subscribe(result => this.employeeMode = result));
     if (urlPath === 'myTasks') {

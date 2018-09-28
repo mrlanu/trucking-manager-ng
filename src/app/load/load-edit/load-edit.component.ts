@@ -16,6 +16,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
   loadForm: FormGroup;
   editMode = false;
   loadId: string;
+  isLoading = false;
 
   kinds: string[] = ['Dry', 'Frozen', 'Chilled'];
   dispatches: Observable<EmployeeModel[]>;
@@ -97,16 +98,18 @@ export class LoadEditComponent implements OnInit, OnDestroy {
       this.loadService.updateLoad(this.loadForm.value);
       this.router.navigate(['/loads']);
     } else {
-      const loadForSave: LoadModel = this.loadForm.value;
-      loadForSave.task.unscheduledPickUpCount = loadForSave.task.pickUpCount;
-      loadForSave.task.unscheduledDeliveryCount = loadForSave.task.deliveryCount;
-      this.loadService.saveLoad(loadForSave);
-
-      // here should be a spinner during this process
+      this.loadForm.patchValue({
+        'task': {
+          'unscheduledPickUpCount': this.loadForm.value.task.pickUpCount,
+          'unscheduledDeliveryCount': this.loadForm.value.task.deliveryCount
+        }
+      });
+      this.loadService.saveLoad(this.loadForm.value);
+      this.isLoading = true;
       this.componentSubs.push(this.loadService.loadSavedConfirm
         .subscribe((loadId: string) => {
-        this.router.navigate(['/tasks', loadId]);
-      }));
+          this.router.navigate(['/tasks', loadId]);
+        }));
     }
   }
 
