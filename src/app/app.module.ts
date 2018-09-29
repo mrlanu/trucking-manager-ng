@@ -26,7 +26,7 @@ import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
 import {TaskItemComponent} from './tasks/tasks-list/task-item/task-item.component';
 import {TaskStartComponent} from './tasks/task-start/task-start.component';
 import { LoadComponent } from './load/load.component';
-import {SharedService} from './shared/shared.service';
+import {UiService} from './shared/ui.service';
 import {AuthService} from './auth/auth.service';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DeleteConfirmComponent} from './shared/delete-confirm.component';
@@ -62,7 +62,7 @@ import {AddressComponent} from './tasks/task-edit/address.component';
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [LoadService, EmployeeService, TaskService, SharedService, AuthService],
+  providers: [LoadService, EmployeeService, TaskService, UiService, AuthService],
   bootstrap: [AppComponent],
   entryComponents: [DeleteConfirmComponent, AddressComponent]
 })

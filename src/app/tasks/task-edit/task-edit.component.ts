@@ -8,6 +8,7 @@ import {EmployeeModel} from '../../employee/employee.model';
 import {MatDialog, MatSelectChange} from '@angular/material';
 import {AddressComponent} from './address.component';
 import {AddressModel} from '../../shared/address.model';
+import {UiService} from '../../shared/ui.service';
 
 @Component({
   selector: 'app-task-edit',
@@ -31,7 +32,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private taskService: TaskService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private sharedService: UiService) { }
 
   ngOnInit() {
     this.componentSubs.push(this.route.params.subscribe((params: Params) => {
@@ -126,12 +128,14 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       case 'Pick Up': {
         if (this.availableTasksForSchedule.unscheduledPickUp === 0) {
           this.canScheduleTask = false;
+          this.sharedService.openSnackBar('All Pick Ups has been scheduled.', '');
         }
         break;
       }
       case 'Delivery': {
         if (this.availableTasksForSchedule.unscheduledDelivery === 0) {
           this.canScheduleTask = false;
+          this.sharedService.openSnackBar('All Deliveries has been scheduled', '');
         }
         break;
       }

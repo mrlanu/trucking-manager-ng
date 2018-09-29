@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskModel} from '../../task.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TaskService} from '../../task.service';
-import {SharedService} from '../../../shared/shared.service';
+import {UiService} from '../../../shared/ui.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {DeleteConfirmComponent} from '../../../shared/delete-confirm.component';
@@ -21,7 +21,7 @@ export class TaskItemComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private taskService: TaskService,
-              private sharedService: SharedService,
+              private sharedService: UiService,
               private dialog: MatDialog) { }
 
   ngOnInit() {

@@ -2,7 +2,7 @@
   <form [formGroup]="taskEditForm" (ngSubmit)="onSubmit()">
     <div class="tasks">
       <div fxLayout="row" fxLayoutAlign="center">
-        <h1 class="mat-body">
+        <h1 class="mat-subheading-2">
           Unscheduled Pick-Ups - {{ availableTasksForSchedule?.unscheduledPickUp }},
           Delivery - {{ availableTasksForSchedule?.unscheduledDelivery }}
         </h1>

@@ -6,7 +6,7 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
 import {LoadService} from '../load/load.service';
 import {LoadModel} from '../load/load.model';
-import {SharedService} from '../shared/shared.service';
+import {UiService} from '../shared/ui.service';
 
 @Injectable()
 export class TaskService {
@@ -21,7 +21,7 @@ export class TaskService {
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService,
               private loadService: LoadService,
-              private sharedService: SharedService) {}
+              private sharedService: UiService) {}
 
   fetchTasksByLoadId(loadId: string) {
     this.sharedService.isLoadingChanged.next(true);
