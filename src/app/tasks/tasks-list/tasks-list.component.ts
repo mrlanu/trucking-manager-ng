@@ -24,7 +24,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   constructor(private taskService: TaskService,
               private router: Router,
               private route: ActivatedRoute,
-              private sharedService: UiService,
+              private uiService: UiService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -33,9 +33,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
       .subscribe((params: Params) => {
       this.tasksEmployeeName = params['employeeName'];
     }));
-    this.componentSubs.push(this.sharedService.isLoadingChanged
+    this.componentSubs.push(this.uiService.isLoadingChanged
       .subscribe(result => this.isLoading = result));
-    this.componentSubs.push(this.sharedService.isEmployeeModeChanged
+    this.componentSubs.push(this.uiService.isEmployeeModeChanged
       .subscribe(result => this.employeeMode = result));
     if (urlPath === 'myTasks') {
       this.initTasksByEmployee();
@@ -59,7 +59,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.componentSubs.push(this.taskService.tasksChangedForEmployee.subscribe((tasks: TaskModel[]) => {
       this.tasksArr = tasks;
       setTimeout(() => {
-        this.sharedService.isEmployeeModeChanged.next(true);
+        this.uiService.isEmployeeModeChanged.next(true);
       }, 300);
     }));
     this.taskService.fetchTasksForEmployeeName(this.tasksEmployeeName);

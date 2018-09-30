@@ -4,6 +4,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
+import {UiService} from '../shared/ui.service';
 
 @Injectable()
 export class LoadService {
@@ -14,7 +15,8 @@ export class LoadService {
   loadSavedConfirm = new Subject<string>();
 
   constructor(private db: AngularFirestore,
-              private employeeService: EmployeeService) {}
+              private employeeService: EmployeeService,
+              private uiService: UiService) {}
 
   fetchAvailableLoads() {
     this.serviceSubs.push(this.db
@@ -29,6 +31,7 @@ export class LoadService {
       })).subscribe((loads: LoadModel[]) => {
         this.loadList = loads;
         this.loadsChanged.next([...this.loadList]);
+        this.uiService.isLoadingChanged.next(false);
       }, err => console.log('Error - fetchAvailableLoads() ' + err)
     ));
   }

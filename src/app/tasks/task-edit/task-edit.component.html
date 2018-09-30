@@ -1,21 +1,19 @@
-<section *ngIf="showForm">
-  <form [formGroup]="taskEditForm" (ngSubmit)="onSubmit()">
-    <div class="tasks">
+<form [formGroup]="taskEditForm" (ngSubmit)="onSubmit()" *ngIf="showForm">
       <div fxLayout="row" fxLayoutAlign="center">
         <h1 class="mat-subheading-2">
           Unscheduled Pick-Ups - {{ availableTasksForSchedule?.unscheduledPickUp }},
           Delivery - {{ availableTasksForSchedule?.unscheduledDelivery }}
         </h1>
       </div>
-          <div fxLayout="row" fxLayoutGap="10px">
-            <mat-form-field>
+      <div fxLayout="row" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50">
               <mat-select placeholder="Kind" formControlName="kind" required (selectionChange)="onChangeKind($event)">
                 <mat-option *ngFor="let kind of kindArr" [value]="kind">
                   {{kind}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field fxFlex="50">
               <mat-select placeholder="Driver" formControlName="employee">
                 <mat-option [value]="''">None</mat-option>
                 <mat-option *ngFor="let driver of drivers | async" [value]="driver.firstName + ' ' + driver.secondName">
@@ -23,33 +21,33 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div fxLayout="column">
-            <section fxLayout="row" fxLayoutGap="10px">
-              <mat-form-field class="with_2">
+      </div>
+      <div fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+              <mat-form-field fxFlex="48">
                 <input name="pickUpDate" placeholder="Date" formControlName="date" matInput required
                        [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
               </mat-form-field>
-              <mat-form-field class="with_2">
+              <mat-form-field fxFlex="48">
                 <input type="time" placeholder="Time" formControlName="time" matInput>
               </mat-form-field>
-            </section>
-            <div fxLayout="row">
-              <label *ngIf="!address" class="address">Add an Address</label>
-                <label *ngIf="address" class="address">{{ address?.address1 }} {{ address?.address2 }}
+        </div>
+        <div fxLayout="row">
+              <label fxFlex="90%" *ngIf="!address" class="address">Add an Address</label>
+                <label fxFlex="90%" *ngIf="address" class="address">{{ address?.address1 }} {{ address?.address2 }}
                   {{ address?.city }}, {{ address?.state }} {{ address?.zip }}</label>
               <div fxFlex fxLayout fxLayoutAlign="flex-end">
                 <button type="button" mat-mini-fab color="primary" (click)="onAddAddress()" [disabled]="!canScheduleTask">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
-            </div>
+        </div>
             <mat-form-field style="margin-top: 1rem">
               <input type="text" placeholder="Confirmation numbers etc." formControlName="description" matInput>
             </mat-form-field>
-          </div>
+      </div>
       <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
         <button type="submit" mat-mini-fab color="primary"
                 [disabled]="!canScheduleTask || taskEditForm.invalid || taskEditForm.untouched">
@@ -59,6 +57,4 @@
           <mat-icon>clear</mat-icon>
         </button>
       </div>
-    </div>
-  </form>
-</section>
+</form>

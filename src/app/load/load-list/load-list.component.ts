@@ -5,6 +5,7 @@ import {LoadService} from '../load.service';
 import {Subscription} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute, Router} from '@angular/router';
+import {UiService} from '../../shared/ui.service';
 
 @Component({
   selector: 'app-load-list',
@@ -20,8 +21,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private loadChangesSubs: Subscription;
-
+  isLoading = true;
   columnsToDisplay = ['broker', 'dispatch'];
   columnHeaderName = ['Broker', 'Dispatch'];
   dataSource = new MatTableDataSource<LoadModel>();
@@ -33,11 +33,17 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private loadService: LoadService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private uiService: UiService) { }
 
   ngOnInit() {
-    this.componentSubs.push(this.loadChangesSubs = this.loadService.loadsChanged.subscribe((allLoads: LoadModel[]) => {
+    this.componentSubs.push(this.loadService.loadsChanged
+      .subscribe((allLoads: LoadModel[]) => {
       this.dataSource.data = allLoads;
+      this.isLoading = false;
+    }));
+    this.componentSubs.push(this.uiService.isLoadingChanged.subscribe(result => {
+      this.isLoading = result;
     }));
     this.loadService.fetchAvailableLoads();
     this.dataSource.paginator = this.paginator;
