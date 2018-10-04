@@ -16,6 +16,7 @@ export interface TaskModel {
   };
   employee: string;
   isCompleted: boolean;
+  crossDock: string;
   description: string;
 }
 

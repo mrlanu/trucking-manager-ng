@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TaskModel, UnscheduledTasks} from '../task.model';
 import {TaskService} from '../task.service';
@@ -27,6 +27,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   editMode = false;
   showForm = true;
   kindArr: string[] = ['Pick Up', 'Delivery'];
+  crossDocksArr: string[] = ['Addison, IL', 'Renton, WA', 'Spokane, WA', 'Portland, OR'];
+  isCrossDock = false;
   drivers: Observable<EmployeeModel[]>;
 
   constructor(private router: Router,
@@ -57,6 +59,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     let time = '';
     let employee = '';
     let isCompleted = false;
+    let crossDock = '';
     let description = '';
 
     /*this.address = new FormGroup({
@@ -77,6 +80,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       time = task.time;
       employee = task.employee;
       isCompleted = task.isCompleted;
+      crossDock = task.crossDock;
+      if (crossDock) {this.isCrossDock = true; }
       description = task.description;
       // this.address.setValue(task.address);
     } else {
@@ -92,6 +97,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       // 'address': this.address,
       'employee': new FormControl(employee),
       'isCompleted': new FormControl(isCompleted),
+      'crossDock': new FormControl(crossDock),
       'description': new FormControl(description)
     });
   }

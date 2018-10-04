@@ -118,5 +118,10 @@
       }
     }
   },
-  "defaultProject": "trucking-manager-ng"
+  "defaultProject": "trucking-manager-ng",
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
+    }
+  }
 }
