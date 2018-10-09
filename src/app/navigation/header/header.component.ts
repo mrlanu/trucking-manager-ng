@@ -3,7 +3,6 @@ import {TaskService} from '../../tasks/task.service';
 import {Observable, Observer, Subscription} from 'rxjs';
 import {AuthService} from '../../auth/auth.service';
 import {EmployeeModel} from '../../employee/employee.model';
-import {EmployeeService} from '../../employee/employee.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -23,14 +22,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
-              private employeeService: EmployeeService,
               private router: Router) { }
 
   ngOnInit() {
     this.componentSubs.push(this.authService.authChange.subscribe(authStatus => {
       this.isAuth = authStatus;
       if (this.isAuth) {
-        this.componentSubs.push(this.employeeService.employeeChange
+        this.componentSubs.push(this.authService.employeeChange
           .subscribe(employee => {
           this.authenticatedEmployee = employee;
           this.employeeGreeting = new Observable<string>((observer: Observer<string>) => {

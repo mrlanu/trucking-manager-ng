@@ -10,7 +10,6 @@ export class EmployeeService {
   private allEmployees: EmployeeModel[] = [];
   loggedInEmployee: EmployeeModel;
   employeesChange = new Subject<EmployeeModel[]>();
-  employeeChange = new Subject<EmployeeModel>();
   serviceSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) {}
@@ -29,21 +28,6 @@ export class EmployeeService {
         this.allEmployees = employees;
         this.employeesChange.next([...this.allEmployees]);
     }, err => console.log('Error - fetchAllEmployees() ' + err)));
-  }
-
-  fetchEmployeeByEmail(email: string) {
-    const resultArr: EmployeeModel[] = [];
-    this.db.collection('employee', ref => ref.where('email', '==', email))
-      .get()
-      .subscribe(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          resultArr.push({
-            ...doc.data() as EmployeeModel
-          });
-        });
-        this.loggedInEmployee = resultArr[0];
-        this.employeeChange.next(resultArr[0]);
-      });
   }
 
   getEmployeesByOccupation(occupation: string): Observable<any> {
