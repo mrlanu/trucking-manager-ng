@@ -1,5 +1,6 @@
 import Timestamp = firebase.firestore.Timestamp;
 import * as firebase from 'firebase';
+import {AddressModel} from '../shared/address.model';
 
 export interface TaskModel {
   id: string;
@@ -7,20 +8,19 @@ export interface TaskModel {
   kind: string;
   date: Timestamp;
   time: string;
-  address: {
-    'address1': string,
-    'address2': string,
-    'city': string,
-    'state': string,
-    'zip': number
-  };
+  address: AddressModel;
   employee: string;
   isCompleted: boolean;
-  crossDock: string;
   description: string;
+  crossTask: CrossTask;
 }
 
 export interface UnscheduledTasks {
   'unscheduledPickUp': number;
   'unscheduledDelivery': number;
+}
+
+export interface CrossTask {
+  address: AddressModel;
+  isCompleted: boolean;
 }

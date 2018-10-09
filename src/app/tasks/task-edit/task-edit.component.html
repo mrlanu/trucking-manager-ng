@@ -44,11 +44,15 @@
                 </button>
               </div>
         </div>
-        <mat-checkbox color="primary" style="margin-top: 25px" #checkCrossDock [checked]="isCrossDock">Cross docking ?</mat-checkbox>
+        <mat-checkbox #checkCrossDock
+                      color="primary"
+                      style="margin-top: 25px"
+                      [checked]="isCrossDock"
+                      (change)="isCrossDock = checkCrossDock.checked">Cross docking ?</mat-checkbox>
         <mat-form-field *ngIf="checkCrossDock.checked">
-          <mat-select placeholder="Cross Dock" formControlName="crossDock">
-            <mat-option *ngFor="let dock of crossDocksArr" [value]="dock">
-              {{dock}}
+          <mat-select placeholder="Cross Dock" formControlName="crossTaskCity">
+            <mat-option *ngFor="let dock of crossDocksArr" [value]="dock.address['city']">
+              {{dock.address['city']}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -58,7 +62,7 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
         <button type="submit" mat-mini-fab color="primary"
-                [disabled]="!canScheduleTask || taskEditForm.invalid || taskEditForm.untouched">
+                [disabled]="!canScheduleTask || taskEditForm.invalid">
           <mat-icon>save_alt</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="warn" (click)="onCancelAddNewTask()">

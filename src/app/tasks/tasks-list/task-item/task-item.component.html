@@ -16,6 +16,10 @@
         </div>
         <div>Time: <span>{{ task.time}}</span></div>
         <div>Description: <span>{{ task.description}}</span></div>
+        <div *ngIf="task.crossTask.address.city" style="color: red">This is a Cross Dock load for:
+          <span>{{ task.crossTask.address.address1}} {{ task.crossTask.address.address2}}
+                {{ task.crossTask.address.city}}, {{ task.crossTask.address.state}}
+                {{ task.crossTask.address.zip}}</span></div>
         <div *ngIf="task.isCompleted" style="color: blue">
           Completed
         </div>

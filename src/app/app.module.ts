@@ -8,7 +8,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {LoginComponent} from './auth/login/login.component';
 import {SignUpComponent} from './auth/signup/sign-up.component';
 import {AppRoutingModule} from './app-routing.module';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
 import {LoadListComponent} from './load/load-list/load-list.component';
@@ -57,6 +57,7 @@ import {AddressComponent} from './tasks/task-edit/address.component';
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

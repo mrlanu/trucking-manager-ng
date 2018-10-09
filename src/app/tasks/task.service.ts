@@ -1,20 +1,23 @@
 import {Injectable} from '@angular/core';
-import {TaskModel, UnscheduledTasks} from './task.model';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {CrossTask, TaskModel, UnscheduledTasks} from './task.model';
+import {AngularFirestore, QuerySnapshot} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
 import {LoadService} from '../load/load.service';
 import {LoadModel} from '../load/load.model';
 import {UiService} from '../shared/ui.service';
+import {AddressModel} from '../shared/address.model';
 
 @Injectable()
 export class TaskService {
 
   private tasks: TaskModel[] = [];
+  private crossDocks: CrossTask[] = [];
   tasksChanged = new Subject<TaskModel[]>();
   tasksChangedForEmployee = new Subject<TaskModel[]>();
   numberOfTasksChangedForEmployee = new Subject<number>();
+  crossDocksChanges = new Subject<any>();
   private unscheduledTasks: UnscheduledTasks;
   componentSubs: Subscription[] = [];
 
@@ -64,6 +67,41 @@ export class TaskService {
         this.sharedService.isLoadingChanged.next(false);
       }, err => console.log('Error - fetchTasksForEmployeeName(employeeName: string) ' + err)));
   }
+
+  fetchAllCrossDocks() {
+    this.componentSubs.push(this.db
+      .collection('crossDocks')
+      .get()
+      .pipe(map((querySnapshot: QuerySnapshot<any>) => {
+        return querySnapshot.docs.map(queryDoc => {
+          return {...queryDoc.data()};
+        });
+      }))
+      .subscribe(crossDocks => {
+        this.crossDocks = crossDocks;
+        this.crossDocksChanges.next([...this.crossDocks]);
+      }));
+  }
+
+  getCrossTask(city: string): CrossTask {
+    let result: CrossTask = {
+      address: {
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: null
+      },
+      isCompleted: false
+    };
+    if (city) {
+        result = this.crossDocks.find(item => {
+        return item.address.city === city;
+      });
+    }
+    return {...result};
+  }
+
 
   saveTask(task: TaskModel) {
     this.db.collection('tasks').add(task).then(result => {

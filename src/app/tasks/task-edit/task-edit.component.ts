@@ -1,6 +1,6 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {TaskModel, UnscheduledTasks} from '../task.model';
+import {CrossTask, TaskModel, UnscheduledTasks} from '../task.model';
 import {TaskService} from '../task.service';
 import {Observable, Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -27,7 +27,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   editMode = false;
   showForm = true;
   kindArr: string[] = ['Pick Up', 'Delivery'];
-  crossDocksArr: string[] = ['Addison, IL', 'Renton, WA', 'Spokane, WA', 'Portland, OR'];
+  crossDocksArr: CrossTask[] = [];
   isCrossDock = false;
   drivers: Observable<EmployeeModel[]>;
 
@@ -38,7 +38,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
               private sharedService: UiService) { }
 
   ngOnInit() {
-    this.componentSubs.push(this.route.params.subscribe((params: Params) => {
+    this.componentSubs.push(this.route.params
+      .subscribe((params: Params) => {
       this.taskId = params['taskId'];
       this.loadId = params['loadId'];
       if (this.taskId) {
@@ -48,6 +49,11 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       this.availableTasksForSchedule = this.taskService.getNumbersUnscheduledTasks();
     }));
     this.drivers = this.taskService.getDrivers();
+    this.componentSubs.push(this.taskService.crossDocksChanges
+      .subscribe(crossDock => {
+      this.crossDocksArr = crossDock;
+    }));
+    this.taskService.fetchAllCrossDocks();
   }
 
   initForm() {
@@ -59,7 +65,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     let time = '';
     let employee = '';
     let isCompleted = false;
-    let crossDock = '';
+    let crossTaskCity = '';
     let description = '';
 
     /*this.address = new FormGroup({
@@ -80,8 +86,10 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       time = task.time;
       employee = task.employee;
       isCompleted = task.isCompleted;
-      crossDock = task.crossDock;
-      if (crossDock) {this.isCrossDock = true; }
+      if (task.crossTask.address.city) {
+        crossTaskCity = task.crossTask.address.city;
+        this.isCrossDock = true;
+      }
       description = task.description;
       // this.address.setValue(task.address);
     } else {
@@ -97,18 +105,28 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       // 'address': this.address,
       'employee': new FormControl(employee),
       'isCompleted': new FormControl(isCompleted),
-      'crossDock': new FormControl(crossDock),
+      'crossTaskCity': new FormControl(crossTaskCity),
       'description': new FormControl(description)
     });
   }
 
   onSubmit() {
-    const task = {...this.taskEditForm.value, 'address': this.address};
+    // for clear crossTaskCity value if checkBox is unchecked
+    if (!this.isCrossDock) {
+      this.taskEditForm.patchValue({'crossTaskCity': undefined});
+    }
+    // get crossTask full address depend on City of crossDock
+    const crossTask = this.taskService.getCrossTask(this.taskEditForm.value.crossTaskCity);
+    // remove crossTaskCity FormControl from taskEditForm.value
+    this.taskEditForm.removeControl('crossTaskCity');
+    // create task either for saving or updating
+    const task: TaskModel = {...this.taskEditForm.value, 'address': this.address, 'crossTask': crossTask};
     if (this.editMode) {
       this.taskService.updateTask(task);
     } else {
       this.taskService.saveTask(task);
     }
+    // navigate to LoadsListComponent
     this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
