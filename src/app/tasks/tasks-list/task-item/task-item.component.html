@@ -5,7 +5,10 @@
           {{ task.employee }}
         </mat-panel-title>
         <mat-panel-description>
-          {{ 'for ' + task.kind }} {{ task.date.toDate() | date }}
+          <div>
+            {{ 'for ' + task.kind }} {{ task.date.toDate() | date }}
+            <span *ngIf="task.crossTask.address.city" style="color: red">Cross Dock</span>
+          </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <section fxLayout="column" fxLayoutGap="10px">
@@ -16,10 +19,15 @@
         </div>
         <div>Time: <span>{{ task.time}}</span></div>
         <div>Description: <span>{{ task.description}}</span></div>
-        <div *ngIf="task.crossTask.address.city" style="color: red">This is a Cross Dock load for:
+        <div *ngIf="task.crossTask.address.city" style="color: red">
+          <hr>
+          <div>This is a Cross Dock load for:
           <span>{{ task.crossTask.address.address1}} {{ task.crossTask.address.address2}}
                 {{ task.crossTask.address.city}}, {{ task.crossTask.address.state}}
-                {{ task.crossTask.address.zip}}</span></div>
+
+                {{ task.crossTask.address.zip}}</span>
+          </div>
+        </div>
         <div *ngIf="task.isCompleted" style="color: blue">
           Completed
         </div>

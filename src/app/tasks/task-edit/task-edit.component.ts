@@ -68,14 +68,6 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     let crossTaskCity = '';
     let description = '';
 
-    /*this.address = new FormGroup({
-      'address1': new FormControl('', Validators.required),
-      'address2': new FormControl(''),
-      'city': new FormControl({value: '', disabled: true}, Validators.required),
-      'state': new  FormControl('', Validators.required),
-      'zip': new FormControl('', Validators.required)
-    });*/
-
     if (this.editMode) {
       const task: TaskModel = this.taskService.getTaskById(this.taskId);
       this.address = task.address;
@@ -102,7 +94,6 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       'kind': new FormControl(kind, Validators.required),
       'date': new FormControl(date, Validators.required),
       'time': new FormControl(time),
-      // 'address': this.address,
       'employee': new FormControl(employee),
       'isCompleted': new FormControl(isCompleted),
       'crossTaskCity': new FormControl(crossTaskCity),
