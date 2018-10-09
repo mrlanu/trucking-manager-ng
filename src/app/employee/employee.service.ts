@@ -8,6 +8,7 @@ import {Injectable} from '@angular/core';
 export class EmployeeService {
 
   private allEmployees: EmployeeModel[] = [];
+  loggedInEmployee: EmployeeModel;
   employeesChange = new Subject<EmployeeModel[]>();
   employeeChange = new Subject<EmployeeModel>();
   serviceSubs: Subscription[] = [];
@@ -40,6 +41,7 @@ export class EmployeeService {
             ...doc.data() as EmployeeModel
           });
         });
+        this.loggedInEmployee = resultArr[0];
         this.employeeChange.next(resultArr[0]);
       });
   }

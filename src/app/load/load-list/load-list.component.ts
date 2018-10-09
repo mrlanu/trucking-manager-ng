@@ -61,6 +61,10 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['edit', idLoad], {relativeTo: this.route});
   }
 
+  onLogLoad(idLoad: string) {
+    this.router.navigate(['log', idLoad], {relativeTo: this.route});
+  }
+
   onEditTask(loadId: string) {
     this.router.navigate(['/tasks', loadId]);
   }

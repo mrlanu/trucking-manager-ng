@@ -10,6 +10,7 @@ import {TasksComponent} from './tasks/tasks.component';
 import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
 import {LoadComponent} from './load/load.component';
 import {AuthGuard} from './auth/auth.guard';
+import {LoadLogComponent} from './load/load-log/load-log.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
       {path: '', component: LoadListComponent},
       {path: 'new', component: LoadEditComponent},
       {path: 'edit/:id', component: LoadEditComponent},
+      {path: 'log/:id', component: LoadLogComponent},
     ]},
   {path: 'tasks', component: TasksComponent, canActivateChild: [AuthGuard], children: [
       {path: 'myTasks/:employeeName', component: TasksListComponent},

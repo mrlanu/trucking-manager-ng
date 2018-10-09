@@ -69,7 +69,7 @@
           </div>
           <div style="padding: 20px" fxLayout="row" fxLayoutGap="20px">
             <button type="button" mat-raised-button color="primary" (click)="onEditLoad(element.id)">Edit</button>
-            <button type="button" mat-raised-button color="primary">Log</button>
+            <button type="button" mat-raised-button color="primary" (click)="onLogLoad(element.id)">Log</button>
             <button type="button" mat-raised-button
                     [matBadge]="element.task.unscheduledPickUpCount + element.task.unscheduledDeliveryCount"
                     [matBadgeHidden]="element.task.unscheduledPickUpCount == 0 && element.task.unscheduledDeliveryCount == 0"

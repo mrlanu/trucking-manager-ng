@@ -7,7 +7,7 @@ import {EmployeeService} from '../employee/employee.service';
 import {LoadService} from '../load/load.service';
 import {LoadModel} from '../load/load.model';
 import {UiService} from '../shared/ui.service';
-import {AddressModel} from '../shared/address.model';
+import {LoadLogService} from '../load/load-log/load-log.service';
 
 @Injectable()
 export class TaskService {
@@ -24,7 +24,8 @@ export class TaskService {
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService,
               private loadService: LoadService,
-              private sharedService: UiService) {}
+              private sharedService: UiService,
+              private loadLogService: LoadLogService) {}
 
   fetchTasksByLoadId(loadId: string) {
     this.sharedService.isLoadingChanged.next(true);
@@ -106,21 +107,30 @@ export class TaskService {
   saveTask(task: TaskModel) {
     this.db.collection('tasks').add(task).then(result => {
       const id = result.id;
-      this.db.doc(`tasks/${id}`).update({id: id});
+      this.db.doc(`tasks/${id}`).update({id: id}).then(conf => {
+        this.loadLogService.addLog(task.loadId, 'Task has been added', this.getLoggedInEmployeeName());
+      });
     });
   }
 
   updateTask(task: TaskModel) {
-    this.db.doc(`tasks/${task.id}`).set(task);
+    this.db.doc(`tasks/${task.id}`).set(task).then(conf => {
+      this.loadLogService.addLog(task.loadId, 'Task has been edited', this.getLoggedInEmployeeName());
+    });
   }
 
   updateTaskStatusIsCompleted(taskId: string) {
-    this.db.doc(`tasks/${taskId}`).update({isCompleted: true});
+    const task = this.getTaskById(taskId);
+    this.db.doc(`tasks/${taskId}`).update({isCompleted: true}).then(conf => {
+      this.loadLogService.addLog(task.loadId, 'Task has been completed', this.getLoggedInEmployeeName());
+    });
   }
 
 
   deleteTask(taskId: string) {
+    const task = this.getTaskById(taskId);
     this.db.doc(`tasks/${taskId}`).delete().then(result => {
+      this.loadLogService.addLog(task.loadId, 'Task has been deleted', this.getLoggedInEmployeeName());
     }).catch(err => {
       console.log(err);
     });
@@ -160,6 +170,10 @@ export class TaskService {
 
   getNumbersUnscheduledTasks(): UnscheduledTasks {
     return {...this.unscheduledTasks};
+  }
+
+  getLoggedInEmployeeName(): string {
+    return `${this.employeeService.loggedInEmployee.firstName} ${this.employeeService.loggedInEmployee.secondName}`;
   }
 
   cancelAllSubscriptions() {

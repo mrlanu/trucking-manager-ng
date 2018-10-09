@@ -4,7 +4,6 @@ import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {EmployeeModel} from '../../employee/employee.model';
-import {LoadModel} from '../load.model';
 
 @Component({
   selector: 'app-load-edit',

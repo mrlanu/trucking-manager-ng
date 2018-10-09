@@ -7,6 +7,7 @@ import {LoadService} from '../load/load.service';
 import {EmployeeService} from '../employee/employee.service';
 import {TaskService} from '../tasks/task.service';
 import {EmployeeModel} from '../employee/employee.model';
+import {LoadLogService} from '../load/load-log/load-log.service';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,8 @@ export class AuthService {
               private router: Router,
               private loadService: LoadService,
               private employeeService: EmployeeService,
-              private taskService: TaskService) {}
+              private taskService: TaskService,
+              private loadLogService: LoadLogService) {}
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
@@ -73,6 +75,7 @@ export class AuthService {
     this.loadService.cancelAllSubscriptions();
     this.employeeService.cancelAllSubscriptions();
     this.taskService.cancelAllSubscriptions();
+    this.loadLogService.cancelAllSubscriptions();
     this.serviceSubs.forEach(subscription => {
       subscription.unsubscribe();
     });

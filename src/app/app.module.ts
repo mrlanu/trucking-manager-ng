@@ -31,6 +31,8 @@ import {AuthService} from './auth/auth.service';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DeleteConfirmComponent} from './shared/delete-confirm.component';
 import {AddressComponent} from './tasks/task-edit/address.component';
+import { LoadLogComponent } from './load/load-log/load-log.component';
+import {LoadLogService} from './load/load-log/load-log.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import {AddressComponent} from './tasks/task-edit/address.component';
     TaskStartComponent,
     LoadComponent,
     DeleteConfirmComponent,
-    AddressComponent
+    AddressComponent,
+    LoadLogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,7 @@ import {AddressComponent} from './tasks/task-edit/address.component';
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [LoadService, EmployeeService, TaskService, UiService, AuthService],
+  providers: [LoadService, EmployeeService, TaskService, UiService, AuthService, LoadLogService],
   bootstrap: [AppComponent],
   entryComponents: [DeleteConfirmComponent, AddressComponent]
 })
