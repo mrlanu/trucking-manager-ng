@@ -8,6 +8,7 @@ import {LoadService} from '../load/load.service';
 import {LoadModel} from '../load/load.model';
 import {UiService} from '../shared/ui.service';
 import {LoadLogService} from '../load/load-log/load-log.service';
+import {EmployeeModel} from '../employee/employee.model';
 
 @Injectable()
 export class TaskService {
@@ -108,21 +109,18 @@ export class TaskService {
     this.db.collection('tasks').add(task).then(result => {
       const id = result.id;
       this.db.doc(`tasks/${id}`).update({id: id}).then(conf => {
-        this.loadLogService.addLog(task.loadId, 'Task has been added', this.getLoggedInEmployeeName());
       });
     });
   }
 
   updateTask(task: TaskModel) {
     this.db.doc(`tasks/${task.id}`).set(task).then(conf => {
-      this.loadLogService.addLog(task.loadId, 'Task has been edited', this.getLoggedInEmployeeName());
     });
   }
 
   updateTaskStatusIsCompleted(taskId: string) {
     const task = this.getTaskById(taskId);
     this.db.doc(`tasks/${taskId}`).update({isCompleted: true}).then(conf => {
-      this.loadLogService.addLog(task.loadId, 'Task has been completed', this.getLoggedInEmployeeName());
     });
   }
 
@@ -130,7 +128,6 @@ export class TaskService {
   deleteTask(taskId: string) {
     const task = this.getTaskById(taskId);
     this.db.doc(`tasks/${taskId}`).delete().then(result => {
-      this.loadLogService.addLog(task.loadId, 'Task has been deleted', this.getLoggedInEmployeeName());
     }).catch(err => {
       console.log(err);
     });
@@ -172,8 +169,8 @@ export class TaskService {
     return {...this.unscheduledTasks};
   }
 
-  getLoggedInEmployeeName(): string {
-    return `${this.employeeService.loggedInEmployee.firstName} ${this.employeeService.loggedInEmployee.secondName}`;
+  addLog(loadId: string, description: string, employee: EmployeeModel) {
+    this.loadLogService.addLog(loadId, description, employee);
   }
 
   cancelAllSubscriptions() {

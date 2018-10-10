@@ -9,6 +9,7 @@ import {MatDialog, MatSelectChange} from '@angular/material';
 import {AddressComponent} from './address.component';
 import {AddressModel} from '../../shared/address.model';
 import {UiService} from '../../shared/ui.service';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-task-edit',
@@ -19,6 +20,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
 
   loadId: string;
   taskId: string;
+  loggedInEmployee: EmployeeModel;
   componentSubs: Subscription[] = [];
   taskEditForm: FormGroup;
   address: AddressModel;
@@ -35,7 +37,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private taskService: TaskService,
               private dialog: MatDialog,
-              private sharedService: UiService) { }
+              private sharedService: UiService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.componentSubs.push(this.route.params
@@ -53,6 +56,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       .subscribe(crossDock => {
       this.crossDocksArr = crossDock;
     }));
+    this.loggedInEmployee = this.authService.getLoggedInEmployee();
     this.taskService.fetchAllCrossDocks();
   }
 
@@ -113,8 +117,10 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     // create task either for saving or updating
     const task: TaskModel = {...this.taskEditForm.value, 'address': this.address, 'crossTask': crossTask};
     if (this.editMode) {
+      this.taskService.addLog(task.loadId, `Task for ${task.kind} has been edited`, this.loggedInEmployee);
       this.taskService.updateTask(task);
     } else {
+      this.taskService.addLog(task.loadId, `Task for ${task.kind} has been added`, this.loggedInEmployee);
       this.taskService.saveTask(task);
     }
     // navigate to LoadsListComponent

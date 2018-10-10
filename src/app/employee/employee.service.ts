@@ -8,7 +8,6 @@ import {Injectable} from '@angular/core';
 export class EmployeeService {
 
   private allEmployees: EmployeeModel[] = [];
-  loggedInEmployee: EmployeeModel;
   employeesChange = new Subject<EmployeeModel[]>();
   serviceSubs: Subscription[] = [];
 

@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {Subject, Subscription} from 'rxjs';
 import {LogModel} from './log.model';
+import {EmployeeModel} from '../../employee/employee.model';
 
 @Injectable()
 export class LoadLogService {
@@ -27,11 +28,12 @@ export class LoadLogService {
       }));
   }
 
-  addLog(loadId: string, description: string, employeeName: string) {
+  addLog(loadId: string, description: string, employee: EmployeeModel) {
+    const nameFromEmployeeModel = `${employee.firstName} ${employee.secondName}`;
     const log = {
       date: new Date(),
       description: description,
-      employee: employeeName,
+      employee: nameFromEmployeeModel,
       loadId: loadId
     };
     this.db.collection('loadLog').add(log).then(conf => {

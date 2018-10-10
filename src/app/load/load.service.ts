@@ -6,6 +6,7 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
 import {UiService} from '../shared/ui.service';
 import {LoadLogService} from './load-log/load-log.service';
+import {EmployeeModel} from '../employee/employee.model';
 
 @Injectable()
 export class LoadService {
@@ -43,14 +44,12 @@ export class LoadService {
       const id = result.id;
       this.db.doc(`loads/${id}`).update({id: id}).then(conf => {
         this.loadSavedConfirm.next(id);
-        this.loadLogService.addLog(load.id, 'Load has been got', this.getLoggedInEmployeeName());
       });
     });
   }
 
   updateLoad(load: LoadModel) {
     this.db.doc(`loads/${load.id}`).set(load).then(conf => {
-      this.loadLogService.addLog(load.id, 'Load has been edited', this.getLoggedInEmployeeName());
     });
   }
 
@@ -62,8 +61,8 @@ export class LoadService {
     return this.employeeService.getEmployeesByOccupation('dispatch');
   }
 
-  getLoggedInEmployeeName(): string {
-    return `${this.employeeService.loggedInEmployee.firstName} ${this.employeeService.loggedInEmployee.secondName}`;
+  addLog(loadId: string, description: string, employee: EmployeeModel) {
+    this.loadLogService.addLog(loadId, description, employee);
   }
 
   cancelAllSubscriptions() {

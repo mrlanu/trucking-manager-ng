@@ -58,6 +58,10 @@ export class AuthService {
       }));
   }
 
+  getLoggedInEmployee(): EmployeeModel {
+    return {...this.loggedInEmployee};
+  }
+
   registerUser(authData: AuthData) {
     this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
       .then(result => {

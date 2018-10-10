@@ -6,6 +6,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {UiService} from '../../shared/ui.service';
 import {MatDialog} from '@angular/material';
 import {DeleteConfirmComponent} from '../../shared/delete-confirm.component';
+import {EmployeeModel} from '../../employee/employee.model';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -14,6 +16,7 @@ import {DeleteConfirmComponent} from '../../shared/delete-confirm.component';
 })
 export class TasksListComponent implements OnInit, OnDestroy {
 
+  loggedInEmployee: EmployeeModel;
   componentSubs: Subscription[] = [];
   employeeMode = false;
   isLoading = true;
@@ -25,10 +28,12 @@ export class TasksListComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private uiService: UiService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private authService: AuthService) { }
 
   ngOnInit() {
     const urlPath = this.route.snapshot.url[0].path;
+    this.loggedInEmployee = this.authService.getLoggedInEmployee();
     this.componentSubs.push(this.route.params
       .subscribe((params: Params) => {
       this.tasksEmployeeName = params['employeeName'];
@@ -81,6 +86,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.taskService.addLog(this.tasksArr[0].loadId, 'All tasks has been deleted', this.loggedInEmployee);
         this.tasksArr.forEach(tsk => {
           this.taskService.deleteTask(tsk.id);
         });

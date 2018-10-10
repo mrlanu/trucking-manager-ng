@@ -4,6 +4,7 @@ import {LoadService} from '../load.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {EmployeeModel} from '../../employee/employee.model';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-load-edit',
@@ -12,6 +13,7 @@ import {EmployeeModel} from '../../employee/employee.model';
 })
 export class LoadEditComponent implements OnInit, OnDestroy {
 
+  loggedInEmployee: EmployeeModel;
   loadForm: FormGroup;
   editMode = false;
   loadId: string;
@@ -23,6 +25,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
   componentSubs: Subscription[] = [];
 
   constructor(private loadService: LoadService,
+              private authService: AuthService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -34,6 +37,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
         this.initForm();
       }
     ));
+    this.loggedInEmployee = this.authService.getLoggedInEmployee();
     this.dispatches = this.loadService.getDispatches();
   }
 
@@ -93,20 +97,23 @@ export class LoadEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const load = this.loadForm.value;
     if (this.editMode) {
-      this.loadService.updateLoad(this.loadForm.value);
+      this.loadService.updateLoad(load);
+      this.loadService.addLog(load.id, 'Load has been edited', this.loggedInEmployee);
       this.router.navigate(['/loads']);
     } else {
       this.loadForm.patchValue({
         'task': {
-          'unscheduledPickUpCount': this.loadForm.value.task.pickUpCount,
-          'unscheduledDeliveryCount': this.loadForm.value.task.deliveryCount
+          'unscheduledPickUpCount': load.task.pickUpCount,
+          'unscheduledDeliveryCount': load.task.deliveryCount
         }
       });
-      this.loadService.saveLoad(this.loadForm.value);
+      this.loadService.saveLoad(load);
       this.isLoading = true;
       this.componentSubs.push(this.loadService.loadSavedConfirm
         .subscribe((loadId: string) => {
+          this.loadService.addLog(loadId, 'Load has been got', this.loggedInEmployee);
           this.router.navigate(['/tasks', loadId]);
         }));
     }
