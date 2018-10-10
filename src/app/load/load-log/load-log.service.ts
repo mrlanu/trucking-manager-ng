@@ -15,7 +15,9 @@ export class LoadLogService {
   constructor(private db: AngularFirestore) {}
 
   fetchLogByLoadId(loadId: string) {
-    this.serviceSubs.push(this.db.collection('loadLog', ref => ref.where('loadId', '==', loadId))
+    this.serviceSubs.push(this.db.collection('loadLog', ref => ref
+      .where('loadId', '==', loadId)
+      .orderBy('date'))
       .get()
       .pipe(map((querySnapshot: QuerySnapshot<any>) => {
         return querySnapshot.docs.map(queryDoc => {

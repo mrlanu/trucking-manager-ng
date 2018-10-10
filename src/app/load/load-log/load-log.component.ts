@@ -3,6 +3,7 @@ import {LoadLogService} from './load-log.service';
 import {ActivatedRoute, Route} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {LogModel} from './log.model';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-load-log',
@@ -11,6 +12,8 @@ import {LogModel} from './log.model';
 })
 export class LoadLogComponent implements OnInit, OnDestroy {
 
+  displayedColumns = ['date', 'description', 'employee'];
+  dataSource = new MatTableDataSource<LogModel>();
   loadId: string;
   logArr: LogModel[] = [];
   componentSubs: Subscription[] = [];
@@ -25,8 +28,7 @@ export class LoadLogComponent implements OnInit, OnDestroy {
       }));
     this.componentSubs.push(this.loadLogService.logChange
       .subscribe((log: LogModel[]) => {
-        this.logArr = log;
-        this.logArr.forEach(lg => console.log(lg));
+        this.dataSource.data = log;
       }));
     this.loadLogService.fetchLogByLoadId(this.loadId);
   }
