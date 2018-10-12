@@ -47,7 +47,7 @@ export class TaskItemComponent implements OnInit, OnDestroy {
       if (result) {
         const task = this.taskService.getTaskById(taskId);
         this.taskService.deleteTask(taskId);
-        this.taskService.addLog(task.loadId, `Task for ${task.kind} has been deleted`, this.loggedInEmployee);
+        this.taskService.addLog(task.loadId, `Task for ${task.kind} has been deleted for ${task.employee}`, this.loggedInEmployee);
       } else {
         dialogRef.close();
       }

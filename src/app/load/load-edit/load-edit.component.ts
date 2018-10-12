@@ -113,7 +113,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.componentSubs.push(this.loadService.loadSavedConfirm
         .subscribe((loadId: string) => {
-          this.loadService.addLog(loadId, 'Load has been got', this.loggedInEmployee);
+          this.loadService.addLog(loadId, 'Load has been gotten', this.loggedInEmployee);
           this.router.navigate(['/tasks', loadId]);
         }));
     }

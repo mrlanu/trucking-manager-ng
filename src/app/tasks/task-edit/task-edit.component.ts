@@ -120,7 +120,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       this.taskService.addLog(task.loadId, `Task for ${task.kind} has been edited`, this.loggedInEmployee);
       this.taskService.updateTask(task);
     } else {
-      this.taskService.addLog(task.loadId, `Task for ${task.kind} has been added`, this.loggedInEmployee);
+      this.taskService.addLog(task.loadId, `Task for ${task.kind} has been added to ${task.employee}`, this.loggedInEmployee);
       this.taskService.saveTask(task);
     }
     // navigate to LoadsListComponent
