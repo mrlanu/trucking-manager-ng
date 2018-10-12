@@ -57,6 +57,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
     let unscheduledDeliveryCount: number;
     let description = '';
     let commodity = '';
+    let warehouse = '';
 
     if (this.editMode) {
       const load = this.loadService.getLoadById(this.loadId);
@@ -74,6 +75,7 @@ export class LoadEditComponent implements OnInit, OnDestroy {
       unscheduledDeliveryCount = load.task.unscheduledDeliveryCount;
       description = load.description;
       commodity = load.commodity;
+      warehouse = load.warehouse;
     }
 
     this.loadForm = new FormGroup({
@@ -87,12 +89,13 @@ export class LoadEditComponent implements OnInit, OnDestroy {
       'weight': new FormControl(weight, Validators.pattern(/^[1-9]+[0-9]*$/)),
       'pallets': new FormControl(pallets, Validators.pattern(/^[1-9]+[0-9]*$/)),
       'description': new FormControl(description),
-        'task': new FormGroup({
+      'task': new FormGroup({
           'pickUpCount': new FormControl(pickUpCount, Validators.required),
           'unscheduledPickUpCount': new FormControl(unscheduledPickUpCount),
           'deliveryCount': new FormControl(deliveryCount, Validators.required),
           'unscheduledDeliveryCount': new FormControl(unscheduledDeliveryCount),
-        })
+      }),
+      'warehouse': new FormControl(warehouse)
     });
   }
 

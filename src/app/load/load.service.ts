@@ -39,6 +39,15 @@ export class LoadService {
     ));
   }
 
+  getAvailableLoads() {
+    this.loadsChanged.next([...this.loadList]);
+  }
+
+  filterLoadsByWarehouse(warehouse: string) {
+    const result: LoadModel[] = this.loadList.filter(load => load.warehouse === warehouse);
+    this.loadsChanged.next(result);
+  }
+
   saveLoad(load: LoadModel) {
     this.db.collection('loads').add(load).then(result => {
       const id = result.id;

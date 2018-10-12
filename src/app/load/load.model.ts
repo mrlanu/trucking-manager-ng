@@ -19,4 +19,5 @@ export interface LoadModel {
     deliveryCount: number;
     unscheduledDeliveryCount: number;
   };
+  warehouse: string;
 }

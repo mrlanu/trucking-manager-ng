@@ -21,6 +21,7 @@ import {UiService} from '../../shared/ui.service';
 })
 export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  tabs = ['All', 'Addison', 'Renton', 'Portland'];
   isLoading = true;
   columnsToDisplay = ['broker', 'dispatch'];
   columnHeaderName = ['Broker', 'Dispatch'];
@@ -67,6 +68,19 @@ export class LoadListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onEditTask(loadId: string) {
     this.router.navigate(['/tasks', loadId]);
+  }
+
+  onTabChange(event: number) {
+    // for expand all elements in the table of loads
+    this.dataSource.data = [];
+    this.expandedElement = null;
+
+    const warehouse = this.tabs[event];
+    if (warehouse === 'All') {
+      this.loadService.getAvailableLoads();
+    } else {
+      this.loadService.filterLoadsByWarehouse(warehouse);
+    }
   }
 
   ngOnDestroy() {
