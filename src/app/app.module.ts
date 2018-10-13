@@ -33,6 +33,7 @@ import {DeleteConfirmComponent} from './shared/delete-confirm.component';
 import {AddressComponent} from './tasks/task-edit/address.component';
 import { LoadLogComponent } from './load/load-log/load-log.component';
 import {LoadLogService} from './load/load-log/load-log.service';
+import { LoadManagerComponent } from './load/load-manager/load-manager.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {LoadLogService} from './load/load-log/load-log.service';
     LoadComponent,
     DeleteConfirmComponent,
     AddressComponent,
-    LoadLogComponent
+    LoadLogComponent,
+    LoadManagerComponent
   ],
   imports: [
     BrowserModule,
