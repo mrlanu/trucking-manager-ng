@@ -21,6 +21,7 @@ export class TaskService {
   crossDocksChanges = new Subject<any>();
   private unscheduledTasks: UnscheduledTasks;
   componentSubs: Subscription[] = [];
+  taskForEditChange = new Subject<TaskModel>();
 
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService,
@@ -177,5 +178,9 @@ export class TaskService {
     this.componentSubs.forEach(subs => {
       subs.unsubscribe();
     });
+  }
+
+  editTaskClick(task: TaskModel) {
+    this.taskForEditChange.next(task);
   }
 }

@@ -36,10 +36,10 @@ export class LoadManagerComponent implements OnInit, OnDestroy {
     this.componentSubs.push(this.taskService.tasksChanged
       .subscribe((tasks: TaskModel[]) => {
       this.tasks = tasks;
+      this.taskService.recountUnscheduledTasks(tasks, this.loadId);
     }));
     this.componentSubs.push(this.logService.logChange.subscribe((log: LogModel[]) => {
       this.log = log;
-      console.log(this.log);
     }));
     this.taskService.fetchTasksByLoadId(this.loadId);
     this.logService.fetchLogByLoadId(this.loadId);

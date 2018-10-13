@@ -14,7 +14,7 @@
     </button>
   </div>
 
-  <router-outlet></router-outlet>
+  <app-task-edit></app-task-edit>
 
     <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
   <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">

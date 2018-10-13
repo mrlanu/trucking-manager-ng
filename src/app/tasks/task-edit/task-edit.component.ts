@@ -20,6 +20,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
 
   loadId: string;
   taskId: string;
+  task: TaskModel;
   loggedInEmployee: EmployeeModel;
   componentSubs: Subscription[] = [];
   taskEditForm: FormGroup;
@@ -27,7 +28,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   canScheduleTask = true;
   availableTasksForSchedule: UnscheduledTasks;
   editMode = false;
-  showForm = true;
+  showForm = false;
   kindArr: string[] = ['Pick Up', 'Delivery'];
   crossDocksArr: CrossTask[] = [];
   isCrossDock = false;
@@ -41,16 +42,14 @@ export class TaskEditComponent implements OnInit, OnDestroy {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.componentSubs.push(this.route.params
-      .subscribe((params: Params) => {
-      this.taskId = params['taskId'];
-      this.loadId = params['loadId'];
-      if (this.taskId) {
+    this.componentSubs.push(this.taskService.taskForEditChange
+      .subscribe((task: TaskModel) => {
         this.editMode = true;
-      }
-      this.initForm();
-      this.availableTasksForSchedule = this.taskService.getNumbersUnscheduledTasks();
-    }));
+        this.task = task;
+        this.showForm = true;
+        this.initForm();
+        this.availableTasksForSchedule = this.taskService.getNumbersUnscheduledTasks();
+      }));
     this.drivers = this.taskService.getDrivers();
     this.componentSubs.push(this.taskService.crossDocksChanges
       .subscribe(crossDock => {
@@ -73,7 +72,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     let description = '';
 
     if (this.editMode) {
-      const task: TaskModel = this.taskService.getTaskById(this.taskId);
+      const task = this.task;
       this.address = task.address;
       id = task.id;
       loadId = task.loadId;
@@ -128,7 +127,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   }
 
   onCancelAddNewTask() {
-    this.router.navigate(['../../'], {relativeTo: this.route});
+    this.showForm = false;
+    this.taskEditForm.reset();
   }
 
   onAddAddress() {

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskModel} from '../task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../task.service';
@@ -19,9 +19,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
   loggedInEmployee: EmployeeModel;
   componentSubs: Subscription[] = [];
   employeeMode = false;
-  isLoading = true;
+  isLoading = false;
   loadId: string;
-  tasksArr: TaskModel[] = [];
+  @Input() tasksArr: TaskModel[];
   tasksEmployeeName: string;
 
   constructor(private taskService: TaskService,
@@ -32,21 +32,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
               private authService: AuthService) { }
 
   ngOnInit() {
-    const urlPath = this.route.snapshot.url[0].path;
     this.loggedInEmployee = this.authService.getLoggedInEmployee();
-    this.componentSubs.push(this.route.params
-      .subscribe((params: Params) => {
-      this.tasksEmployeeName = params['employeeName'];
-    }));
-    this.componentSubs.push(this.uiService.isLoadingChanged
-      .subscribe(result => this.isLoading = result));
-    this.componentSubs.push(this.uiService.isEmployeeModeChanged
-      .subscribe(result => this.employeeMode = result));
-    if (urlPath === 'myTasks') {
-      this.initTasksByEmployee();
-    } else {
-      this.initTasksByLoadId();
-    }
   }
 
   initTasksByLoadId () {
