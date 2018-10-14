@@ -119,16 +119,14 @@ export class TaskService {
     });
   }
 
-  updateTaskStatusIsCompleted(taskId: string) {
-    const task = this.getTaskById(taskId);
-    this.db.doc(`tasks/${taskId}`).update({isCompleted: true}).then(conf => {
+  updateTaskStatusIsCompleted(task: TaskModel) {
+    this.db.doc(`tasks/${task.id}`).update({isCompleted: true}).then(conf => {
     });
   }
 
 
-  deleteTask(taskId: string) {
-    const task = this.getTaskById(taskId);
-    this.db.doc(`tasks/${taskId}`).delete().then(result => {
+  deleteTask(task: TaskModel) {
+    this.db.doc(`tasks/${task.id}`).delete().then(result => {
     }).catch(err => {
       console.log(err);
     });
@@ -180,7 +178,4 @@ export class TaskService {
     });
   }
 
-  editTaskClick(task: TaskModel) {
-    this.taskForEditChange.next(task);
-  }
 }

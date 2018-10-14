@@ -7,6 +7,8 @@ import {Subscription} from 'rxjs';
 import {LoadLogService} from '../load-log/load-log.service';
 import {TaskService} from '../../tasks/task.service';
 import {LoadService} from '../load.service';
+import {AuthService} from '../../auth/auth.service';
+import {EmployeeModel} from '../../employee/employee.model';
 
 @Component({
   selector: 'app-load-manager',
@@ -15,6 +17,7 @@ import {LoadService} from '../load.service';
 })
 export class LoadManagerComponent implements OnInit, OnDestroy {
 
+  loggedInEmployee: EmployeeModel;
   load: LoadModel;
   loadId: string;
   tasks: TaskModel[] = [];
@@ -25,7 +28,8 @@ export class LoadManagerComponent implements OnInit, OnDestroy {
               private routes: ActivatedRoute,
               private loadService: LoadService,
               private taskService: TaskService,
-              private logService: LoadLogService) { }
+              private logService: LoadLogService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.componentSubs.push(this.routes.params
@@ -43,6 +47,7 @@ export class LoadManagerComponent implements OnInit, OnDestroy {
     }));
     this.taskService.fetchTasksByLoadId(this.loadId);
     this.logService.fetchLogByLoadId(this.loadId);
+    this.loggedInEmployee = this.authService.getLoggedInEmployee();
   }
 
   ngOnDestroy() {
@@ -50,7 +55,5 @@ export class LoadManagerComponent implements OnInit, OnDestroy {
       subs.unsubscribe();
     });
   }
-
-
 
 }

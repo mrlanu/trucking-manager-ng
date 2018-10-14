@@ -29,25 +29,26 @@ export class TaskItemComponent implements OnInit, OnDestroy {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.componentSubs.push(this.sharedService.isEmployeeModeChanged.subscribe(result => this.employeeMode = result));
+    this.componentSubs.push(this.sharedService.isEmployeeModeChanged
+      .subscribe(result => this.employeeMode = result));
     this.loggedInEmployee = this.authService.getLoggedInEmployee();
   }
 
-  onEditTask(id: string) {
-    this.taskService.editTaskClick(this.task);
+  onEditTask() {
+    this.taskService.taskForEditChange.next(this.task);
   }
 
-  onCompleteTask(taskId: string) {
-    this.taskService.updateTaskStatusIsCompleted(taskId);
+  onCompleteTask() {
+    this.taskService.updateTaskStatusIsCompleted(this.task);
   }
 
-  onDeleteTask(taskId: string) {
+  onDeleteTask() {
     const dialogRef = this.dialog.open(DeleteConfirmComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const task = this.taskService.getTaskById(taskId);
-        this.taskService.deleteTask(taskId);
-        this.taskService.addLog(task.loadId, `Task for ${task.kind} has been deleted for ${task.employee}`, this.loggedInEmployee);
+        this.taskService.deleteTask(this.task);
+        this.taskService
+          .addLog(this.task.loadId, `Task for ${this.task.kind} has been deleted for ${this.task.employee}`, this.loggedInEmployee);
       } else {
         dialogRef.close();
       }

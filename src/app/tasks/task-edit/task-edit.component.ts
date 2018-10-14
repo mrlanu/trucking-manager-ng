@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CrossTask, TaskModel, UnscheduledTasks} from '../task.model';
 import {TaskService} from '../task.service';
 import {Observable, Subscription} from 'rxjs';
@@ -18,34 +18,37 @@ import {AuthService} from '../../auth/auth.service';
 })
 export class TaskEditComponent implements OnInit, OnDestroy {
 
-  loadId: string;
-  taskId: string;
-  task: TaskModel;
-  loggedInEmployee: EmployeeModel;
-  componentSubs: Subscription[] = [];
+  @Input() loggedInEmployee: EmployeeModel;
+  @Input() loadId: string;
   taskEditForm: FormGroup;
+  task: TaskModel;
   address: AddressModel;
-  canScheduleTask = true;
   availableTasksForSchedule: UnscheduledTasks;
   editMode = false;
   showForm = false;
+  canScheduleTask = true;
+  isCrossDock = false;
   kindArr: string[] = ['Pick Up', 'Delivery'];
   crossDocksArr: CrossTask[] = [];
-  isCrossDock = false;
   drivers: Observable<EmployeeModel[]>;
+  componentSubs: Subscription[] = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private taskService: TaskService,
               private dialog: MatDialog,
-              private sharedService: UiService,
-              private authService: AuthService) { }
+              private sharedService: UiService) { }
 
   ngOnInit() {
     this.componentSubs.push(this.taskService.taskForEditChange
       .subscribe((task: TaskModel) => {
-        this.editMode = true;
-        this.task = task;
+        if (task) {
+          this.task = task;
+          this.editMode = true;
+        } else {
+          this.task = null;
+          this.editMode = false;
+        }
         this.showForm = true;
         this.initForm();
         this.availableTasksForSchedule = this.taskService.getNumbersUnscheduledTasks();
@@ -55,12 +58,11 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       .subscribe(crossDock => {
       this.crossDocksArr = crossDock;
     }));
-    this.loggedInEmployee = this.authService.getLoggedInEmployee();
     this.taskService.fetchAllCrossDocks();
   }
 
   initForm() {
-
+    this.address = null;
     let id = '';
     let loadId = '';
     let kind = '';
@@ -121,9 +123,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     } else {
       this.taskService.addLog(task.loadId, `Task for ${task.kind} has been added to ${task.employee}`, this.loggedInEmployee);
       this.taskService.saveTask(task);
+      this.showForm = false;
     }
-    // navigate to LoadsListComponent
-    this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
   onCancelAddNewTask() {

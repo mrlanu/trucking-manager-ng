@@ -1,7 +1,7 @@
 <div class="loading-indicator" *ngIf="isLoading">
   <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
 </div>
-<div fxLayout="column" fxLayoutGap="10px">
+<div fxLayout="column" fxLayoutGap="10px" style="width: 90%; margin-top: 1rem">
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px" *ngIf="!isLoading">
     <button mat-mini-fab color="primary" (click)="onBackToList()" [disabled]="employeeMode">
       <mat-icon>arrow_back</mat-icon>
@@ -14,7 +14,7 @@
     </button>
   </div>
 
-  <app-task-edit></app-task-edit>
+  <app-task-edit [loadId]="loadId" [loggedInEmployee]="loggedInEmployee"></app-task-edit>
 
     <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
   <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
