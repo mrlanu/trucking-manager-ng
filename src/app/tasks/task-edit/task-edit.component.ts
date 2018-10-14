@@ -9,7 +9,6 @@ import {MatDialog, MatSelectChange} from '@angular/material';
 import {AddressComponent} from './address.component';
 import {AddressModel} from '../../shared/address.model';
 import {UiService} from '../../shared/ui.service';
-import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-task-edit',
@@ -123,8 +122,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     } else {
       this.taskService.addLog(task.loadId, `Task for ${task.kind} has been added to ${task.employee}`, this.loggedInEmployee);
       this.taskService.saveTask(task);
-      this.showForm = false;
     }
+    this.showForm = false;
   }
 
   onCancelAddNewTask() {

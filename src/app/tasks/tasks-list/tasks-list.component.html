@@ -1,24 +1,27 @@
-<div class="loading-indicator" *ngIf="isLoading">
-  <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
-</div>
-<div fxLayout="column" fxLayoutGap="10px">
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px" *ngIf="!isLoading">
-    <button mat-mini-fab color="primary" (click)="onBackToList()" [disabled]="employeeMode">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <button mat-mini-fab color="primary" (click)="onAddNewTask()" [disabled]="employeeMode">
-      <mat-icon>add</mat-icon>
-    </button>
-    <button mat-mini-fab color="warn" [disabled]="tasksArr.length === 0 || employeeMode" (click)="onDeleteAllTasks()">
-      <mat-icon>delete_forever</mat-icon>
-    </button>
+<div class="container mat-elevation-z8">
+  <div class="list-container">
+    <!--<div class="loading-indicator" *ngIf="isLoading">
+      <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
+    </div>-->
+    <div class="edit-list" fxLayout="column" fxLayoutGap="10px" fxFlex="95%">
+      <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px" *ngIf="!isLoading">
+        <button mat-mini-fab color="primary" (click)="onBackToList()" [disabled]="employeeMode">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="onAddNewTask()" [disabled]="employeeMode">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" [disabled]="tasksArr.length === 0 || employeeMode" (click)="onDeleteAllTasks()">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+
+      <app-task-edit [loadId]="loadId" [loggedInEmployee]="loggedInEmployee"></app-task-edit>
+
+        <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
+      <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
+        <p class="mat-h3">Hasn't scheduled any Pick-Up or Delivery yet...</p>
+      </div>
+    </div>
   </div>
-
-  <app-task-edit [loadId]="loadId" [loggedInEmployee]="loggedInEmployee"></app-task-edit>
-
-    <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
-  <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
-    <p class="mat-h3">Add any Pick-Up or Delivery</p>
-  </div>
 </div>
-

@@ -1,0 +1,8 @@
+.list-container {
+  max-height: 770px;
+  overflow: auto;
+}
+
+.edit-list {
+  margin: 1rem auto 1rem auto;
+}

@@ -39,7 +39,7 @@ export class LoadLogService {
       loadId: loadId
     };
     this.db.collection('loadLog').add(log).then(conf => {
-
+      this.fetchLogByLoadId(log.loadId);
     });
   }
 

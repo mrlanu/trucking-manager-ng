@@ -1,3 +1,8 @@
 .container {
   margin: 2rem 5rem 1rem 5rem;
 }
+
+.load-description {
+  border: 1px solid black;
+  height: 350px;
+}
