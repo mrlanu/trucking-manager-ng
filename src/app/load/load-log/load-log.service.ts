@@ -17,7 +17,7 @@ export class LoadLogService {
   fetchLogByLoadId(loadId: string) {
     this.serviceSubs.push(this.db.collection('loadLog', ref => ref
       .where('loadId', '==', loadId)
-      .orderBy('date'))
+      .orderBy('date', 'desc'))
       .get()
       .pipe(map((querySnapshot: QuerySnapshot<any>) => {
         return querySnapshot.docs.map(queryDoc => {

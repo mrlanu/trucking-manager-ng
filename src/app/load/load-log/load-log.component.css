@@ -1,5 +1,17 @@
 table {
-  width: 95%;
+  width: 100%;
   max-width: 1300px;
-  margin: 2rem auto;
+}
+
+.table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.mat-column-date {
+  max-width: 20%;
+}
+
+.mat-column-employee {
+  max-width: 15%;
 }

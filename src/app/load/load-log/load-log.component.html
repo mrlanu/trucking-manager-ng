@@ -1,16 +1,20 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.date.toDate() | date: 'MMM dd yyyy, h:mm a'}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="employee">
-    <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.employee}}</mat-cell>
-  </ng-container>
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</table>
+<div class="container mat-elevation-z8">
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.date.toDate() | date: 'MMM dd yyyy, h:mm a'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="employee">
+        <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.employee}}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+  </div>
+</div>

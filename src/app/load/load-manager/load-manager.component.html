@@ -1,6 +1,9 @@
 <div style="height: 16px"></div>
-<div class="coontainer" fxLayout="row" fxLayoutAlign="space-between">
-  <div class="stolbik" fxFlex="48%">First one</div>
+<div class="container" fxLayout="row" fxLayoutAlign="space-between">
+  <div class="stolbik" fxLayout="column" fxFlex="48%">
+    <div>Raz</div>
+      <app-load-log [loadId]="loadId"></app-load-log>
+  </div>
   <div class="stolbik" fxFlex="48%">
     <app-tasks-list [tasksArr]="tasks" [loadId]="loadId" [loggedInEmployee]="loggedInEmployee"></app-tasks-list>
   </div>
