@@ -22,7 +22,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   taskEditForm: FormGroup;
   task: TaskModel;
   address: AddressModel;
-  availableTasksForSchedule: UnscheduledTasks;
+  @Input() availableTasksForSchedule: UnscheduledTasks;
   editMode = false;
   showForm = false;
   canScheduleTask = true;
@@ -50,7 +50,6 @@ export class TaskEditComponent implements OnInit, OnDestroy {
         }
         this.showForm = true;
         this.initForm();
-        this.availableTasksForSchedule = this.taskService.getNumbersUnscheduledTasks();
       }));
     this.drivers = this.taskService.getDrivers();
     this.componentSubs.push(this.taskService.crossDocksChanges

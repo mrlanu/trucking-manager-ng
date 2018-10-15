@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {TaskModel} from '../task.model';
+import {TaskModel, UnscheduledTasks} from '../task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../task.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -18,6 +18,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   @Input() loggedInEmployee: EmployeeModel;
   @Input() loadId: string;
   @Input() tasksArr: TaskModel[];
+  availableTasksForSchedule: UnscheduledTasks;
   employeeMode = false;
   isLoading = false;
   tasksEmployeeName: string;
@@ -30,6 +31,10 @@ export class TasksListComponent implements OnInit, OnDestroy {
               private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.componentSubs.push(this.taskService.unscheduledTasksChange
+      .subscribe((unscheduledT: UnscheduledTasks) => {
+        this.availableTasksForSchedule = unscheduledT;
+      }));
   }
 
   initTasksByEmployee() {

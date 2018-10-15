@@ -19,7 +19,8 @@ export class TaskService {
   tasksChangedForEmployee = new Subject<TaskModel[]>();
   numberOfTasksChangedForEmployee = new Subject<number>();
   crossDocksChanges = new Subject<any>();
-  private unscheduledTasks: UnscheduledTasks;
+  unscheduledTasksChange = new Subject<UnscheduledTasks>();
+  // private unscheduledTasks: UnscheduledTasks;
   componentSubs: Subscription[] = [];
   taskForEditChange = new Subject<TaskModel>();
 
@@ -157,15 +158,11 @@ export class TaskService {
     });
     load.task.unscheduledPickUpCount = load.task.pickUpCount - scheduledPickUps;
     load.task.unscheduledDeliveryCount = load.task.deliveryCount - scheduledDelivery;
-    this.unscheduledTasks = {
+    this.unscheduledTasksChange.next({
       'unscheduledPickUp': load.task.unscheduledPickUpCount,
       'unscheduledDelivery': load.task.unscheduledDeliveryCount
-    };
+    });
     this.loadService.updateLoad(load);
-  }
-
-  getNumbersUnscheduledTasks(): UnscheduledTasks {
-    return {...this.unscheduledTasks};
   }
 
   addLog(loadId: string, description: string, employee: EmployeeModel) {
