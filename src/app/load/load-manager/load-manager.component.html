@@ -1,7 +1,17 @@
 <div style="height: 16px"></div>
 <div class="container" fxLayout="row" fxLayoutAlign="space-between">
   <div class="stolbik" fxLayout="column" fxFlex="49%" fxLayoutGap="20px">
-    <div class="load-description">Load description</div>
+    <div class="load-description mat-elevation-z8">
+      <div class="description mat-subheading-1"> Date: {{ load.date.toDate() | date}} </div>
+      <div class="description mat-subheading-1"> Got by: {{ load.dispatch}} </div>
+      <div class="description mat-subheading-1"> Broker: {{ load.broker}} </div>
+      <div class="description mat-subheading-1"> Rate: {{ load.rate}} $</div>
+      <div class="description mat-subheading-1"> Commodity: {{ load.commodity}} </div>
+      <div class="description mat-subheading-1"> Pallets: {{ load.pallets}} </div>
+      <div class="description mat-subheading-1"> Weight: {{ load.weight}} </div>
+      <div class="description mat-subheading-1"> Kind: {{ load.kind}} </div>
+      <div class="description mat-subheading-1"> Description#: {{ load.description}} </div>
+    </div>
     <app-load-log [loadId]="loadId"></app-load-log>
   </div>
   <div class="stolbik" fxFlex="48%">

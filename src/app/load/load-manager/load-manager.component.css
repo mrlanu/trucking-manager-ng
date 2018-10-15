@@ -3,6 +3,9 @@
 }
 
 .load-description {
-  border: 1px solid black;
   height: 350px;
+}
+
+.description {
+  margin-left: 2rem;
 }
