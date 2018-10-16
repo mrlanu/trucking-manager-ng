@@ -9,6 +9,7 @@ import {MatDialog, MatSelectChange} from '@angular/material';
 import {AddressComponent} from './address.component';
 import {AddressModel} from '../../shared/address.model';
 import {UiService} from '../../shared/ui.service';
+import {LoadLogService} from '../../load/load-log/load-log.service';
 
 @Component({
   selector: 'app-task-edit',
@@ -35,6 +36,7 @@ export class TaskEditComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private taskService: TaskService,
+              private logService: LoadLogService,
               private dialog: MatDialog,
               private sharedService: UiService) { }
 
@@ -102,6 +104,15 @@ export class TaskEditComponent implements OnInit, OnDestroy {
       'crossTaskCity': new FormControl(crossTaskCity),
       'description': new FormControl(description)
     });
+
+    // override this.task for comparing the Date field
+    // in this.logService.compareEditedTask(this.task, task);
+    // because had a problem to compare Date & Timestamp
+        if (!this.isCrossDock) {
+          this.taskEditForm.patchValue({'crossTaskCity': undefined});
+        }
+        const crossTask = this.taskService.getCrossTask(this.taskEditForm.value.crossTaskCity);
+        this.task = {...this.taskEditForm.value, 'address': this.address, 'crossTask': crossTask};
   }
 
   onSubmit() {
@@ -116,7 +127,8 @@ export class TaskEditComponent implements OnInit, OnDestroy {
     // create task either for saving or updating
     const task: TaskModel = {...this.taskEditForm.value, 'address': this.address, 'crossTask': crossTask};
     if (this.editMode) {
-      this.taskService.addLog(task.loadId, `Task for ${task.kind} has been edited`, this.loggedInEmployee);
+      const changes: string = this.logService.compareEditedTask(this.task, task);
+      this.taskService.addLog(task.loadId, `Task has been edited. What: ${changes}`, this.loggedInEmployee);
       this.taskService.updateTask(task);
     } else {
       this.taskService.addLog(task.loadId, `Task for ${task.kind} has been added to ${task.employee}`, this.loggedInEmployee);
