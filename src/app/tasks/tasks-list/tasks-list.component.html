@@ -13,7 +13,8 @@
           <button mat-mini-fab color="primary" (click)="onBackToList()" [disabled]="employeeMode">
             <mat-icon>arrow_back</mat-icon>
           </button>
-          <button mat-mini-fab color="primary" (click)="onAddNewTask()" [disabled]="employeeMode">
+          <button mat-mini-fab color="primary" (click)="onAddNewTask()"
+                  [disabled]="employeeMode || (availableTasksForSchedule?.unscheduledPickUp == 0 && availableTasksForSchedule?.unscheduledDelivery == 0)">
             <mat-icon>add</mat-icon>
           </button>
           <button mat-mini-fab color="warn" [disabled]="tasksArr.length === 0 || employeeMode" (click)="onDeleteAllTasks()">

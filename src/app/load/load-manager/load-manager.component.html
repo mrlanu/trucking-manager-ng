@@ -1,10 +1,12 @@
 <div style="height: 16px"></div>
 <div class="container" fxLayout="row" fxLayoutAlign="space-between">
   <div class="stolbik" fxLayout="column" fxFlex="49%" fxLayoutGap="20px">
-    <div class="load-description mat-elevation-z8">
-      <div class="description mat-subheading-1"> Date: {{ load.date.toDate() | date}} </div>
-      <div class="description mat-subheading-1"> Got by: {{ load.dispatch}} </div>
+    <div class="mat-elevation-z8 load-description">
       <div class="description mat-subheading-1"> Broker: {{ load.broker}} </div>
+      <div fxLayout="row" fxLayoutGap="15px">
+        <div class="description mat-subheading-1"> Pick-ups: {{ load.task.pickUpCount}} </div>
+        <div class="description mat-subheading-1"> Deliveries: {{ load.task.deliveryCount}} </div>
+      </div>
       <div class="description mat-subheading-1"> Rate: {{ load.rate}} $</div>
       <div class="description mat-subheading-1"> Commodity: {{ load.commodity}} </div>
       <div class="description mat-subheading-1"> Pallets: {{ load.pallets}} </div>
