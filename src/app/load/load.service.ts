@@ -1,6 +1,6 @@
 import {LoadModel} from './load.model';
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, QuerySnapshot} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {EmployeeService} from '../employee/employee.service';
@@ -15,6 +15,7 @@ export class LoadService {
   serviceSubs: Subscription[] = [];
   loadsChanged = new Subject<LoadModel[]>();
   loadSavedConfirm = new Subject<string>();
+  loadByIdChange = new Subject<LoadModel>();
 
   constructor(private db: AngularFirestore,
               private employeeService: EmployeeService,
@@ -64,6 +65,14 @@ export class LoadService {
 
   getLoadById(id: string) {
     return this.loadList.find(load => load.id === id);
+  }
+
+  fetchLoadById(id: string) {
+    let loadSub: Subscription;
+     loadSub = this.db.doc(`loads/${id}`).get().subscribe(doc => {
+      this.loadByIdChange.next(<LoadModel>doc.data());
+      loadSub.unsubscribe();
+    });
   }
 
   getDispatches(): Observable<any> {

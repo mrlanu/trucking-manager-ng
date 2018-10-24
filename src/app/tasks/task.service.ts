@@ -121,8 +121,27 @@ export class TaskService {
   }
 
   updateTaskStatusIsCompleted(task: TaskModel) {
-    this.db.doc(`tasks/${task.id}`).update({isCompleted: true}).then(conf => {
+    let compl = 1;
+    let fetchLoadSubs: Subscription;
+    fetchLoadSubs = this.loadService.loadByIdChange.subscribe(load => {
+      this.db.doc(`tasks/${task.id}`).update({isCompleted: true}).then(conf => {
+      });
+      const [city, kind] = [task.crossTask.address.city, task.kind];
+      if (!load.warehouse) {
+        console.log('Fuck');
+        this.tasks.forEach(tsk => {
+          if (tsk.isCompleted && tsk.crossTask.address.city === city && tsk.kind === kind) {
+            compl++;
+          }
+        });
+      }
+      if (load.task.pickUpCount === compl) {
+        console.log('URA');
+      }
+      console.log(load);
+      fetchLoadSubs.unsubscribe();
     });
+    this.loadService.fetchLoadById(task.loadId);
   }
 
 

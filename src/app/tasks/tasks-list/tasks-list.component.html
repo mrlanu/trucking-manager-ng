@@ -4,7 +4,7 @@
       <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
     </div>-->
     <div class="edit-list" fxLayout="column" fxLayoutGap="10px" fxFlex="95%">
-      <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!isLoading">
+      <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="!employeeMode">
         <div fxLayout="row" fxLayoutGap="20px">
           <div class="mat-subheading-1">Unscheduled Pick-Ups - {{ availableTasksForSchedule?.unscheduledPickUp }}</div>
           <div class="mat-subheading-1">Deliveries - {{ availableTasksForSchedule?.unscheduledDelivery }}</div>
@@ -17,7 +17,7 @@
                   [disabled]="employeeMode || (availableTasksForSchedule?.unscheduledPickUp == 0 && availableTasksForSchedule?.unscheduledDelivery == 0)">
             <mat-icon>add</mat-icon>
           </button>
-          <button mat-mini-fab color="warn" [disabled]="tasksArr.length === 0 || employeeMode" (click)="onDeleteAllTasks()">
+          <button mat-mini-fab color="warn" [disabled]="tasksArr?.length === 0 || employeeMode" (click)="onDeleteAllTasks()">
             <mat-icon>delete_forever</mat-icon>
           </button>
         </div>
@@ -29,7 +29,7 @@
       </app-task-edit>
 
         <app-task-item *ngFor="let task of tasksArr; let i = index" [task]="task"></app-task-item>
-      <div *ngIf="tasksArr.length === 0" fxLayout="row" fxLayoutAlign="center">
+      <div *ngIf="tasksArr?.length === 0" fxLayout="row" fxLayoutAlign="center">
         <p class="mat-h3">Hasn't scheduled any Pick-Up or Delivery yet...</p>
       </div>
     </div>

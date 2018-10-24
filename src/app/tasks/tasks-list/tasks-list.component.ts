@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskModel, UnscheduledTasks} from '../task.model';
 import {Subscription} from 'rxjs';
 import {TaskService} from '../task.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {UiService} from '../../shared/ui.service';
 import {MatDialog} from '@angular/material';
 import {DeleteConfirmComponent} from '../../shared/delete-confirm.component';
@@ -31,20 +31,27 @@ export class TasksListComponent implements OnInit, OnDestroy {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.componentSubs.push(this.taskService.unscheduledTasksChange
-      .subscribe((unscheduledT: UnscheduledTasks) => {
-        this.availableTasksForSchedule = unscheduledT;
-      }));
+    const urlPath = this.route.snapshot.url[0].path;
+    if (urlPath === 'myTasks') {
+      this.initTasksByEmployee();
+    } else {
+      this.componentSubs.push(this.taskService.unscheduledTasksChange
+        .subscribe((unscheduledT: UnscheduledTasks) => {
+          this.availableTasksForSchedule = unscheduledT;
+        }));
+    }
   }
 
   initTasksByEmployee() {
+    this.employeeMode = true;
+    this.componentSubs.push(this.route.params
+      .subscribe((params: Params) => {
+        this.tasksEmployeeName = params['employeeName'];
+      }));
     this.componentSubs.push(this.taskService.tasksChangedForEmployee
       .subscribe((tasks: TaskModel[]) => {
-      this.tasksArr = tasks;
-      setTimeout(() => {
-        this.uiService.isEmployeeModeChanged.next(true);
-      }, 300);
-    }));
+        this.tasksArr = tasks;
+      }));
     this.taskService.fetchTasksForEmployeeName(this.tasksEmployeeName);
   }
 
