@@ -57,6 +57,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['tasks', 'myTasks', employeeName]);
   }
 
+  onEmployees() {
+    this.router.navigate(['employees']);
+  }
+
   ngOnDestroy() {
     this.componentSubs.forEach(subs => {
       subs.unsubscribe();

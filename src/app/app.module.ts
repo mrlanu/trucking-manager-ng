@@ -25,15 +25,18 @@ import {TasksComponent} from './tasks/tasks.component';
 import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
 import {TaskItemComponent} from './tasks/tasks-list/task-item/task-item.component';
 import {TaskStartComponent} from './tasks/task-start/task-start.component';
-import { LoadComponent } from './load/load.component';
+import {LoadComponent} from './load/load.component';
 import {UiService} from './shared/ui.service';
 import {AuthService} from './auth/auth.service';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DeleteConfirmComponent} from './shared/delete-confirm.component';
 import {AddressComponent} from './tasks/task-edit/address.component';
-import { LoadLogComponent } from './load/load-log/load-log.component';
+import {LoadLogComponent} from './load/load-log/load-log.component';
 import {LoadLogService} from './load/load-log/load-log.service';
-import { LoadManagerComponent } from './load/load-manager/load-manager.component';
+import {LoadManagerComponent} from './load/load-manager/load-manager.component';
+import {EmployeeyListComponent} from './employee/employeey-list/employeey-list.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {EmployeeJavaService} from './employee/employee-java.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,8 @@ import { LoadManagerComponent } from './load/load-manager/load-manager.component
     DeleteConfirmComponent,
     AddressComponent,
     LoadLogComponent,
-    LoadManagerComponent
+    LoadManagerComponent,
+    EmployeeyListComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +70,10 @@ import { LoadManagerComponent } from './load/load-manager/load-manager.component
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
-  providers: [LoadService, EmployeeService, TaskService, UiService, AuthService, LoadLogService],
+  providers: [LoadService, EmployeeService, TaskService, UiService, AuthService, LoadLogService, EmployeeJavaService],
   bootstrap: [AppComponent],
   entryComponents: [DeleteConfirmComponent, AddressComponent]
 })
