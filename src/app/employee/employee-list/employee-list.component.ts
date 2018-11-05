@@ -3,11 +3,11 @@ import {EmployeeModel} from '../employee.model';
 import {EmployeeJavaService} from '../employee-java.service';
 
 @Component({
-  selector: 'app-employeey-list',
-  templateUrl: './employeey-list.component.html',
-  styleUrls: ['./employeey-list.component.css']
+  selector: 'app-employee-list',
+  templateUrl: './employee-list.component.html',
+  styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeyListComponent implements OnInit {
+export class EmployeeListComponent implements OnInit {
 
   employees: EmployeeModel[] = [];
 

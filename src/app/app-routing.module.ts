@@ -12,13 +12,13 @@ import {LoadComponent} from './load/load.component';
 import {AuthGuard} from './auth/auth.guard';
 import {LoadLogComponent} from './load/load-log/load-log.component';
 import {LoadManagerComponent} from './load/load-manager/load-manager.component';
-import {EmployeeyListComponent} from './employee/employee-list/employeey-list.component';
+import {EmployeeListComponent} from './employee/employee-list/employee-list.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'signup', component: SignUpComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'employees', component: EmployeeyListComponent},
+  {path: 'employees', component: EmployeeListComponent},
   {path: 'employee', component: EmployeeEditComponent, canActivate: [AuthGuard]},
   {path: 'loads', component: LoadComponent, canActivateChild: [AuthGuard], children: [
       {path: '', component: LoadListComponent},
