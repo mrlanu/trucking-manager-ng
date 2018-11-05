@@ -34,8 +34,8 @@ import {AddressComponent} from './tasks/task-edit/address.component';
 import {LoadLogComponent} from './load/load-log/load-log.component';
 import {LoadLogService} from './load/load-log/load-log.service';
 import {LoadManagerComponent} from './load/load-manager/load-manager.component';
-import {EmployeeyListComponent} from './employee/employeey-list/employeey-list.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {EmployeeyListComponent} from './employee/employee-list/employeey-list.component';
+import {HttpClientModule} from '@angular/common/http';
 import {EmployeeJavaService} from './employee/employee-java.service';
 
 @NgModule({

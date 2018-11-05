@@ -12,7 +12,7 @@ import {LoadComponent} from './load/load.component';
 import {AuthGuard} from './auth/auth.guard';
 import {LoadLogComponent} from './load/load-log/load-log.component';
 import {LoadManagerComponent} from './load/load-manager/load-manager.component';
-import {EmployeeyListComponent} from './employee/employeey-list/employeey-list.component';
+import {EmployeeyListComponent} from './employee/employee-list/employeey-list.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
