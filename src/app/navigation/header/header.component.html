@@ -11,7 +11,6 @@
       <li *ngIf="isAuth"><a style="cursor: pointer" (click)="onTasksEmployee()">
         <span [matBadge]="myTasksCount" matBadgeColor="warn" [matBadgeHidden]="myTasksCount === 0">Tasks</span>
       </a></li>
-      <li *ngIf="isAuth"><a style="cursor: pointer" (click)="onEmployees()">Employees</a></li>
       <li *ngIf="isAuth"><a style="cursor: pointer" (click)="onLogOut()">Logout</a></li>
     </ul>
   </div>

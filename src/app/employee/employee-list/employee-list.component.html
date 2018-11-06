@@ -1,12 +1,8 @@
-<div style="height: 15px"></div>
-<div>
-  <div *ngFor="let empl of employees">
-    <div>First name: {{ empl.firstName }}</div>
-    <div>Second name: {{ empl.secondName }}</div>
-    <div>Occupation: {{ empl.occupation }}</div>
-    <div>Email: {{ empl.email }}</div>
-    <div>Salary: {{ empl.salary }}</div>
-    <div>Salary measure: {{ empl.salaryMeasure }}</div>
-    <hr>
+<div class="container" fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column" fxFlex="60" fxLayoutGap="10px">
+    <div *ngFor="let empl of employees">
+      <app-employee-item [employee]="empl"></app-employee-item>
+    </div>
   </div>
 </div>
+

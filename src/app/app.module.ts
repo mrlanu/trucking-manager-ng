@@ -37,6 +37,7 @@ import {LoadManagerComponent} from './load/load-manager/load-manager.component';
 import {HttpClientModule} from '@angular/common/http';
 import {EmployeeJavaService} from './employee/employee-java.service';
 import {EmployeeListComponent} from './employee/employee-list/employee-list.component';
+import { EmployeeItemComponent } from './employee/employee-list/employee-item/employee-item.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {EmployeeListComponent} from './employee/employee-list/employee-list.comp
     AddressComponent,
     LoadLogComponent,
     LoadManagerComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    EmployeeItemComponent
   ],
   imports: [
     BrowserModule,
